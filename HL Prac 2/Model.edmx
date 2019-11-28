@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="HOTLOADDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Loads">
+          <Key>
+            <PropertyRef Name="bol_num" />
+          </Key>
+          <Property Name="bol_num" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="pro_num" Type="varchar" MaxLength="20" />
+          <Property Name="quote_num" Type="varchar" MaxLength="20" />
+          <Property Name="ref_num" Type="varchar" MaxLength="20" />
+          <Property Name="weight" Type="float" />
+          <Property Name="pieces" Type="int" />
+          <Property Name="commodity" Type="varchar" MaxLength="20" />
+          <Property Name="mileage" Type="float" />
+          <Property Name="carrier_rate" Type="money" />
+          <Property Name="customer_rate" Type="money" />
+          <Property Name="pick_appointment" Type="smalldatetime" />
+          <Property Name="drop_appointment" Type="smalldatetime" />
+          <Property Name="driver_id" Type="int" />
+          <Property Name="dispatch_id" Type="int" />
+          <Property Name="customer_id" Type="int" />
+          <Property Name="broker_id" Type="int" />
+        </EntityType>
+        <EntityContainer Name="HOTLOADDBModelStoreContainer">
+          <EntitySet Name="Loads" EntityType="Self.Loads" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HOTLOADDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Load">
+          <Key>
+            <PropertyRef Name="bol_num" />
+          </Key>
+          <Property Name="bol_num" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="pro_num" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="quote_num" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ref_num" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="weight" Type="Double" />
+          <Property Name="pieces" Type="Int32" />
+          <Property Name="commodity" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="mileage" Type="Double" />
+          <Property Name="carrier_rate" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="customer_rate" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="pick_appointment" Type="DateTime" Precision="0" />
+          <Property Name="drop_appointment" Type="DateTime" Precision="0" />
+          <Property Name="driver_id" Type="Int32" />
+          <Property Name="dispatch_id" Type="Int32" />
+          <Property Name="customer_id" Type="Int32" />
+          <Property Name="broker_id" Type="Int32" />
+        </EntityType>
+        <EntityContainer Name="HOTLOADDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Loads" EntityType="Self.Load" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="HOTLOADDBModelStoreContainer" CdmEntityContainer="HOTLOADDBEntities">
+          <EntitySetMapping Name="Loads">
+            <EntityTypeMapping TypeName="HOTLOADDBModel.Load">
+              <MappingFragment StoreEntitySet="Loads">
+                <ScalarProperty Name="bol_num" ColumnName="bol_num" />
+                <ScalarProperty Name="pro_num" ColumnName="pro_num" />
+                <ScalarProperty Name="quote_num" ColumnName="quote_num" />
+                <ScalarProperty Name="ref_num" ColumnName="ref_num" />
+                <ScalarProperty Name="weight" ColumnName="weight" />
+                <ScalarProperty Name="pieces" ColumnName="pieces" />
+                <ScalarProperty Name="commodity" ColumnName="commodity" />
+                <ScalarProperty Name="mileage" ColumnName="mileage" />
+                <ScalarProperty Name="carrier_rate" ColumnName="carrier_rate" />
+                <ScalarProperty Name="customer_rate" ColumnName="customer_rate" />
+                <ScalarProperty Name="pick_appointment" ColumnName="pick_appointment" />
+                <ScalarProperty Name="drop_appointment" ColumnName="drop_appointment" />
+                <ScalarProperty Name="driver_id" ColumnName="driver_id" />
+                <ScalarProperty Name="dispatch_id" ColumnName="dispatch_id" />
+                <ScalarProperty Name="customer_id" ColumnName="customer_id" />
+                <ScalarProperty Name="broker_id" ColumnName="broker_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

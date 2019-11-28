@@ -1,0 +1,194 @@
+﻿<Window x:Class="HL_Prac_2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HL_Prac_2"
+        mc:Ignorable="d"
+        Title="Hot Load" Height="1000" Width="1800" WindowStartupLocation="CenterScreen" FontFamily="Book Antiqua" Background="GhostWhite">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="5" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="5" />
+        </Grid.RowDefinitions>
+
+        <!--Search Boxes & Labels-->
+        <!--BOL# Search-->
+        <Label Content="BOL#" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1" />
+        <TextBox x:Name="bolSearch_txt" TextAlignment="Center" Grid.Column="1" Grid.Row="2" Background="Ivory" Margin="3"/>
+
+        <!--Pro# Search-->
+        <Label Content="Pro#" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="1" />
+        <TextBox x:Name="proSearch_txt" TextAlignment="Center" Grid.Column="2" Grid.Row="2" Background="Ivory" Margin="3"/>
+
+        <!--Load Board tab-->
+        <TabControl Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="8" Background="AntiqueWhite">
+            <TabItem Header="Load Board">
+
+                <!--Data Grid-->
+                <DataGrid Name="LoadBoard" AutoGenerateColumns="False" AlternatingRowBackground="Cornsilk" Background="Ivory">
+                    <!--Datagrid Columns-->
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="BOL#" Binding="{Binding bol_num}"/>
+                        <DataGridTextColumn Header="Pro#" Binding="{Binding pro_num}"/>
+                        <DataGridTextColumn Header="Quote#" Binding="{Binding quote_num}"/>
+                        <DataGridTextColumn Header="Ref" Binding="{Binding ref_num}"/>
+                        <DataGridTextColumn Header="Weight" Binding="{Binding weight}"/>
+                        <DataGridTextColumn Header="Pieces" Binding="{Binding pieces}"/>
+                        <DataGridTextColumn Header="Commodity" Binding="{Binding commodity}"/>
+                        <DataGridTextColumn Header="Mileage" Binding="{Binding mileage}"/>
+                        <DataGridTextColumn Header="Carrier Rate" Binding="{Binding carrier_rate}"/>
+                        <DataGridTextColumn Header="Customer Rate" Binding="{Binding customer_rate}"/>
+                        <DataGridTextColumn Header="Pick Date" Binding="{Binding pick_appointment}"/>
+                        <DataGridTextColumn Header="Drop Date" Binding="{Binding drop_appointment}"/>
+                        <DataGridTextColumn Header="Driver" Binding="{Binding driver_id}"/>
+                        <DataGridTextColumn Header="Dispatch" Binding="{Binding dispatch_id}"/>
+                        <DataGridTextColumn Header="Customer" Binding="{Binding customer_id}"/>
+                        <DataGridTextColumn Header="Broker" Binding="{Binding broker_id}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+            </TabItem>
+        </TabControl>
+
+        <TabControl Grid.Column="9" Grid.Row="3" Grid.ColumnSpan="4">
+            <TabItem Header="Load Info">
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="5" />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="5" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="5" />
+                    </Grid.RowDefinitions>
+
+                    <!--BOL-->
+                    <Label Content="BOL#" Grid.Column="1" Grid.Row="2" />
+                    <TextBox x:Name="bol_txt" Grid.Column="2" Grid.Row="2" Background="GhostWhite" Margin="3" IsReadOnly="True"/>
+
+                    <!--Pro-->
+                    <Label Content="Pro#" Grid.Column="3" Grid.Row="2" />
+                    <TextBox x:Name="pro_txt" Grid.Column="4" Grid.Row="2" Background="Ivory" Margin="3" />
+
+                    <!--Quote-->
+                    <Label Content="Quote#" Grid.Column="1" Grid.Row="3" />
+                    <TextBox x:Name="quote_txt" Grid.Column="2" Grid.Row="3" Background="Ivory" Margin="3" />
+
+                    <!--Ref-->
+                    <Label Content="Ref#" Grid.Column="3" Grid.Row="3" />
+                    <TextBox x:Name="ref_txt" Grid.Column="4" Grid.Row="3" Background="Ivory" Margin="3" />
+
+                    <!--Weight-->
+                    <Label Content="Weight" Grid.Column="1" Grid.Row="4" />
+                    <TextBox x:Name="weight_txt" Grid.Column="2" Grid.Row="4" Background="Ivory" Margin="3" />
+
+                    <!--Pieces-->
+                    <Label Content="Pieces" Grid.Column="3" Grid.Row="4" />
+                    <TextBox x:Name="pieces_txt" Grid.Column="4" Grid.Row="4" Background="Ivory" Margin="3" />
+
+                    <!--Commodity-->
+                    <Label Content="Commodity" Grid.Column="1" Grid.Row="5" />
+                    <TextBox x:Name="commodity_txt" Grid.Column="2" Grid.Row="5" Background="Ivory" Margin="3" />
+
+                    <!--Mileage-->
+                    <Label Content="Mileage" Grid.Column="3" Grid.Row="5" />
+                    <TextBox x:Name="mileage_txt" Grid.Column="4" Grid.Row="5" Background="Ivory" Margin="3" />
+
+                    <!--Carrier Rate-->
+                    <Label Content="Carrier Rate" Grid.Column="1" Grid.Row="6" />
+                    <TextBox x:Name="carrierRate_txt" Grid.Column="2" Grid.Row="6" Background="Ivory" Margin="3" />
+
+                    <!--Customer Rate-->
+                    <Label Content="Customer Rate" Grid.Column="3" Grid.Row="6" />
+                    <TextBox x:Name="customerRate_txt" Grid.Column="4" Grid.Row="6" Background="Ivory" Margin="3" />
+
+                    <!--Pick Up-->
+                    <Label Content="Pick Appointment" Grid.Column="1" Grid.Row="10" Grid.RowSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <TextBox x:Name="pickAptTime_txt" Grid.Column="4" Grid.Row="10" Background="Ivory" Margin="3" />
+                    <DatePicker Name="pickDate_picker" Grid.Column="2" Grid.Row="11" Background="Ivory" Margin="3" />
+                    <TextBox x:Name="PickIn_text" Grid.Column="4" Grid.Row="12" Background="Ivory" Margin="3" />
+                    <TextBox x:Name="PickOut_text" Grid.Column="4" Grid.Row="13" Background="Ivory" Margin="3" />
+                    <Label Content="Pick In" Grid.Column="1" Grid.Row="12" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <Label Content="Pick Out" Grid.Column="1" Grid.Row="13" VerticalAlignment="Center" HorizontalAlignment="Center" />
+
+                    <!--Drop Off-->
+                    <Label Content="Delivery Appointment" Grid.Column="3" Grid.Row="10" Grid.RowSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <TextBox x:Name="dropAptTime_txt" Grid.Column="2" Grid.Row="10" Background="Ivory" Margin="3" />
+                    <DatePicker Name="dropDate_picker" Grid.Column="4" Grid.Row="11" Background="Ivory" Margin="3" />
+                    <TextBox x:Name="DropIn_txt" Grid.Column="2" Grid.Row="12" Background="Ivory" Margin="3" />
+                    <TextBox x:Name="DropOut_txt" Grid.Column="2" Grid.Row="13" Background="Ivory" Margin="3" />
+                    <Label Content="Delivery In" Grid.Column="3" Grid.Row="12" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <Label Content="Delivery Out" Grid.Column="3" Grid.Row="13" VerticalAlignment="Center" HorizontalAlignment="Center" />
+
+                    <!--Driver-->
+                    <Label Content="Driver" Grid.Column="1" Grid.Row="7" />
+                    <TextBox x:Name="driver_txt" Grid.Column="2" Grid.Row="7" Background="Ivory" Margin="3" />
+
+                    <!--Dispatch-->
+                    <Label Content="Dispatch" Grid.Column="3" Grid.Row="7" />
+                    <TextBox x:Name="dispatch_txt" Grid.Column="4" Grid.Row="7" Background="Ivory" Margin="3" />
+
+                    <!--Customer-->
+                    <Label Content="Customer" Grid.Column="1" Grid.Row="8" />
+                    <TextBox x:Name="customer_txt" Grid.Column="2" Grid.Row="8" Background="Ivory" Margin="3" />
+
+                    <!--Broker-->
+                    <Label Content="Broker" Grid.Column="3" Grid.Row="8" />
+                    <TextBox x:Name="broker_txt" Grid.Column="4" Grid.Row="8" Background="Ivory" Margin="3" />
+
+                    <Button x:Name="update_btn" Content="Update" Grid.Column="1" Grid.Row="19" Margin="3" Width="100" Click="update_btn_Click" />
+                    <Button x:Name="new_btn" Content="New" Grid.Column="2" Grid.Row="19" Margin="3" Width="100" Click="new_btn_Click" />
+                    <Button x:Name="copy_btn" Content="Copy" Grid.Column="3" Grid.Row="19" Margin="3" Width="100" Click="copy_btn_Click" />
+                    <Button x:Name="clear_btn" Content="Clear" Grid.Column="4" Grid.Row="19" Margin="3" Width="100" Click="clear_btn_Click" />
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
+

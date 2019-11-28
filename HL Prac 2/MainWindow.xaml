@@ -46,7 +46,7 @@
             <TabItem Header="Load Board">
 
                 <!--Data Grid-->
-                <DataGrid Name="LoadBoard" AutoGenerateColumns="False" AlternatingRowBackground="Cornsilk" Background="Ivory">
+                <DataGrid Name="LoadBoard" AutoGenerateColumns="False" AlternatingRowBackground="Cornsilk" Background="Ivory"  MouseDoubleClick="LoadBoard_MouseDoubleClick">
                     <!--Datagrid Columns-->
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="BOL#" Binding="{Binding bol_num}"/>
@@ -181,11 +181,12 @@
                     <!--Broker-->
                     <Label Content="Broker" Grid.Column="3" Grid.Row="8" />
                     <TextBox x:Name="broker_txt" Grid.Column="4" Grid.Row="8" Background="Ivory" Margin="3" />
-
-                    <Button x:Name="update_btn" Content="Update" Grid.Column="1" Grid.Row="19" Margin="3" Width="100" Click="update_btn_Click" />
-                    <Button x:Name="new_btn" Content="New" Grid.Column="2" Grid.Row="19" Margin="3" Width="100" Click="new_btn_Click" />
-                    <Button x:Name="copy_btn" Content="Copy" Grid.Column="3" Grid.Row="19" Margin="3" Width="100" Click="copy_btn_Click" />
-                    <Button x:Name="clear_btn" Content="Clear" Grid.Column="4" Grid.Row="19" Margin="3" Width="100" Click="clear_btn_Click" />
+                    
+                    <!--Load View Buttons-->
+                    <Button x:Name="update_btn" Content="New Load" Grid.Column="1" Grid.Row="19" Margin="3" Width="100" Click="update_btn_Click" />
+                    <Button x:Name="copy_btn" Content="Copy Load" Grid.Column="2" Grid.Row="19" Margin="3" Width="100" Click="copy_btn_Click" />
+                    <Button x:Name="clear_btn" Content="Clear" Grid.Column="3" Grid.Row="19" Margin="3" Width="100" Click="clear_btn_Click" />
+                    <Button x:Name="delete_btn" Content="Delete" Grid.Column="4" Grid.Row="19" Margin="3" Width="100" IsEnabled="False"/>
                 </Grid>
             </TabItem>
         </TabControl>

@@ -1,22 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
+using System.Data.Entity;
 using System.Data.Entity.Validation;
-using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 namespace HL_Prac_2
 {
     /// <summary>
@@ -25,22 +12,23 @@ namespace HL_Prac_2
     public partial class MainWindow : Window
     {
         //Entity Model
-        HOTLOADDBEntities HotloadModel = new HOTLOADDBEntities();
-   
+        HOTLOADDBEntities2 HotLoadModel2 = new HOTLOADDBEntities2();
+
         public MainWindow()
         {
             InitializeComponent();
             PopulateGrid();
+            Clear();
         }
 
         public void PopulateGrid()
         {
-            LoadBoard.ItemsSource = HotloadModel.Loads.ToList();
+            LoadBoard.ItemsSource = HotLoadModel2.Loads.ToList();
         }
 
         public void Clear()
         {
-            bol_txt.Clear();
+            bol_txt.Text = "0";
             pro_txt.Clear();
             quote_txt.Clear();
             ref_txt.Clear();
@@ -68,39 +56,54 @@ namespace HL_Prac_2
 
             PopulateGrid();
         }
-
+        //Clear textfields button
         private void clear_btn_Click(object sender, RoutedEventArgs e)
         {
             Clear();
         }
-
-        private void new_btn_Click(object sender, RoutedEventArgs e)
+        //Update or Create Button
+        private void update_btn_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                var load = new Load
-                {
-                    pro_num = pro_txt.Text,
-                    quote_num = quote_txt.Text,
-                    ref_num = ref_txt.Text,
-                    weight = Convert.ToDouble(weight_txt.Text),
-                    pieces = Convert.ToInt32(pieces_txt.Text),
-                    commodity = commodity_txt.Text,
-                    mileage = Convert.ToDouble(mileage_txt.Text),
-                    carrier_rate = Convert.ToDecimal(carrierRate_txt.Text),
-                    customer_rate = Convert.ToDecimal(customerRate_txt.Text),
-                    pick_appointment = Convert.ToDateTime(pickDate_picker.SelectedDate),
-                    drop_appointment = Convert.ToDateTime(dropDate_picker.SelectedDate),
-                    driver_id = Convert.ToInt32(driver_txt.Text),
-                    dispatch_id = Convert.ToInt32(dispatch_txt.Text),
-                    customer_id = Convert.ToInt32(customer_txt.Text),
-                    broker_id = Convert.ToInt32(broker_txt.Text)
-                };
+                //Load model
+                Load loadModel = new Load();
+                //Get the load data from textboxes
+                loadModel.bol_num = Convert.ToInt32(bol_txt.Text.Trim());
+                loadModel.pro_num = pro_txt.Text.Trim();
+                loadModel.quote_num = quote_txt.Text.Trim();
+                loadModel.ref_num = ref_txt.Text.Trim();
+                loadModel.weight = Convert.ToDouble(weight_txt.Text.Trim());
+                loadModel.pieces = Convert.ToInt32(pieces_txt.Text.Trim());
+                loadModel.commodity = commodity_txt.Text.Trim();
+                loadModel.mileage = Convert.ToDouble(mileage_txt.Text.Trim());
+                loadModel.carrier_rate = Convert.ToDecimal(carrierRate_txt.Text.Trim());
+                loadModel.customer_rate = Convert.ToDecimal(customerRate_txt.Text.Trim());
+                loadModel.pick_appointment = Convert.ToDateTime(pickDate_picker.SelectedDate);
+                loadModel.drop_appointment = Convert.ToDateTime(dropDate_picker.SelectedDate);
+                loadModel.driver_id = Convert.ToInt32(driver_txt.Text.Trim());
+                loadModel.dispatch_id = Convert.ToInt32(dispatch_txt.Text.Trim());
+                loadModel.customer_id = Convert.ToInt32(customer_txt.Text.Trim());
+                loadModel.broker_id = Convert.ToInt32(broker_txt.Text.Trim());
 
-                HotloadModel.Loads.Add(load);
-                HotloadModel.SaveChanges();
+                //Save the load to the database
+                using(HOTLOADDBEntities2 HOTLOADEntity = new HOTLOADDBEntities2())
+                {
+                    if(loadModel.bol_num == 0)//Insert
+                    {
+                        HotLoadModel2.Loads.Add(loadModel);
+                        Clear();
+                        MessageBox.Show("Saved Succesfully");
+                    }
+                    else//Update
+                    {
+                        HOTLOADEntity.Entry(loadModel).State = EntityState.Modified;
+                    }
+                    HotLoadModel2.SaveChanges();
+                }
                 PopulateGrid();
             }
+            //Entity Model Exception handler
             catch (DbEntityValidationException dbEx)
             {
                 foreach (var validationErrors in dbEx.EntityValidationErrors)
@@ -117,14 +120,41 @@ namespace HL_Prac_2
             }
         }
 
-        private void update_btn_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void copy_btn_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+        //Fill textboxes with selected values
+        private void LoadBoard_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (LoadBoard.SelectedIndex != -1)
+            {
+                //Load model
+                Load loadModel = (Load)LoadBoard.SelectedItem;
+                using (HOTLOADDBEntities2 HOTLOADEntity = new HOTLOADDBEntities2())
+                {
+                    loadModel = HOTLOADEntity.Loads.Where(x => x.bol_num == loadModel.bol_num).FirstOrDefault();
+                    bol_txt.Text = loadModel.bol_num.ToString();
+                    pro_txt.Text = loadModel.pro_num.ToString();
+                    quote_txt.Text = loadModel.quote_num.ToString();
+                    ref_txt.Text = loadModel.ref_num.ToString();
+                    weight_txt.Text = loadModel.weight.ToString();
+                    pieces_txt.Text = loadModel.pieces.ToString();
+                    commodity_txt.Text = loadModel.commodity.ToString();
+                    mileage_txt.Text = loadModel.mileage.ToString();
+                    carrierRate_txt.Text = loadModel.carrier_rate.ToString();
+                    customerRate_txt.Text = loadModel.customer_rate.ToString();
+                    pickDate_picker.Text = loadModel.pick_appointment.ToString();
+                    dropDate_picker.Text = loadModel.drop_appointment.ToString();
+                    driver_txt.Text = loadModel.driver_id.ToString();
+                    dispatch_txt.Text = loadModel.dispatch_id.ToString();
+                    customer_txt.Text = loadModel.customer_id.ToString();
+                    broker_txt.Text = loadModel.broker_id.ToString();
+                }
+
+                delete_btn.IsEnabled = true;
+                copy_btn.IsEnabled = true;
+            }
         }
         //Database search method
         /*

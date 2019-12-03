@@ -21,11 +21,6 @@ namespace HL_Prac_2
             Clear();
         }
 
-        public void PopulateGrid()
-        {
-            LoadBoard.ItemsSource = HotLoadModel2.Loads.ToList();
-        }
-
         public void Clear()
         {
             bol_txt.Text = "0";
@@ -66,6 +61,13 @@ namespace HL_Prac_2
         {
             Clear();
         }
+
+        //Fill datagrid from DB
+        public void PopulateGrid()
+        {
+            LoadBoard.ItemsSource = HotLoadModel2.Loads.ToList();
+        }
+
         //Update or Create Button
         private void update_btn_Click(object sender, RoutedEventArgs e)
         {

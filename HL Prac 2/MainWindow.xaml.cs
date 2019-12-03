@@ -54,7 +54,12 @@ namespace HL_Prac_2
             customer_txt.Clear();
             broker_txt.Clear();
 
+            //Populate Load Board
             PopulateGrid();
+
+            //disable copy & delete buttons
+            delete_btn.IsEnabled = false;
+            copy_btn.IsEnabled = false;
         }
         //Clear textfields button
         private void clear_btn_Click(object sender, RoutedEventArgs e)
@@ -91,15 +96,17 @@ namespace HL_Prac_2
                 {
                     if(loadModel.bol_num == 0)//Insert
                     {
-                        HotLoadModel2.Loads.Add(loadModel);
+                        HOTLOADEntity.Loads.Add(loadModel);
                         Clear();
                         MessageBox.Show("Saved Succesfully");
                     }
                     else//Update
                     {
                         HOTLOADEntity.Entry(loadModel).State = EntityState.Modified;
+                        Clear();
                     }
-                    HotLoadModel2.SaveChanges();
+                    //Save the changes
+                    HOTLOADEntity.SaveChanges();
                 }
                 PopulateGrid();
             }
@@ -151,7 +158,7 @@ namespace HL_Prac_2
                     customer_txt.Text = loadModel.customer_id.ToString();
                     broker_txt.Text = loadModel.broker_id.ToString();
                 }
-
+                //Enable copy & delete buttons
                 delete_btn.IsEnabled = true;
                 copy_btn.IsEnabled = true;
             }

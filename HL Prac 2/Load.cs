@@ -31,4 +31,6 @@ namespace HL_Prac_2
         public Nullable<int> customer_id { get; set; }
         public Nullable<int> broker_id { get; set; }
     }
+
+    
 }

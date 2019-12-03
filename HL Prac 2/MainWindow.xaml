@@ -86,6 +86,7 @@
 
                     <Grid.RowDefinitions>
                         <RowDefinition Height="5" />
+                        <RowDefinition Height="30" />
                         <RowDefinition Height="*" />
                         <RowDefinition Height="30" />
                         <RowDefinition Height="30" />
@@ -109,44 +110,44 @@
                     </Grid.RowDefinitions>
 
                     <!--BOL-->
-                    <Label Content="BOL#" Grid.Column="1" Grid.Row="2" />
-                    <TextBox x:Name="bol_txt" Grid.Column="2" Grid.Row="2" Background="GhostWhite" Margin="3" IsReadOnly="True"/>
+                    <Label Content="BOL#" Grid.Column="1" Grid.Row="3" />
+                    <TextBox x:Name="bol_txt" Grid.Column="2" Grid.Row="3" Background="GhostWhite" Margin="3" IsReadOnly="True"/>
 
                     <!--Pro-->
-                    <Label Content="Pro#" Grid.Column="3" Grid.Row="2" />
-                    <TextBox x:Name="pro_txt" Grid.Column="4" Grid.Row="2" Background="Ivory" Margin="3" />
+                    <Label Content="Pro#" Grid.Column="3" Grid.Row="3" />
+                    <TextBox x:Name="pro_txt" Grid.Column="4" Grid.Row="3" Background="Ivory" Margin="3" />
 
                     <!--Quote-->
-                    <Label Content="Quote#" Grid.Column="1" Grid.Row="3" />
-                    <TextBox x:Name="quote_txt" Grid.Column="2" Grid.Row="3" Background="Ivory" Margin="3" />
+                    <Label Content="Quote#" Grid.Column="1" Grid.Row="4" />
+                    <TextBox x:Name="quote_txt" Grid.Column="2" Grid.Row="4" Background="Ivory" Margin="3" />
 
                     <!--Ref-->
-                    <Label Content="Ref#" Grid.Column="3" Grid.Row="3" />
-                    <TextBox x:Name="ref_txt" Grid.Column="4" Grid.Row="3" Background="Ivory" Margin="3" />
+                    <Label Content="Ref#" Grid.Column="3" Grid.Row="4" />
+                    <TextBox x:Name="ref_txt" Grid.Column="4" Grid.Row="4" Background="Ivory" Margin="3" />
 
                     <!--Weight-->
-                    <Label Content="Weight" Grid.Column="1" Grid.Row="4" />
-                    <TextBox x:Name="weight_txt" Grid.Column="2" Grid.Row="4" Background="Ivory" Margin="3" />
+                    <Label Content="Weight" Grid.Column="1" Grid.Row="5" />
+                    <TextBox x:Name="weight_txt" Grid.Column="2" Grid.Row="5" Background="Ivory" Margin="3" />
 
                     <!--Pieces-->
-                    <Label Content="Pieces" Grid.Column="3" Grid.Row="4" />
-                    <TextBox x:Name="pieces_txt" Grid.Column="4" Grid.Row="4" Background="Ivory" Margin="3" />
+                    <Label Content="Pieces" Grid.Column="3" Grid.Row="5" />
+                    <TextBox x:Name="pieces_txt" Grid.Column="4" Grid.Row="5" Background="Ivory" Margin="3" />
 
                     <!--Commodity-->
-                    <Label Content="Commodity" Grid.Column="1" Grid.Row="5" />
-                    <TextBox x:Name="commodity_txt" Grid.Column="2" Grid.Row="5" Background="Ivory" Margin="3" />
+                    <Label Content="Commodity" Grid.Column="1" Grid.Row="6" />
+                    <TextBox x:Name="commodity_txt" Grid.Column="2" Grid.Row="6" Background="Ivory" Margin="3" />
 
                     <!--Mileage-->
-                    <Label Content="Mileage" Grid.Column="3" Grid.Row="5" />
-                    <TextBox x:Name="mileage_txt" Grid.Column="4" Grid.Row="5" Background="Ivory" Margin="3" />
+                    <Label Content="Mileage" Grid.Column="3" Grid.Row="6" />
+                    <TextBox x:Name="mileage_txt" Grid.Column="4" Grid.Row="6" Background="Ivory" Margin="3" />
 
                     <!--Carrier Rate-->
-                    <Label Content="Carrier Rate" Grid.Column="1" Grid.Row="6" />
-                    <TextBox x:Name="carrierRate_txt" Grid.Column="2" Grid.Row="6" Background="Ivory" Margin="3" />
+                    <Label Content="Carrier Rate" Grid.Column="1" Grid.Row="7" />
+                    <TextBox x:Name="carrierRate_txt" Grid.Column="2" Grid.Row="7" Background="Ivory" Margin="3" />
 
                     <!--Customer Rate-->
-                    <Label Content="Customer Rate" Grid.Column="3" Grid.Row="6" />
-                    <TextBox x:Name="customerRate_txt" Grid.Column="4" Grid.Row="6" Background="Ivory" Margin="3" />
+                    <Label Content="Customer Rate" Grid.Column="3" Grid.Row="7" />
+                    <TextBox x:Name="customerRate_txt" Grid.Column="4" Grid.Row="7" Background="Ivory" Margin="3" />
 
                     <!--Pick Up-->
                     <Label Content="Pick Appointment" Grid.Column="1" Grid.Row="10" Grid.RowSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" />
@@ -167,26 +168,34 @@
                     <Label Content="Delivery Out" Grid.Column="3" Grid.Row="13" VerticalAlignment="Center" HorizontalAlignment="Center" />
 
                     <!--Driver-->
-                    <Label Content="Driver" Grid.Column="1" Grid.Row="7" />
-                    <TextBox x:Name="driver_txt" Grid.Column="2" Grid.Row="7" Background="Ivory" Margin="3" />
+                    <Label Content="Driver" Grid.Column="1" Grid.Row="8" />
+                    <TextBox x:Name="driver_txt" Grid.Column="2" Grid.Row="8" Background="Ivory" Margin="3" />
 
                     <!--Dispatch-->
-                    <Label Content="Dispatch" Grid.Column="3" Grid.Row="7" />
-                    <TextBox x:Name="dispatch_txt" Grid.Column="4" Grid.Row="7" Background="Ivory" Margin="3" />
+                    <Label Content="Dispatch" Grid.Column="3" Grid.Row="8" />
+                    <TextBox x:Name="dispatch_txt" Grid.Column="4" Grid.Row="8" Background="Ivory" Margin="3" />
 
                     <!--Customer-->
-                    <Label Content="Customer" Grid.Column="1" Grid.Row="8" />
-                    <TextBox x:Name="customer_txt" Grid.Column="2" Grid.Row="8" Background="Ivory" Margin="3" />
+                    <Label Content="Customer" Grid.Column="1" Grid.Row="9" />
+                    <TextBox x:Name="customer_txt" Grid.Column="2" Grid.Row="9" Background="Ivory" Margin="3" />
 
-                    <!--Broker-->
-                    <Label Content="Broker" Grid.Column="3" Grid.Row="8" />
-                    <TextBox x:Name="broker_txt" Grid.Column="4" Grid.Row="8" Background="Ivory" Margin="3" />
+                <!--Broker-->
+                    <Label Content="Broker" Grid.Column="3" Grid.Row="9" />
+                    <TextBox x:Name="broker_txt" Grid.Column="4" Grid.Row="9" Background="Ivory" Margin="3" />
                     
-                    <!--Load View Buttons-->
-                    <Button x:Name="update_btn" Content="New Load" Grid.Column="1" Grid.Row="19" Margin="3" Width="100" Click="update_btn_Click" />
-                    <Button x:Name="copy_btn" Content="Copy Load" Grid.Column="2" Grid.Row="19" Margin="3" Width="100" Click="copy_btn_Click" />
-                    <Button x:Name="clear_btn" Content="Clear" Grid.Column="3" Grid.Row="19" Margin="3" Width="100" Click="clear_btn_Click" />
-                    <Button x:Name="delete_btn" Content="Delete" Grid.Column="4" Grid.Row="19" Margin="3" Width="100" IsEnabled="False"/>
+                <!--Load View Buttons-->
+                    
+                    <!--Update & New Button-->
+                    <Button x:Name="update_btn" Content="New Load" Grid.Column="1" Grid.Row="1" Margin="3" Width="100" Click="update_btn_Click" />
+                    
+                    <!--Clear Button-->
+                    <Button x:Name="clear_btn" Content="Clear" Grid.Column="2" Grid.Row="1" Margin="3" Width="100" Click="clear_btn_Click" />
+                    
+                    <!--Copy Button-->
+                    <Button x:Name="copy_btn" Content="Copy Load" Grid.Column="3" Grid.Row="1" Margin="3" Width="100" Click="copy_btn_Click" IsEnabled="False"/>
+                    
+                    <!--Delete Button-->
+                    <Button x:Name="delete_btn" Content="Delete" Grid.Column="4" Grid.Row="1" Margin="3" Width="100" IsEnabled="False"/>
                 </Grid>
             </TabItem>
         </TabControl>

@@ -46,7 +46,7 @@
             <TabItem Header="Load Board">
 
                 <!--Data Grid-->
-                <DataGrid Name="LoadBoard" AutoGenerateColumns="False" AlternatingRowBackground="Cornsilk" Background="Ivory"  MouseDoubleClick="LoadBoard_MouseDoubleClick">
+                <DataGrid Name="LoadBoard" AutoGenerateColumns="False" AlternatingRowBackground="Cornsilk" Background="Ivory" IsReadOnly="True" MouseDoubleClick="LoadBoard_MouseDoubleClick">
                     <!--Datagrid Columns-->
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="BOL#" Binding="{Binding bol_num}"/>
@@ -195,7 +195,7 @@
                     <Button x:Name="copy_btn" Content="Copy Load" Grid.Column="3" Grid.Row="1" Margin="3" Width="100" Click="copy_btn_Click" IsEnabled="False"/>
                     
                     <!--Delete Button-->
-                    <Button x:Name="delete_btn" Content="Delete" Grid.Column="4" Grid.Row="1" Margin="3" Width="100" IsEnabled="False"/>
+                    <Button x:Name="delete_btn" Content="Delete" Grid.Column="4" Grid.Row="1" Margin="3" Width="100" IsEnabled="False" Click="delete_btn_Click"/>
                 </Grid>
             </TabItem>
         </TabControl>

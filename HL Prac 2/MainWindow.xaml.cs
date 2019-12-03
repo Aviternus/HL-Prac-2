@@ -165,6 +165,27 @@ namespace HL_Prac_2
                 copy_btn.IsEnabled = true;
             }
         }
+
+        private void delete_btn_Click(object sender, RoutedEventArgs e)
+        {
+            //Get the selected load from Datagrid
+            Load loadModel = (Load)LoadBoard.SelectedItem;
+            if (MessageBox.Show("Are you sure you want to delete this record?", "Confirm Deletion", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                using (HOTLOADDBEntities2 HOTLOADEntity = new HOTLOADDBEntities2()) 
+                {
+                    var entry = HOTLOADEntity.Entry(loadModel);
+                    if(entry.State == EntityState.Detached)
+                    {
+                        HOTLOADEntity.Loads.Attach(loadModel);
+                    }
+                    //Remove the selected load from database
+                    HOTLOADEntity.Loads.Remove(loadModel);
+                    HOTLOADEntity.SaveChanges();
+                    PopulateGrid();
+                    Clear();
+                    MessageBox.Show("Deleted Load #" + loadModel.bol_num + " succesfully.", "Load Deleted", MessageBoxButton.OK);
+                }
+        }
         //Database search method
         /*
         private void Search()

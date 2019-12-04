@@ -12,7 +12,7 @@ namespace HL_Prac_2
     public partial class MainWindow : Window
     {
         //Entity Model
-        HOTLOADDBEntities2 HotLoadModel2 = new HOTLOADDBEntities2();
+        HOTLOADDBEntities2 HOTLOADEntity;
 
         public MainWindow()
         {
@@ -65,7 +65,8 @@ namespace HL_Prac_2
         //Fill datagrid from DB
         public void PopulateGrid()
         {
-            LoadBoard.ItemsSource = HotLoadModel2.Loads.ToList();
+            HOTLOADEntity = new HOTLOADDBEntities2();
+            LoadBoard.ItemsSource = HOTLOADEntity.Loads.ToList();
         }
 
         //Update or Create Button
@@ -109,8 +110,9 @@ namespace HL_Prac_2
                     }
                     //Save the changes
                     HOTLOADEntity.SaveChanges();
+                    PopulateGrid();
                 }
-                PopulateGrid();
+                
             }
             //Entity Model Exception handler
             catch (DbEntityValidationException dbEx)

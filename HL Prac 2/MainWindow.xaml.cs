@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
@@ -82,7 +83,15 @@ namespace HL_Prac_2
                 loadModel.quote_num = quote_txt.Text.Trim();
                 loadModel.ref_num = ref_txt.Text.Trim();
                 loadModel.weight = Convert.ToDouble(weight_txt.Text.Trim());
-                loadModel.pieces = Convert.ToInt32(pieces_txt.Text.Trim());
+                try
+                { 
+                    loadModel.pieces = Convert.ToInt32(pieces_txt.Text.Trim()); 
+                }
+                catch(System.FormatException ex) 
+                {
+                    MessageBox.Show(ex.Message, "Invalid Pieces Entry", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                
                 loadModel.commodity = commodity_txt.Text.Trim();
                 loadModel.mileage = Convert.ToDouble(mileage_txt.Text.Trim());
                 loadModel.carrier_rate = Convert.ToDecimal(carrierRate_txt.Text.Trim());
@@ -187,6 +196,16 @@ namespace HL_Prac_2
                     Clear();
                     MessageBox.Show("Deleted Load #" + loadModel.bol_num + " succesfully.", "Load Deleted", MessageBoxButton.OK);
                 }
+        }
+
+        //Search function
+        private void Search(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            HOTLOADEntity = new HOTLOADDBEntities2();
+
+            List<Load> matchedLoads = HOTLOADEntity.Loads.Where(x => x.bol_num.ToString().Contains(bolSearch_txt.Text)).ToList();
+
+            LoadBoard.ItemsSource = matchedLoads;
         }
         //Database search method
         /*

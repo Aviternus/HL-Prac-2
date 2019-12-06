@@ -207,32 +207,5 @@ namespace HL_Prac_2
 
             LoadBoard.ItemsSource = matchedLoads;
         }
-        //Database search method
-        /*
-        private void Search()
-        {
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(connectionString))
-                {
-                    //Establish connection
-                    conn.Open();
-                    SqlDataAdapter adapter = new SqlDataAdapter(
-                        "SELECT * FROM Loads" +
-                        "WHERE "
-                        , conn);
-                    DataTable dtbl = new DataTable();
-                    adapter.Fill(dtbl);
-
-                    LoadBoard.ItemsSource = dtbl.DefaultView;
-                }
-            }
-            catch (SqlException sqlError)
-            {
-                //Display SQL error
-                MessageBox.Show(sqlError.Message, "SQL Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-        */
     }
 }

@@ -13,7 +13,7 @@ namespace HL_Prac_2
     public partial class MainWindow : Window
     {
         //Entity Model
-        HOTLOADDBEntities2 HOTLOADEntity;
+        HOTLOADDBEntities HOTLOADEntity;
 
         public MainWindow()
         {
@@ -66,7 +66,7 @@ namespace HL_Prac_2
         //Fill datagrid from DB
         public void PopulateGrid()
         {
-            HOTLOADEntity = new HOTLOADDBEntities2();
+            HOTLOADEntity = new HOTLOADDBEntities();
             LoadBoard.ItemsSource = HOTLOADEntity.Loads.ToList();
         }
 
@@ -104,7 +104,7 @@ namespace HL_Prac_2
                 loadModel.broker_id = Convert.ToInt32(broker_txt.Text.Trim());
 
                 //Save the load to the database
-                using(HOTLOADDBEntities2 HOTLOADEntity = new HOTLOADDBEntities2())
+                using(HOTLOADDBEntities HOTLOADEntity = new HOTLOADDBEntities())
                 {
                     if(loadModel.bol_num == 0)//Insert
                     {
@@ -151,7 +151,7 @@ namespace HL_Prac_2
             {
                 //Load model
                 Load loadModel = (Load)LoadBoard.SelectedItem;
-                using (HOTLOADDBEntities2 HOTLOADEntity = new HOTLOADDBEntities2())
+                using (HOTLOADDBEntities HOTLOADEntity = new HOTLOADDBEntities())
                 {
                     loadModel = HOTLOADEntity.Loads.Where(x => x.bol_num == loadModel.bol_num).FirstOrDefault();
                     bol_txt.Text = loadModel.bol_num.ToString();
@@ -182,7 +182,7 @@ namespace HL_Prac_2
             //Get the selected load from Datagrid
             Load loadModel = (Load)LoadBoard.SelectedItem;
             if (MessageBox.Show("Are you sure you want to delete this record?", "Confirm Deletion", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-                using (HOTLOADDBEntities2 HOTLOADEntity = new HOTLOADDBEntities2()) 
+                using (HOTLOADDBEntities HOTLOADEntity = new HOTLOADDBEntities()) 
                 {
                     var entry = HOTLOADEntity.Entry(loadModel);
                     if(entry.State == EntityState.Detached)
@@ -201,9 +201,15 @@ namespace HL_Prac_2
         //Search function
         private void Search(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
-            HOTLOADEntity = new HOTLOADDBEntities2();
+            HOTLOADEntity = new HOTLOADDBEntities();
 
-            List<Load> matchedLoads = HOTLOADEntity.Loads.Where(x => x.bol_num.ToString().Contains(bolSearch_txt.Text)).ToList();
+            List<Load> matchedLoads = HOTLOADEntity.Loads.Where(
+                x => x.bol_num.ToString().Contains(bolSearch_txt.Text) &&
+                x.pro_num.ToString().Contains(proSearch_txt.Text) &&
+                x.quote_num.ToString().Contains(quoteSearch_txt.Text) &&
+                x.ref_num.ToString().Contains(refSearch_txt.Text)
+
+                ).ToList();
 
             LoadBoard.ItemsSource = matchedLoads;
         }

@@ -5,6 +5,8 @@ using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows;
+using System.Windows.Input;
+//C# DateTime format = 11/12/2019 12:00:00 AM MM/DD/YYYY HH:MM:SS AM
 namespace HL_Prac_2
 {
     /// <summary>
@@ -119,7 +121,7 @@ namespace HL_Prac_2
                     }
                     //Save the changes
                     HOTLOADEntity.SaveChanges();
-                    PopulateGrid();
+                    Search();
                 }
                 
             }
@@ -199,19 +201,42 @@ namespace HL_Prac_2
         }
 
         //Search function
-        private void Search(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        private void Search()
         {
             HOTLOADEntity = new HOTLOADDBEntities();
+            List<Load> matchedLoads = null;
 
-            List<Load> matchedLoads = HOTLOADEntity.Loads.Where(
+            matchedLoads = HOTLOADEntity.Loads.Where(
                 x => x.bol_num.ToString().Contains(bolSearch_txt.Text) &&
                 x.pro_num.ToString().Contains(proSearch_txt.Text) &&
                 x.quote_num.ToString().Contains(quoteSearch_txt.Text) &&
-                x.ref_num.ToString().Contains(refSearch_txt.Text)
+                x.ref_num.ToString().Contains(refSearch_txt.Text) &&
 
-                ).ToList();
+                (
+                (pickDateStart_dtpckr.SelectedDate == null || x.pick_appointment.Value >= pickDateStart_dtpckr.SelectedDate) &&
+
+                (pickDateEnd_dtpckr.SelectedDate == null || x.pick_appointment.Value <= pickDateEnd_dtpckr.SelectedDate)
+                ) &&
+
+                (
+                (dropDateStart_dtpckr.SelectedDate == null || x.drop_appointment.Value >= dropDateStart_dtpckr.SelectedDate) &&
+
+                (dropDateEnd_dtpckr.SelectedDate == null || x.drop_appointment.Value <= dropDateEnd_dtpckr.SelectedDate)
+                )
+
+            ).ToList();
 
             LoadBoard.ItemsSource = matchedLoads;
+        }
+
+        private void Search(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            Search();
+        }
+
+        private void Search(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            Search();
         }
     }
 }

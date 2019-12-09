@@ -75,7 +75,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Load.cs">
-      <DependentUpon>Model2.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

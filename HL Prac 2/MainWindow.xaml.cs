@@ -127,7 +127,14 @@ namespace HL_Prac_2
                 loadModel.pro_num = pro_txt.Text.Trim();
                 loadModel.quote_num = quote_txt.Text.Trim();
                 loadModel.ref_num = ref_txt.Text.Trim();
-                loadModel.weight = Convert.ToDouble(weight_txt.Text.Trim());
+                try
+                {
+                    loadModel.weight = Convert.ToDouble(weight_txt.Text.Trim());
+                }
+                catch (System.FormatException ex)
+                {
+                    MessageBox.Show(ex.Message, "Invalid Pieces Entry", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
                 try
                 { 
                     loadModel.pieces = Convert.ToInt32(pieces_txt.Text.Trim()); 
@@ -143,9 +150,9 @@ namespace HL_Prac_2
                 loadModel.customer_rate = Convert.ToDecimal(customerRate_txt.Text.Trim());
 
                 //Pick DateTime setter
-                loadModel.pick_appointment = DateBuilder(pickDate_picker.SelectedDate.Value, pickAptTime_txt.Text);
+                loadModel.pick_date = DateBuilder(pickDate_picker.SelectedDate.Value, pickAptTime_txt.Text);
                 //Drop DateTime setter
-                loadModel.drop_appointment = DateBuilder(dropDate_picker.SelectedDate.Value, dropAptTime_txt.Text);
+                loadModel.drop_date = DateBuilder(dropDate_picker.SelectedDate.Value, dropAptTime_txt.Text);
 
                 loadModel.driver_id = Convert.ToInt32(driver_txt.Text.Trim());
                 loadModel.dispatch_id = Convert.ToInt32(dispatch_txt.Text.Trim());
@@ -217,10 +224,10 @@ namespace HL_Prac_2
                     customerRate_txt.Text = loadModel.customer_rate.ToString();
 
                     //Dates & Times
-                    pickDate_picker.Text = loadModel.pick_appointment.ToString();
-                    pickAptTime_txt.Text = TimeStringBuilder(loadModel.pick_appointment.Value);
-                    dropDate_picker.Text = loadModel.drop_appointment.ToString();
-                    dropAptTime_txt.Text = TimeStringBuilder(loadModel.drop_appointment.Value);
+                    pickDate_picker.Text = loadModel.pick_date.ToString();
+                    pickAptTime_txt.Text = loadModel.pick_time.ToString();
+                    dropDate_picker.Text = loadModel.drop_date.ToString();
+                    dropAptTime_txt.Text = loadModel.drop_time.ToString();
 
                     driver_txt.Text = loadModel.driver_id.ToString();
                     dispatch_txt.Text = loadModel.dispatch_id.ToString();
@@ -271,15 +278,15 @@ namespace HL_Prac_2
 
                 //Date search terms
                 (
-                (pickDateStart_dtpckr.SelectedDate == null || x.pick_appointment.Value >= pickDateStart_dtpckr.SelectedDate) &&
+                (pickDateStart_dtpckr.SelectedDate == null || x.pick_date.Value >= pickDateStart_dtpckr.SelectedDate) &&
 
-                (pickDateEnd_dtpckr.SelectedDate == null || x.pick_appointment.Value <= pickDateEnd_dtpckr.SelectedDate)
+                (pickDateEnd_dtpckr.SelectedDate == null || x.pick_date.Value <= pickDateEnd_dtpckr.SelectedDate)
                 ) 
                 &&
                 (
-                (dropDateStart_dtpckr.SelectedDate == null || x.drop_appointment.Value >= dropDateStart_dtpckr.SelectedDate) &&
+                (dropDateStart_dtpckr.SelectedDate == null || x.drop_date.Value >= dropDateStart_dtpckr.SelectedDate) &&
 
-                (dropDateEnd_dtpckr.SelectedDate == null || x.drop_appointment.Value <= dropDateEnd_dtpckr.SelectedDate)
+                (dropDateEnd_dtpckr.SelectedDate == null || x.drop_date.Value <= dropDateEnd_dtpckr.SelectedDate)
                 )
             ).ToList();
 

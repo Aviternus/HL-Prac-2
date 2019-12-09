@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="HOTLOADDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="HOTLOADDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Loads">
           <Key>
             <PropertyRef Name="bol_num" />
@@ -19,8 +19,10 @@
           <Property Name="mileage" Type="float" />
           <Property Name="carrier_rate" Type="money" />
           <Property Name="customer_rate" Type="money" />
-          <Property Name="pick_appointment" Type="smalldatetime" />
-          <Property Name="drop_appointment" Type="smalldatetime" />
+          <Property Name="pick_date" Type="date" />
+          <Property Name="pick_time" Type="time" Precision="7" />
+          <Property Name="drop_date" Type="date" />
+          <Property Name="drop_time" Type="time" Precision="7" />
           <Property Name="driver_id" Type="int" />
           <Property Name="dispatch_id" Type="int" />
           <Property Name="customer_id" Type="int" />
@@ -29,8 +31,7 @@
         <EntityContainer Name="HOTLOADDBModelStoreContainer">
           <EntitySet Name="Loads" EntityType="Self.Loads" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="HOTLOADDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -48,12 +49,14 @@
           <Property Name="mileage" Type="Double" />
           <Property Name="carrier_rate" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="customer_rate" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="pick_appointment" Type="DateTime" Precision="0" />
-          <Property Name="drop_appointment" Type="DateTime" Precision="0" />
           <Property Name="driver_id" Type="Int32" />
           <Property Name="dispatch_id" Type="Int32" />
           <Property Name="customer_id" Type="Int32" />
           <Property Name="broker_id" Type="Int32" />
+          <Property Name="pick_date" Type="DateTime" Precision="0" />
+          <Property Name="pick_time" Type="Time" Precision="7" />
+          <Property Name="drop_date" Type="DateTime" Precision="0" />
+          <Property Name="drop_time" Type="Time" Precision="7" />
         </EntityType>
         <EntityContainer Name="HOTLOADDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Loads" EntityType="Self.Load" />
@@ -67,6 +70,10 @@
           <EntitySetMapping Name="Loads">
             <EntityTypeMapping TypeName="HOTLOADDBModel.Load">
               <MappingFragment StoreEntitySet="Loads">
+                <ScalarProperty Name="drop_time" ColumnName="drop_time" />
+                <ScalarProperty Name="drop_date" ColumnName="drop_date" />
+                <ScalarProperty Name="pick_time" ColumnName="pick_time" />
+                <ScalarProperty Name="pick_date" ColumnName="pick_date" />
                 <ScalarProperty Name="bol_num" ColumnName="bol_num" />
                 <ScalarProperty Name="pro_num" ColumnName="pro_num" />
                 <ScalarProperty Name="quote_num" ColumnName="quote_num" />
@@ -77,8 +84,6 @@
                 <ScalarProperty Name="mileage" ColumnName="mileage" />
                 <ScalarProperty Name="carrier_rate" ColumnName="carrier_rate" />
                 <ScalarProperty Name="customer_rate" ColumnName="customer_rate" />
-                <ScalarProperty Name="pick_appointment" ColumnName="pick_appointment" />
-                <ScalarProperty Name="drop_appointment" ColumnName="drop_appointment" />
                 <ScalarProperty Name="driver_id" ColumnName="driver_id" />
                 <ScalarProperty Name="dispatch_id" ColumnName="dispatch_id" />
                 <ScalarProperty Name="customer_id" ColumnName="customer_id" />

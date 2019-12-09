@@ -24,6 +24,12 @@ namespace HL_Prac_2
             Clear();
         }
 
+        //Program Initialization
+        public void Initialize()
+        {
+            
+        }
+
         public void Clear()
         {
             bol_txt.Text = "0";
@@ -145,10 +151,12 @@ namespace HL_Prac_2
             }
         }
 
+        //Copy Load button
         private void copy_btn_Click(object sender, RoutedEventArgs e)
         {
 
         }
+
         //Fill textboxes with selected values
         private void LoadBoard_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {

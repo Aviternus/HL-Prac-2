@@ -21,6 +21,13 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
             <ColumnDefinition Width="5" />
         </Grid.ColumnDefinitions>
 
@@ -64,7 +71,7 @@
         <DatePicker Name="dropDateEnd_dtpckr" Grid.Column="8" Grid.Row="2" SelectedDateChanged="Search" />
 
         <!--Load Board tab-->
-        <TabControl Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="8" Background="AntiqueWhite">
+        <TabControl Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="13" Background="AntiqueWhite">
             <TabItem Header="Load Board">
 
                 <!--Data Grid-->
@@ -93,7 +100,7 @@
             </TabItem>
         </TabControl>
 
-        <TabControl Grid.Column="9" Grid.Row="3" Grid.ColumnSpan="4">
+        <TabControl Grid.Column="14" Grid.Row="3" Grid.ColumnSpan="6">
             <TabItem Header="Load Info">
 
                 <Grid>

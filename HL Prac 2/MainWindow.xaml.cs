@@ -55,6 +55,9 @@ namespace HL_Prac_2
             //Populate Load Board
             PopulateGrid();
 
+            //Change Update/New button text
+            update_btn.Content = "New Load";
+
             //disable copy & delete buttons
             delete_btn.IsEnabled = false;
             copy_btn.IsEnabled = false;
@@ -173,6 +176,9 @@ namespace HL_Prac_2
                     customer_txt.Text = loadModel.customer_id.ToString();
                     broker_txt.Text = loadModel.broker_id.ToString();
                 }
+                //Change Update/New button text
+                update_btn.Content = "Update Load";
+
                 //Enable copy & delete buttons
                 delete_btn.IsEnabled = true;
                 copy_btn.IsEnabled = true;
@@ -212,18 +218,18 @@ namespace HL_Prac_2
                 x.quote_num.ToString().Contains(quoteSearch_txt.Text) &&
                 x.ref_num.ToString().Contains(refSearch_txt.Text) &&
 
+                //Date search terms
                 (
                 (pickDateStart_dtpckr.SelectedDate == null || x.pick_appointment.Value >= pickDateStart_dtpckr.SelectedDate) &&
 
                 (pickDateEnd_dtpckr.SelectedDate == null || x.pick_appointment.Value <= pickDateEnd_dtpckr.SelectedDate)
-                ) &&
-
+                ) 
+                &&
                 (
                 (dropDateStart_dtpckr.SelectedDate == null || x.drop_appointment.Value >= dropDateStart_dtpckr.SelectedDate) &&
 
                 (dropDateEnd_dtpckr.SelectedDate == null || x.drop_appointment.Value <= dropDateEnd_dtpckr.SelectedDate)
                 )
-
             ).ToList();
 
             LoadBoard.ItemsSource = matchedLoads;

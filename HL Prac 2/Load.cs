@@ -24,8 +24,6 @@ namespace HL_Prac_2
         public Nullable<double> mileage { get; set; }
         public Nullable<decimal> carrier_rate { get; set; }
         public Nullable<decimal> customer_rate { get; set; }
-        public Nullable<System.DateTime> pick_appointment { get; set; }
-        public Nullable<System.DateTime> drop_appointment { get; set; }
         public Nullable<int> driver_id { get; set; }
         public Nullable<int> dispatch_id { get; set; }
         public Nullable<int> customer_id { get; set; }

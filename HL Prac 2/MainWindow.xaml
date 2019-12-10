@@ -102,8 +102,10 @@
                         <DataGridTextColumn Header="Mileage" Binding="{Binding mileage}"/>
                         <DataGridTextColumn Header="Carrier Rate" Binding="{Binding carrier_rate}"/>
                         <DataGridTextColumn Header="Customer Rate" Binding="{Binding customer_rate}"/>
-                        <DataGridTextColumn Header="Pick Date" Binding="{Binding pick_date, StringFormat=\{0:dd/MM/yy HH:mm\}}"/>
-                        <DataGridTextColumn Header="Drop Date" Binding="{Binding drop_date, StringFormat=\{0:dd/MM/yy HH:mm\}}"/>
+                        <DataGridTextColumn Header="Pick Date" Binding="{Binding pick_date, StringFormat= \{0:dd/MM/yyyy\}}" />
+                        <DataGridTextColumn Header="Pick Time" Binding="{Binding pick_time, StringFormat=hh\\:mm}" />
+                        <DataGridTextColumn Header="Drop Date" Binding="{Binding drop_date, StringFormat= \{0:dd/MM/yyyy\}}" />
+                        <DataGridTextColumn Header="Drop Time" Binding="{Binding drop_time, StringFormat=hh\\:mm}" />
                         <DataGridTextColumn Header="Driver" Binding="{Binding driver_id}"/>
                         <DataGridTextColumn Header="Dispatch" Binding="{Binding dispatch_id}"/>
                         <DataGridTextColumn Header="Customer" Binding="{Binding customer_id}"/>

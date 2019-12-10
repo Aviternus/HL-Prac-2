@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
@@ -104,12 +105,22 @@ namespace HL_Prac_2
             return newDate;
         }
 
-        //Time String Builder
-        public string TimeStringBuilder(DateTime datetime)
+        //Time Span Builder
+        public TimeSpan TimeSpanBuilder(string timeString)
         {
+            var hours = Int32.Parse(timeString.Split(':')[0]);
+            var minutes = Int32.Parse(timeString.Split(':')[1]);
+
+            var timeSpan = new TimeSpan(hours, minutes, 0);
+            return timeSpan;
+        }
+
+        public string TimeStringBuilder(TimeSpan span)
+        {
+            string format = @"hh\:mm";
             string time;
 
-            time = datetime.Hour + ":" + datetime.Minute;
+            time = span.ToString(format);
 
             return time;
         }
@@ -149,10 +160,13 @@ namespace HL_Prac_2
                 loadModel.carrier_rate = Convert.ToDecimal(carrierRate_txt.Text.Trim());
                 loadModel.customer_rate = Convert.ToDecimal(customerRate_txt.Text.Trim());
 
-                //Pick DateTime setter
-                loadModel.pick_date = DateBuilder(pickDate_picker.SelectedDate.Value, pickAptTime_txt.Text);
-                //Drop DateTime setter
-                loadModel.drop_date = DateBuilder(dropDate_picker.SelectedDate.Value, dropAptTime_txt.Text);
+                //Pick Date & Time setter
+                loadModel.pick_date = pickDate_picker.SelectedDate.Value;
+                loadModel.pick_time = TimeSpanBuilder(pickAptTime_txt.Text);
+
+                //Drop Date & Time setter
+                loadModel.drop_date = dropDate_picker.SelectedDate.Value;
+                loadModel.drop_time = TimeSpanBuilder(dropAptTime_txt.Text);
 
                 loadModel.driver_id = Convert.ToInt32(driver_txt.Text.Trim());
                 loadModel.dispatch_id = Convert.ToInt32(dispatch_txt.Text.Trim());
@@ -225,9 +239,9 @@ namespace HL_Prac_2
 
                     //Dates & Times
                     pickDate_picker.Text = loadModel.pick_date.ToString();
-                    pickAptTime_txt.Text = loadModel.pick_time.ToString();
+                    pickAptTime_txt.Text = TimeStringBuilder(loadModel.pick_time.Value);
                     dropDate_picker.Text = loadModel.drop_date.ToString();
-                    dropAptTime_txt.Text = loadModel.drop_time.ToString();
+                    dropAptTime_txt.Text = TimeStringBuilder(loadModel.drop_time.Value);
 
                     driver_txt.Text = loadModel.driver_id.ToString();
                     dispatch_txt.Text = loadModel.dispatch_id.ToString();

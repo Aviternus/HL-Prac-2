@@ -151,84 +151,91 @@
                         <RowDefinition Height="30" />
                         <RowDefinition Height="30" />
                         <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
                         <RowDefinition Height="5" />
                     </Grid.RowDefinitions>
+                    
+                    <!--Load Status-->
+                    <Label Content="Load Status: " Grid.Column="1" Grid.Row="3" />
+                    
+                    <!--Last Updated-->
+                    <Label Content="Last Updated: " Grid.Column="4" Grid.Row="3" />
 
                     <!--BOL-->
-                    <Label Content="BOL#" Grid.Column="1" Grid.Row="3" />
-                    <TextBox x:Name="bol_txt" Grid.Column="2" Grid.Row="3" Background="GhostWhite" Margin="3" IsReadOnly="True"/>
+                    <Label Content="BOL#" Grid.Column="1" Grid.Row="4" />
+                    <TextBox x:Name="bol_txt" Grid.Column="2" Grid.Row="4" Background="GhostWhite" Margin="3" IsReadOnly="True"/>
 
                     <!--Pro-->
-                    <Label Content="Pro#" Grid.Column="3" Grid.Row="3" />
-                    <TextBox x:Name="pro_txt" Grid.Column="4" Grid.Row="3" TabIndex="1" Background="Ivory" Margin="3" />
+                    <Label Content="Pro#" Grid.Column="3" Grid.Row="4" />
+                    <TextBox x:Name="pro_txt" Grid.Column="4" Grid.Row="4" TabIndex="1" Background="Ivory" Margin="3" />
 
                     <!--Quote-->
-                    <Label Content="Quote#" Grid.Column="1" Grid.Row="4" />
-                    <TextBox x:Name="quote_txt" Grid.Column="2" Grid.Row="4" TabIndex="2" Background="Ivory" Margin="3" />
+                    <Label Content="Quote#" Grid.Column="1" Grid.Row="5" />
+                    <TextBox x:Name="quote_txt" Grid.Column="2" Grid.Row="5" TabIndex="2" Background="Ivory" Margin="3" />
 
                     <!--Ref-->
-                    <Label Content="Ref#" Grid.Column="3" Grid.Row="4" />
-                    <TextBox x:Name="ref_txt" Grid.Column="4" Grid.Row="4" TabIndex="3" Background="Ivory" Margin="3" />
+                    <Label Content="Ref#" Grid.Column="3" Grid.Row="5" />
+                    <TextBox x:Name="ref_txt" Grid.Column="4" Grid.Row="5" TabIndex="3" Background="Ivory" Margin="3" />
 
                     <!--Weight-->
-                    <Label Content="Weight" Grid.Column="1" Grid.Row="5" />
-                    <TextBox x:Name="weight_txt" Grid.Column="2" Grid.Row="5" TabIndex="4" Background="Ivory" Margin="3" />
+                    <Label Content="Weight" Grid.Column="1" Grid.Row="6" />
+                    <TextBox x:Name="weight_txt" Grid.Column="2" Grid.Row="6" TabIndex="4" Background="Ivory" Margin="3" />
 
                     <!--Pieces-->
-                    <Label Content="Pieces" Grid.Column="3" Grid.Row="5" />
-                    <TextBox x:Name="pieces_txt" Grid.Column="4" Grid.Row="5" TabIndex="5" Background="Ivory" Margin="3" />
+                    <Label Content="Pieces" Grid.Column="3" Grid.Row="6" />
+                    <TextBox x:Name="pieces_txt" Grid.Column="4" Grid.Row="6" TabIndex="5" Background="Ivory" Margin="3" />
 
                     <!--Commodity-->
-                    <Label Content="Commodity" Grid.Column="1" Grid.Row="6" />
-                    <TextBox x:Name="commodity_txt" Grid.Column="2" Grid.Row="6" TabIndex="6" Background="Ivory" Margin="3" />
+                    <Label Content="Commodity" Grid.Column="1" Grid.Row="7" />
+                    <TextBox x:Name="commodity_txt" Grid.Column="2" Grid.Row="7" TabIndex="6" Background="Ivory" Margin="3" />
 
                     <!--Mileage-->
-                    <Label Content="Mileage" Grid.Column="3" Grid.Row="6" />
-                    <TextBox x:Name="mileage_txt" Grid.Column="4" Grid.Row="6" TabIndex="7" Background="Ivory" Margin="3" />
+                    <Label Content="Mileage" Grid.Column="3" Grid.Row="7" />
+                    <TextBox x:Name="mileage_txt" Grid.Column="4" Grid.Row="7" TabIndex="7" Background="Ivory" Margin="3" />
 
                     <!--Carrier Rate-->
-                    <Label Content="Carrier Rate" Grid.Column="1" Grid.Row="7" />
-                    <TextBox x:Name="carrierRate_txt" Grid.Column="2" Grid.Row="7" TabIndex="8" Background="Ivory" Margin="3" />
+                    <Label Content="Carrier Rate" Grid.Column="1" Grid.Row="8" />
+                    <TextBox x:Name="carrierRate_txt" Grid.Column="2" Grid.Row="8" TabIndex="8" Background="Ivory" Margin="3" />
 
                     <!--Customer Rate-->
-                    <Label Content="Customer Rate" Grid.Column="3" Grid.Row="7" />
-                    <TextBox x:Name="customerRate_txt" Grid.Column="4" Grid.Row="7" TabIndex="9" Background="Ivory" Margin="3" />
+                    <Label Content="Customer Rate" Grid.Column="3" Grid.Row="8" />
+                    <TextBox x:Name="customerRate_txt" Grid.Column="4" Grid.Row="8" TabIndex="9" Background="Ivory" Margin="3" />
 
                     <!--Driver-->
-                    <Label Content="Driver" Grid.Column="1" Grid.Row="8" />
-                    <TextBox x:Name="driver_txt" Grid.Column="2" Grid.Row="8" TabIndex="10" Background="Ivory" Margin="3" />
+                    <Label Content="Driver" Grid.Column="1" Grid.Row="9" />
+                    <TextBox x:Name="driver_txt" Grid.Column="2" Grid.Row="9" TabIndex="10" Background="Ivory" Margin="3" />
 
                     <!--Dispatch-->
-                    <Label Content="Dispatch" Grid.Column="3" Grid.Row="8" />
-                    <TextBox x:Name="dispatch_txt" Grid.Column="4" Grid.Row="8" TabIndex="11" Background="Ivory" Margin="3" />
+                    <Label Content="Dispatch" Grid.Column="3" Grid.Row="9" />
+                    <TextBox x:Name="dispatch_txt" Grid.Column="4" Grid.Row="9" TabIndex="11" Background="Ivory" Margin="3" />
 
                     <!--Customer-->
-                    <Label Content="Customer" Grid.Column="1" Grid.Row="9" />
-                    <TextBox x:Name="customer_txt" Grid.Column="2" Grid.Row="9" TabIndex="12" Background="Ivory" Margin="3" />
+                    <Label Content="Customer" Grid.Column="1" Grid.Row="10" />
+                    <TextBox x:Name="customer_txt" Grid.Column="2" Grid.Row="10" TabIndex="12" Background="Ivory" Margin="3" />
 
                     <!--Broker-->
-                    <Label Content="Broker" Grid.Column="3" Grid.Row="9" />
-                    <TextBox x:Name="broker_txt" Grid.Column="4" Grid.Row="9" TabIndex="13" Background="Ivory" Margin="3" />
+                    <Label Content="Broker" Grid.Column="3" Grid.Row="10" />
+                    <TextBox x:Name="broker_txt" Grid.Column="4" Grid.Row="10" TabIndex="13" Background="Ivory" Margin="3" />
 
                     <!--Pick Up-->
-                    <Label Content="Pick Date" Grid.Column="1" Grid.Row="10" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                    <DatePicker Name="pickDate_picker" Grid.Column="2" Grid.Row="10" Background="Ivory" Margin="3" />
-                    <Label Content="Pick Time" Grid.Column="1" Grid.Row="11" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                    <TextBox x:Name="pickAptTime_txt" Grid.Column="2" Grid.Row="11" TabIndex="14" Background="Ivory" Margin="3" />
-                    <TextBox x:Name="PickIn_text" Grid.Column="4" Grid.Row="12" Background="Ivory" Margin="3" />
-                    <TextBox x:Name="PickOut_text" Grid.Column="4" Grid.Row="13" Background="Ivory" Margin="3" />
-                    <Label Content="Pick In" Grid.Column="1" Grid.Row="12" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                    <Label Content="Pick Out" Grid.Column="1" Grid.Row="13" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <Label Content="Pick Date" Grid.Column="1" Grid.Row="11" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <DatePicker Name="pickDate_picker" Grid.Column="2" Grid.Row="11" Background="Ivory" Margin="3" />
+                    <Label Content="Pick Time" Grid.Column="1" Grid.Row="12" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <TextBox x:Name="pickAptTime_txt" Grid.Column="2" Grid.Row="12" TabIndex="14" Background="Ivory" Margin="3" />
+                    <TextBox x:Name="PickIn_text" Grid.Column="4" Grid.Row="13" Background="Ivory" Margin="3" />
+                    <TextBox x:Name="PickOut_text" Grid.Column="4" Grid.Row="14" Background="Ivory" Margin="3" />
+                    <Label Content="Pick In" Grid.Column="1" Grid.Row="13" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <Label Content="Pick Out" Grid.Column="1" Grid.Row="14" VerticalAlignment="Center" HorizontalAlignment="Center" />
 
                     <!--Drop Off-->
-                    <Label Content="Delivery Date" Grid.Column="3" Grid.Row="10" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                    <DatePicker Name="dropDate_picker" Grid.Column="4" Grid.Row="10" Background="Ivory" Margin="3" />
-                    <Label Content="Delivery Time" Grid.Column="3" Grid.Row="11" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                    <TextBox x:Name="dropAptTime_txt" Grid.Column="4" Grid.Row="11" TabIndex="15" Background="Ivory" Margin="3" />
-                    <TextBox x:Name="DropIn_txt" Grid.Column="2" Grid.Row="12" Background="Ivory" Margin="3" />
-                    <TextBox x:Name="DropOut_txt" Grid.Column="2" Grid.Row="13" Background="Ivory" Margin="3" />
-                    <Label Content="Delivery In" Grid.Column="3" Grid.Row="12" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                    <Label Content="Delivery Out" Grid.Column="3" Grid.Row="13" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <Label Content="Delivery Date" Grid.Column="3" Grid.Row="11" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <DatePicker Name="dropDate_picker" Grid.Column="4" Grid.Row="11" Background="Ivory" Margin="3" />
+                    <Label Content="Delivery Time" Grid.Column="3" Grid.Row="12" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <TextBox x:Name="dropAptTime_txt" Grid.Column="4" Grid.Row="12" TabIndex="15" Background="Ivory" Margin="3" />
+                    <TextBox x:Name="DropIn_txt" Grid.Column="2" Grid.Row="13" Background="Ivory" Margin="3" />
+                    <TextBox x:Name="DropOut_txt" Grid.Column="2" Grid.Row="14" Background="Ivory" Margin="3" />
+                    <Label Content="Delivery In" Grid.Column="3" Grid.Row="13" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <Label Content="Delivery Out" Grid.Column="3" Grid.Row="14" VerticalAlignment="Center" HorizontalAlignment="Center" />
 
                     <!--Load View Buttons-->
                     

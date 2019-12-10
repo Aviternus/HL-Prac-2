@@ -125,6 +125,51 @@ namespace HL_Prac_2
             return time;
         }
 
+        public int ParseStatus(string statusString)
+        {
+            int comboBoxIndex = 0;
+            switch (statusString)
+            {
+                case "Unnassigned":
+                    comboBoxIndex = 0;
+                    break;
+                case "Assigned":
+                    comboBoxIndex = 1;
+                    break;
+                case "Rate Confirmation":
+                    comboBoxIndex = 2;
+                    break;
+                case "Dispatched":
+                    comboBoxIndex = 3;
+                    break;
+                case "At Shipper":
+                    comboBoxIndex = 4;
+                    break;
+                case "In Transit":
+                    comboBoxIndex = 5;
+                    break;
+                case "At Consignee":
+                    comboBoxIndex = 6;
+                    break;
+                case "Delivered":
+                    comboBoxIndex = 7;
+                    break;
+                case "Paid":
+                    comboBoxIndex = 8;
+                    break;
+                case "Invoiced":
+                    comboBoxIndex = 9;
+                    break;
+                case "Collected":
+                    comboBoxIndex = 10;
+                    break;
+                default:
+                    comboBoxIndex = 0;
+                    break;
+            }
+            return comboBoxIndex;
+        }
+
         //Update or Create Button
         private void update_btn_Click(object sender, RoutedEventArgs e)
         {
@@ -133,8 +178,9 @@ namespace HL_Prac_2
             {
                 //Load model
                 Load loadModel = new Load();
-                //Get the load data from textboxes
+                //Get the load data from input fields
                 loadModel.bol_num = Convert.ToInt32(bol_txt.Text.Trim());
+                loadModel.load_status = loadStatus_cmbo.Text;
                 loadModel.pro_num = pro_txt.Text.Trim();
                 loadModel.quote_num = quote_txt.Text.Trim();
                 loadModel.ref_num = ref_txt.Text.Trim();
@@ -142,18 +188,12 @@ namespace HL_Prac_2
                 {
                     loadModel.weight = Convert.ToDouble(weight_txt.Text.Trim());
                 }
-                catch (System.FormatException ex)
-                {
-                    MessageBox.Show(ex.Message, "Invalid Pieces Entry", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+                catch (System.FormatException ex){ MessageBox.Show(ex.Message, "Invalid Pieces Entry", MessageBoxButton.OK, MessageBoxImage.Error);}
                 try
                 { 
                     loadModel.pieces = Convert.ToInt32(pieces_txt.Text.Trim()); 
                 }
-                catch(System.FormatException ex) 
-                {
-                    MessageBox.Show(ex.Message, "Invalid Pieces Entry", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+                catch(System.FormatException ex){MessageBox.Show(ex.Message, "Invalid Pieces Entry", MessageBoxButton.OK, MessageBoxImage.Error);}
                 
                 loadModel.commodity = commodity_txt.Text.Trim();
                 loadModel.mileage = Convert.ToDouble(mileage_txt.Text.Trim());
@@ -172,6 +212,9 @@ namespace HL_Prac_2
                 loadModel.dispatch_id = Convert.ToInt32(dispatch_txt.Text.Trim());
                 loadModel.customer_id = Convert.ToInt32(customer_txt.Text.Trim());
                 loadModel.broker_id = Convert.ToInt32(broker_txt.Text.Trim());
+
+                //Last updated
+                loadModel.last_updated_time = DateTime.Now;
 
                 //Save the load to the database
                 using(HOTLOADDBEntities HOTLOADEntity = new HOTLOADDBEntities())
@@ -227,6 +270,7 @@ namespace HL_Prac_2
                 {
                     loadModel = HOTLOADEntity.Loads.Where(x => x.bol_num == loadModel.bol_num).FirstOrDefault();
                     bol_txt.Text = loadModel.bol_num.ToString();
+                    loadStatus_cmbo.SelectedIndex = ParseStatus(loadModel.load_status);
                     pro_txt.Text = loadModel.pro_num.ToString();
                     quote_txt.Text = loadModel.quote_num.ToString();
                     ref_txt.Text = loadModel.ref_num.ToString();
@@ -247,6 +291,8 @@ namespace HL_Prac_2
                     dispatch_txt.Text = loadModel.dispatch_id.ToString();
                     customer_txt.Text = loadModel.customer_id.ToString();
                     broker_txt.Text = loadModel.broker_id.ToString();
+
+                    lastUpdated_lbl.Content = "Last Updated: " + loadModel.last_updated_time;
                 }
                 //Change Update/New button text
                 update_btn.Content = "Update Load";

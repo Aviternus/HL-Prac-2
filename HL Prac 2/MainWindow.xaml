@@ -93,6 +93,7 @@
                     <!--Datagrid Columns-->
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="BOL#" Binding="{Binding bol_num}"/>
+                        <DataGridTextColumn Header="Status" Binding="{Binding load_status}"/>
                         <DataGridTextColumn Header="Pro#" Binding="{Binding pro_num}"/>
                         <DataGridTextColumn Header="Quote#" Binding="{Binding quote_num}"/>
                         <DataGridTextColumn Header="Ref" Binding="{Binding ref_num}"/>
@@ -106,6 +107,7 @@
                         <DataGridTextColumn Header="Pick Time" Binding="{Binding pick_time, StringFormat=hh\\:mm}" />
                         <DataGridTextColumn Header="Drop Date" Binding="{Binding drop_date, StringFormat= \{0:dd/MM/yyyy\}}" />
                         <DataGridTextColumn Header="Drop Time" Binding="{Binding drop_time, StringFormat=hh\\:mm}" />
+                        <DataGridTextColumn Header="Last Updated" Binding="{Binding last_updated_time}" />
                         <DataGridTextColumn Header="Driver" Binding="{Binding driver_id}"/>
                         <DataGridTextColumn Header="Dispatch" Binding="{Binding dispatch_id}"/>
                         <DataGridTextColumn Header="Customer" Binding="{Binding customer_id}"/>
@@ -156,10 +158,22 @@
                     </Grid.RowDefinitions>
                     
                     <!--Load Status-->
-                    <Label Content="Load Status: " Grid.Column="1" Grid.Row="3" />
+                    <ComboBox Name="loadStatus_cmbo" Grid.Column="1" Grid.Row="3">
+                        <ComboBoxItem Content="Unnassigned" IsSelected="True"/>
+                        <ComboBoxItem Content="Assigned"/>
+                        <ComboBoxItem Content="Rate Confirmation"/>
+                        <ComboBoxItem Content="Dispatched"/>
+                        <ComboBoxItem Content="At Shipper"/>
+                        <ComboBoxItem Content="In Transit"/>
+                        <ComboBoxItem Content="At Consignee"/>
+                        <ComboBoxItem Content="Delivered"/>
+                        <ComboBoxItem Content="Paid"/>
+                        <ComboBoxItem Content="Invoiced"/>
+                        <ComboBoxItem Content="Collected"/>
+                    </ComboBox>
                     
                     <!--Last Updated-->
-                    <Label Content="Last Updated: " Grid.Column="4" Grid.Row="3" />
+                    <Label Name="lastUpdated_lbl" Content="Last Updated: " Grid.Column="3" Grid.Row="3" Grid.ColumnSpan ="2"/>
 
                     <!--BOL-->
                     <Label Content="BOL#" Grid.Column="1" Grid.Row="4" />

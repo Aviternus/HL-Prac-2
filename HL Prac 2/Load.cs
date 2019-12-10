@@ -32,5 +32,7 @@ namespace HL_Prac_2
         public Nullable<System.TimeSpan> pick_time { get; set; }
         public Nullable<System.DateTime> drop_date { get; set; }
         public Nullable<System.TimeSpan> drop_time { get; set; }
+        public Nullable<System.DateTime> last_updated_time { get; set; }
+        public string load_status { get; set; }
     }
 }

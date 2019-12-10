@@ -6,6 +6,15 @@
     <edmx:Diagrams>
       <Diagram DiagramId="2c8b412a0268407ba7394a04c21832cd" Name="Diagram1">
         <EntityTypeShape EntityType="HOTLOADDBModel.Load" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HOTLOADDBModel.Account" Width="1.5" PointX="5.625" PointY="1" />
+        <EntityTypeShape EntityType="HOTLOADDBModel.Address" Width="1.5" PointX="3.375" PointY="5.25" />
+        <EntityTypeShape EntityType="HOTLOADDBModel.Contact" Width="1.5" PointX="3.375" PointY="1.125" />
+        <EntityTypeShape EntityType="HOTLOADDBModel.User" Width="1.5" PointX="7.875" PointY="1.125" />
+        <AssociationConnector Association="HOTLOADDBModel.accounts2addresses" />
+        <AssociationConnector Association="HOTLOADDBModel.accounts2billingcontacts" />
+        <AssociationConnector Association="HOTLOADDBModel.accounts2contacts" />
+        <AssociationConnector Association="HOTLOADDBModel.users2accounts" />
+        <AssociationConnector Association="HOTLOADDBModel.users2contacts" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

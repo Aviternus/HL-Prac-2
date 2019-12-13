@@ -22,7 +22,6 @@ namespace HL_Prac_2
         {
             InitializeComponent();
             PopulateGrid();
-            Clear();
         }
 
         //Program Initialization
@@ -380,6 +379,69 @@ namespace HL_Prac_2
         private void Search(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
             Search();
+        }
+        //Column Display Control
+        private void ColumnController(object sender, System.Windows.Controls.ContextMenuEventArgs e)
+        {
+            List<System.Windows.Controls.MenuItem> MenuItems = new List<System.Windows.Controls.MenuItem> {
+                bolController_mnu,
+                statusController_mnu,
+                proController_mnu,
+                quoteController_mnu,
+                refController_mnu,
+                weightController_mnu,
+                piecesController_mnu,
+                commodityController_mnu,
+                mileageController_mnu,
+                carrierRateController_mnu,
+                customerController_mnu,
+                pDateController_mnu,
+                pTimeController_mnu,
+                dDateController_mnu,
+                dTimeController_mnu,
+                lastUpdateController_mnu,
+                driverController_mnu,
+                dispatchController_mnu,
+                customerController_mnu,
+                brokerController_mnu
+            };
+
+            List<System.Windows.Controls.DataGridTextColumn> columns = new List<System.Windows.Controls.DataGridTextColumn> {
+                bolColumn,
+                statusColumn,
+                proColumn,
+                quoteColumn,
+                refColumn,
+                weightColumn,
+                piecesColumn,
+                commodityColumn,
+                mileageColumn,
+                carrierColumn,
+                customerRateColumn,
+                pickDateColumn,
+                pickTimeColumn,
+                dropDateColumn,
+                dropTimeColumn,
+                lastUpdatedColumn,
+                driverColumn,
+                DispatchColumn,
+                CustomerColumn,
+                BrokerColumn
+            };
+
+            foreach (System.Windows.Controls.MenuItem MenuItem in MenuItems)
+            {
+                int index = MenuItems.IndexOf(MenuItem);
+
+                if (MenuItem.IsChecked)
+                {
+                    columns[index].Visibility = Visibility.Visible;
+                }
+                else if (!MenuItem.IsChecked)
+                {
+                    columns[index].Visibility = Visibility.Collapsed;
+                }
+            }
         }
     }
 }

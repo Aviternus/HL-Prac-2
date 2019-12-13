@@ -83,6 +83,34 @@
         <!--Time End-->
         <Label Content="Drop Time End" HorizontalAlignment="Center" FontSize="10" Grid.Column="12" Grid.Row="1" />
         <TextBox x:Name="dropTimeEndSearch_txt" TextAlignment="Center" Grid.Column="12" Grid.Row="2" Background="Ivory" Margin="3" TextChanged="Search"/>
+        
+    <!--Load Board Column Filter-->
+        <Button Name="columnControlMenu" Content="Filter" Grid.Column="13" Grid.Row="2" ContextMenuClosing="ColumnController">
+            <Button.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Name="bolController_mnu" Header="BOL#" IsCheckable="True" IsChecked="True"/>
+                    <MenuItem Name="statusController_mnu" Header="Status" IsCheckable="True" IsChecked="True"/>
+                    <MenuItem Name="proController_mnu" Header="Pro#" IsCheckable="True" IsChecked="True"/>
+                    <MenuItem Name="quoteController_mnu" Header="Quote#" IsCheckable="True" IsChecked="True"/>
+                    <MenuItem Name="refController_mnu" Header="Ref" IsCheckable="True" IsChecked="True"/>
+                    <MenuItem Name="weightController_mnu" Header="Weight" IsCheckable="True" IsChecked="True"/>
+                    <MenuItem Name="piecesController_mnu" Header="Pieces" IsCheckable="True" IsChecked="True"/>
+                    <MenuItem Name="commodityController_mnu" Header="Commodity" IsCheckable="True" IsChecked="True"/>
+                    <MenuItem Name="mileageController_mnu" Header="Mileage" IsCheckable="True" IsChecked="True"/>
+                    <MenuItem Name="carrierRateController_mnu" Header="Carrier Rate" IsCheckable="True" IsChecked="True"/>
+                    <MenuItem Name="customerRateController_mnu" Header="Customer Rate" IsCheckable="True" IsChecked="True"/>
+                    <MenuItem Name="pDateController_mnu" Header="Pick Date" IsCheckable="True" IsChecked="True"/>
+                    <MenuItem Name="pTimeController_mnu" Header="Pick Time" IsCheckable="True" IsChecked="True"/>
+                    <MenuItem Name="dDateController_mnu" Header="Drop Date" IsCheckable="True" IsChecked="True"/>
+                    <MenuItem Name="dTimeController_mnu" Header="Drop Time" IsCheckable="True" IsChecked="True"/>
+                    <MenuItem Name="lastUpdateController_mnu" Header="Last Updated" IsCheckable="True" IsChecked="True"/>
+                    <MenuItem Name="driverController_mnu" Header="Driver" IsCheckable="True" IsChecked="True"/>
+                    <MenuItem Name="dispatchController_mnu" Header="Dispatch" IsCheckable="True" IsChecked="True"/>
+                    <MenuItem Name="customerController_mnu" Header="Customer" IsCheckable="True" IsChecked="True"/>
+                    <MenuItem Name="brokerController_mnu" Header="Broker" IsCheckable="True" IsChecked="True"/>
+                </ContextMenu>
+            </Button.ContextMenu>
+        </Button>    
 
         <!--Load Board tab-->
         <TabControl Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="13" Background="AntiqueWhite">
@@ -92,26 +120,26 @@
                 <DataGrid Name="LoadBoard" AutoGenerateColumns="False" AlternatingRowBackground="Cornsilk" Background="Ivory" IsReadOnly="True" MouseDoubleClick="LoadBoard_MouseDoubleClick">
                     <!--Datagrid Columns-->
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="BOL#" Binding="{Binding bol_num}"/>
-                        <DataGridTextColumn Header="Status" Binding="{Binding load_status}"/>
-                        <DataGridTextColumn Header="Pro#" Binding="{Binding pro_num}"/>
-                        <DataGridTextColumn Header="Quote#" Binding="{Binding quote_num}"/>
-                        <DataGridTextColumn Header="Ref" Binding="{Binding ref_num}"/>
-                        <DataGridTextColumn Header="Weight" Binding="{Binding weight}"/>
-                        <DataGridTextColumn Header="Pieces" Binding="{Binding pieces}"/>
-                        <DataGridTextColumn Header="Commodity" Binding="{Binding commodity}"/>
-                        <DataGridTextColumn Header="Mileage" Binding="{Binding mileage}"/>
-                        <DataGridTextColumn Header="Carrier Rate" Binding="{Binding carrier_rate}"/>
-                        <DataGridTextColumn Header="Customer Rate" Binding="{Binding customer_rate}"/>
-                        <DataGridTextColumn Header="Pick Date" Binding="{Binding pick_date, StringFormat= \{0:dd/MM/yyyy\}}" />
-                        <DataGridTextColumn Header="Pick Time" Binding="{Binding pick_time, StringFormat=hh\\:mm}" />
-                        <DataGridTextColumn Header="Drop Date" Binding="{Binding drop_date, StringFormat= \{0:dd/MM/yyyy\}}" />
-                        <DataGridTextColumn Header="Drop Time" Binding="{Binding drop_time, StringFormat=hh\\:mm}" />
-                        <DataGridTextColumn Header="Last Updated" Binding="{Binding last_updated_time}" />
-                        <DataGridTextColumn Header="Driver" Binding="{Binding driver_id}"/>
-                        <DataGridTextColumn Header="Dispatch" Binding="{Binding dispatch_id}"/>
-                        <DataGridTextColumn Header="Customer" Binding="{Binding customer_id}"/>
-                        <DataGridTextColumn Header="Broker" Binding="{Binding broker_id}"/>
+                        <DataGridTextColumn x:Name="bolColumn" Header="BOL#" Binding="{Binding bol_num}"/>
+                        <DataGridTextColumn x:Name="statusColumn" Header="Status" Binding="{Binding load_status}"/>
+                        <DataGridTextColumn x:Name="proColumn" Header="Pro#" Binding="{Binding pro_num}"/>
+                        <DataGridTextColumn x:Name="quoteColumn" Header="Quote#" Binding="{Binding quote_num}"/>
+                        <DataGridTextColumn x:Name="refColumn" Header="Ref" Binding="{Binding ref_num}"/>
+                        <DataGridTextColumn x:Name="weightColumn" Header="Weight" Binding="{Binding weight}"/>
+                        <DataGridTextColumn x:Name="piecesColumn" Header="Pieces" Binding="{Binding pieces}"/>
+                        <DataGridTextColumn x:Name="commodityColumn" Header="Commodity" Binding="{Binding commodity}"/>
+                        <DataGridTextColumn x:Name="mileageColumn" Header="Mileage" Binding="{Binding mileage}"/>
+                        <DataGridTextColumn x:Name="carrierColumn" Header="Carrier Rate" Binding="{Binding carrier_rate}"/>
+                        <DataGridTextColumn x:Name="customerRateColumn" Header="Customer Rate" Binding="{Binding customer_rate}"/>
+                        <DataGridTextColumn x:Name="pickDateColumn" Header="Pick Date" Binding="{Binding pick_date, StringFormat= \{0:dd/MM/yyyy\}}" />
+                        <DataGridTextColumn x:Name="pickTimeColumn" Header="Pick Time" Binding="{Binding pick_time, StringFormat=hh\\:mm}" />
+                        <DataGridTextColumn x:Name="dropDateColumn" Header="Drop Date" Binding="{Binding drop_date, StringFormat= \{0:dd/MM/yyyy\}}" />
+                        <DataGridTextColumn x:Name="dropTimeColumn" Header="Drop Time" Binding="{Binding drop_time, StringFormat=hh\\:mm}" />
+                        <DataGridTextColumn x:Name="lastUpdatedColumn" Header="Last Updated" Binding="{Binding last_updated_time}" />
+                        <DataGridTextColumn x:Name="driverColumn" Header="Driver" Binding="{Binding driver_id}"/>
+                        <DataGridTextColumn x:Name="DispatchColumn" Header="Dispatch" Binding="{Binding dispatch_id}"/>
+                        <DataGridTextColumn x:Name="CustomerColumn" Header="Customer" Binding="{Binding customer_id}"/>
+                        <DataGridTextColumn x:Name="BrokerColumn" Header="Broker" Binding="{Binding broker_id}"/>
                     </DataGrid.Columns>
                 </DataGrid>
 

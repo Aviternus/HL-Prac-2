@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
+using System.Data.Linq.SqlClient;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
@@ -343,6 +344,37 @@ namespace HL_Prac_2
             try { dropTimeEnd = TimeSpanBuilder(dropTimeEndSearch_txt.Text); }catch (System.Exception){//Ignore
             }
 
+            matchedLoads = (
+                            from loads in HOTLOADEntity.Loads
+
+                            where 
+                            loads.bol_num.ToString().Contains(bolSearch_txt.Text) &&
+                            loads.pro_num.ToString().Contains(proSearch_txt.Text) &&
+                            loads.quote_num.ToString().Contains(quoteSearch_txt.Text) &&
+                            loads.ref_num.ToString().Contains(refSearch_txt.Text) &&
+
+                            //Pick Date search terms
+                            ((pickDateStart_dtpckr.SelectedDate == null || loads.pick_date >= pickDateStart_dtpckr.SelectedDate) &&
+
+                            (pickDateEnd_dtpckr.SelectedDate == null || loads.pick_date <= pickDateEnd_dtpckr.SelectedDate)) &&
+
+                            //Pick Time search terms
+                            ((pickTimeStartSearch_txt.Text == null || pickTimeStart == TimeSpan.Zero || loads.pick_time.Value >= pickTimeStart) &&
+                            (pickTimeEndSearch_txt.Text == null || pickTimeEnd == TimeSpan.Zero || loads.pick_time.Value <= pickTimeEnd)) &&
+
+                            //Drop Date Search terms
+                            ((dropDateStart_dtpckr.SelectedDate == null || loads.drop_date >= dropDateStart_dtpckr.SelectedDate) &&
+
+                            (dropDateEnd_dtpckr.SelectedDate == null || loads.drop_date <= dropDateEnd_dtpckr.SelectedDate)) &&
+
+                            //Drop Time search terms
+                            ((dropTimeStartSearch_txt.Text == null || dropTimeStart == TimeSpan.Zero || loads.drop_time.Value >= dropTimeStart) &&
+                            (dropTimeEndSearch_txt.Text == null || dropTimeEnd == TimeSpan.Zero || loads.drop_time.Value <= dropTimeEnd))
+
+                            select loads
+                            ).ToList();
+
+            /*
             matchedLoads = HOTLOADEntity.Loads.Where(
                 x => x.bol_num.ToString().Contains(bolSearch_txt.Text) &&
                 x.pro_num.ToString().Contains(proSearch_txt.Text) &&
@@ -366,8 +398,8 @@ namespace HL_Prac_2
                 //Drop Time search terms
                 ((dropTimeStartSearch_txt.Text == null || dropTimeStart == TimeSpan.Zero || x.drop_time.Value >= dropTimeStart) &&
                 (dropTimeEndSearch_txt.Text == null || dropTimeEnd == TimeSpan.Zero || x.drop_time.Value <= dropTimeEnd))
-            ).ToList();
-
+                ).ToList();
+            */
             LoadBoard.ItemsSource = matchedLoads;
         }
 

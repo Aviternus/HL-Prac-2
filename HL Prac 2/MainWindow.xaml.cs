@@ -17,7 +17,7 @@ namespace HL_Prac_2
     public partial class MainWindow : Window
     {
         //Entity Model
-        HOTLOADDBEntities HOTLOADEntity;
+        HOTLOADDBEntities2 HOTLOADEntity;
 
         public MainWindow()
         {
@@ -78,7 +78,7 @@ namespace HL_Prac_2
         //Fill datagrid from DB
         public void PopulateGrid()
         {
-            HOTLOADEntity = new HOTLOADDBEntities();
+            HOTLOADEntity = new HOTLOADDBEntities2();
             LoadBoard.ItemsSource = HOTLOADEntity.Loads.ToList();
         }
 
@@ -121,7 +121,7 @@ namespace HL_Prac_2
             string time;
 
             time = span.ToString(format);
-
+            
             return time;
         }
 
@@ -217,7 +217,7 @@ namespace HL_Prac_2
                 loadModel.last_updated_time = DateTime.Now;
 
                 //Save the load to the database
-                using(HOTLOADDBEntities HOTLOADEntity = new HOTLOADDBEntities())
+                using(HOTLOADDBEntities2 HOTLOADEntity = new HOTLOADDBEntities2())
                 {
                     if(loadModel.bol_num == 0)//Insert
                     {
@@ -266,7 +266,7 @@ namespace HL_Prac_2
             {
                 //Load model
                 Load loadModel = (Load)LoadBoard.SelectedItem;
-                using (HOTLOADDBEntities HOTLOADEntity = new HOTLOADDBEntities())
+                using (HOTLOADDBEntities2 HOTLOADEntity = new HOTLOADDBEntities2())
                 {
                     loadModel = HOTLOADEntity.Loads.Where(x => x.bol_num == loadModel.bol_num).FirstOrDefault();
                     bol_txt.Text = loadModel.bol_num.ToString();
@@ -284,6 +284,7 @@ namespace HL_Prac_2
                     //Dates & Times
                     pickDate_picker.Text = loadModel.pick_date.ToString();
                     pickAptTime_txt.Text = TimeStringBuilder(loadModel.pick_time.Value);
+
                     dropDate_picker.Text = loadModel.drop_date.ToString();
                     dropAptTime_txt.Text = TimeStringBuilder(loadModel.drop_time.Value);
 
@@ -308,7 +309,7 @@ namespace HL_Prac_2
             //Get the selected load from Datagrid
             Load loadModel = (Load)LoadBoard.SelectedItem;
             if (MessageBox.Show("Are you sure you want to delete this record?", "Confirm Deletion", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-                using (HOTLOADDBEntities HOTLOADEntity = new HOTLOADDBEntities()) 
+                using (HOTLOADDBEntities2 HOTLOADEntity = new HOTLOADDBEntities2()) 
                 {
                     var entry = HOTLOADEntity.Entry(loadModel);
                     if(entry.State == EntityState.Detached)
@@ -327,7 +328,7 @@ namespace HL_Prac_2
         //Search function
         private void Search()
         {
-            HOTLOADEntity = new HOTLOADDBEntities();
+            HOTLOADEntity = new HOTLOADDBEntities2();
             List<Load> matchedLoads = null;
 
             //Timespan handling
@@ -426,7 +427,7 @@ namespace HL_Prac_2
                 commodityController_mnu,
                 mileageController_mnu,
                 carrierRateController_mnu,
-                customerController_mnu,
+                customerRateController_mnu,
                 pDateController_mnu,
                 pTimeController_mnu,
                 dDateController_mnu,

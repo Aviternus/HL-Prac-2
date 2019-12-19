@@ -131,9 +131,9 @@
                         <DataGridTextColumn x:Name="mileageColumn" Header="Mileage" Binding="{Binding mileage}"/>
                         <DataGridTextColumn x:Name="carrierColumn" Header="Carrier Rate" Binding="{Binding carrier_rate}"/>
                         <DataGridTextColumn x:Name="customerRateColumn" Header="Customer Rate" Binding="{Binding customer_rate}"/>
-                        <DataGridTextColumn x:Name="pickDateColumn" Header="Pick Date" Binding="{Binding pick_date, StringFormat= \{0:dd/MM/yyyy\}}" />
+                        <DataGridTextColumn x:Name="pickDateColumn" Header="Pick Date" Binding="{Binding pick_date, StringFormat= \{0:MM/dd/yyyy\}}" />
                         <DataGridTextColumn x:Name="pickTimeColumn" Header="Pick Time" Binding="{Binding pick_time, StringFormat=hh\\:mm}" />
-                        <DataGridTextColumn x:Name="dropDateColumn" Header="Drop Date" Binding="{Binding drop_date, StringFormat= \{0:dd/MM/yyyy\}}" />
+                        <DataGridTextColumn x:Name="dropDateColumn" Header="Drop Date" Binding="{Binding drop_date, StringFormat= \{0:MM/dd/yyyy\}}" />
                         <DataGridTextColumn x:Name="dropTimeColumn" Header="Drop Time" Binding="{Binding drop_time, StringFormat=hh\\:mm}" />
                         <DataGridTextColumn x:Name="lastUpdatedColumn" Header="Last Updated" Binding="{Binding last_updated_time}" />
                         <DataGridTextColumn x:Name="driverColumn" Header="Driver" Binding="{Binding driver_id}"/>

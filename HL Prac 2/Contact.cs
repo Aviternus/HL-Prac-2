@@ -18,7 +18,6 @@ namespace HL_Prac_2
         public Contact()
         {
             this.Accounts = new HashSet<Account>();
-            this.Accounts1 = new HashSet<Account>();
             this.Users = new HashSet<User>();
         }
     
@@ -29,8 +28,6 @@ namespace HL_Prac_2
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Account> Accounts { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Account> Accounts1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User> Users { get; set; }
     }

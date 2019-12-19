@@ -1,15 +1,45 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx">
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
   <!-- EF Runtime content -->
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="HOTLOADDBModel2.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2006/04/edm/ssdl">
+    <Schema Namespace="HOTLOADDBModel2.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Accounts">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="active" Type="int" />
+          <Property Name="contact_id" Type="int" />
+          <Property Name="billing_contact_id" Type="int" />
+          <Property Name="billing_address_id" Type="int" />
+        </EntityType>
+        <EntityType Name="Addresses">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="street" Type="varchar" MaxLength="50" />
+          <Property Name="city" Type="varchar" MaxLength="50" />
+          <Property Name="state" Type="varchar" MaxLength="2" />
+          <Property Name="zip" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Contacts">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="contact_name" Type="varchar" MaxLength="50" />
+          <Property Name="contact_phone" Type="varchar" MaxLength="15" />
+          <Property Name="contact_email" Type="varchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="Loads">
           <Key>
             <PropertyRef Name="bol_num" />
           </Key>
           <Property Name="bol_num" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="load_status" Type="varchar" MaxLength="20" />
           <Property Name="pro_num" Type="varchar" MaxLength="20" />
           <Property Name="quote_num" Type="varchar" MaxLength="20" />
           <Property Name="ref_num" Type="varchar" MaxLength="20" />
@@ -19,26 +49,158 @@
           <Property Name="mileage" Type="float" />
           <Property Name="carrier_rate" Type="money" />
           <Property Name="customer_rate" Type="money" />
-          <Property Name="pick_appointment" Type="smalldatetime" />
-          <Property Name="drop_appointment" Type="smalldatetime" />
+          <Property Name="pick_date" Type="date" />
+          <Property Name="pick_time" Type="time" Precision="7" />
+          <Property Name="drop_date" Type="date" />
+          <Property Name="drop_time" Type="time" Precision="7" />
+          <Property Name="last_updated_time" Type="datetime" />
           <Property Name="driver_id" Type="int" />
           <Property Name="dispatch_id" Type="int" />
           <Property Name="customer_id" Type="int" />
           <Property Name="broker_id" Type="int" />
         </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="contact_id" Type="int" />
+          <Property Name="username" Type="varchar" MaxLength="50" />
+          <Property Name="user_password" Type="varchar" MaxLength="50" />
+          <Property Name="account_id" Type="int" />
+        </EntityType>
+        <Association Name="accounts2addresses">
+          <End Role="Addresses" Type="Self.Addresses" Multiplicity="0..1" />
+          <End Role="Accounts" Type="Self.Accounts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Addresses">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Accounts">
+              <PropertyRef Name="billing_address_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="accounts2billingcontacts">
+          <End Role="Contacts" Type="Self.Contacts" Multiplicity="0..1" />
+          <End Role="Accounts" Type="Self.Accounts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contacts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Accounts">
+              <PropertyRef Name="billing_contact_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="accounts2contacts">
+          <End Role="Contacts" Type="Self.Contacts" Multiplicity="0..1" />
+          <End Role="Accounts" Type="Self.Accounts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contacts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Accounts">
+              <PropertyRef Name="contact_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="users2accounts">
+          <End Role="Accounts" Type="Self.Accounts" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accounts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="users2contacts">
+          <End Role="Contacts" Type="Self.Contacts" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contacts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="contact_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="HOTLOADDBModel2StoreContainer">
+          <EntitySet Name="Accounts" EntityType="Self.Accounts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Addresses" EntityType="Self.Addresses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Contacts" EntityType="Self.Contacts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Loads" EntityType="Self.Loads" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="accounts2addresses" Association="Self.accounts2addresses">
+            <End Role="Addresses" EntitySet="Addresses" />
+            <End Role="Accounts" EntitySet="Accounts" />
+          </AssociationSet>
+          <AssociationSet Name="accounts2billingcontacts" Association="Self.accounts2billingcontacts">
+            <End Role="Contacts" EntitySet="Contacts" />
+            <End Role="Accounts" EntitySet="Accounts" />
+          </AssociationSet>
+          <AssociationSet Name="accounts2contacts" Association="Self.accounts2contacts">
+            <End Role="Contacts" EntitySet="Contacts" />
+            <End Role="Accounts" EntitySet="Accounts" />
+          </AssociationSet>
+          <AssociationSet Name="users2accounts" Association="Self.users2accounts">
+            <End Role="Accounts" EntitySet="Accounts" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="users2contacts" Association="Self.users2contacts">
+            <End Role="Contacts" EntitySet="Contacts" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="HOTLOADDBModel2" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2006/04/edm">
+      <Schema Namespace="HOTLOADDBModel2" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="active" Type="Int32" />
+          <Property Name="contact_id" Type="Int32" />
+          <Property Name="billing_contact_id" Type="Int32" />
+          <Property Name="billing_address_id" Type="Int32" />
+          <NavigationProperty Name="Address" Relationship="Self.accounts2addresses" FromRole="Accounts" ToRole="Addresses" />
+          <NavigationProperty Name="Contact" Relationship="Self.accounts2billingcontacts" FromRole="Accounts" ToRole="Contacts" />
+          <NavigationProperty Name="Users" Relationship="Self.users2accounts" FromRole="Accounts" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="street" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="city" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="state" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="zip" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Accounts" Relationship="Self.accounts2addresses" FromRole="Addresses" ToRole="Accounts" />
+        </EntityType>
+        <EntityType Name="Contact">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="contact_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="contact_phone" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="contact_email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Accounts" Relationship="Self.accounts2billingcontacts" FromRole="Contacts" ToRole="Accounts" />
+          <NavigationProperty Name="Users" Relationship="Self.users2contacts" FromRole="Contacts" ToRole="Users" />
+        </EntityType>
         <EntityType Name="Load">
           <Key>
             <PropertyRef Name="bol_num" />
           </Key>
           <Property Name="bol_num" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="load_status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="pro_num" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="quote_num" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="ref_num" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
@@ -48,26 +210,158 @@
           <Property Name="mileage" Type="Double" />
           <Property Name="carrier_rate" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="customer_rate" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="pick_appointment" Type="DateTime" Precision="0" />
-          <Property Name="drop_appointment" Type="DateTime" Precision="0" />
+          <Property Name="pick_date" Type="DateTime" Precision="0" />
+          <Property Name="pick_time" Type="Time" Precision="7" />
+          <Property Name="drop_date" Type="DateTime" Precision="0" />
+          <Property Name="drop_time" Type="Time" Precision="7" />
+          <Property Name="last_updated_time" Type="DateTime" Precision="3" />
           <Property Name="driver_id" Type="Int32" />
           <Property Name="dispatch_id" Type="Int32" />
           <Property Name="customer_id" Type="Int32" />
           <Property Name="broker_id" Type="Int32" />
         </EntityType>
-        <EntityContainer Name="HOTLOADDBEntities2">
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="contact_id" Type="Int32" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="user_password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="account_id" Type="Int32" />
+          <NavigationProperty Name="Account" Relationship="Self.users2accounts" FromRole="Users" ToRole="Accounts" />
+          <NavigationProperty Name="Contact" Relationship="Self.users2contacts" FromRole="Users" ToRole="Contacts" />
+        </EntityType>
+        <Association Name="accounts2addresses">
+          <End Role="Addresses" Type="Self.Address" Multiplicity="0..1" />
+          <End Role="Accounts" Type="Self.Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Addresses">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Accounts">
+              <PropertyRef Name="billing_address_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="accounts2billingcontacts">
+          <End Role="Contacts" Type="Self.Contact" Multiplicity="0..1" />
+          <End Role="Accounts" Type="Self.Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contacts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Accounts">
+              <PropertyRef Name="billing_contact_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="accounts2contacts">
+          <End Role="Contacts" Type="Self.Contact" Multiplicity="0..1" />
+          <End Role="Accounts" Type="Self.Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contacts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Accounts">
+              <PropertyRef Name="contact_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="users2accounts">
+          <End Role="Accounts" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accounts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="users2contacts">
+          <End Role="Contacts" Type="Self.Contact" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contacts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="contact_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HOTLOADDBEntities2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Accounts" EntityType="Self.Account" />
+          <EntitySet Name="Addresses" EntityType="Self.Address" />
+          <EntitySet Name="Contacts" EntityType="Self.Contact" />
           <EntitySet Name="Loads" EntityType="Self.Load" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="accounts2addresses" Association="Self.accounts2addresses">
+            <End Role="Addresses" EntitySet="Addresses" />
+            <End Role="Accounts" EntitySet="Accounts" />
+          </AssociationSet>
+          <AssociationSet Name="accounts2billingcontacts" Association="Self.accounts2billingcontacts">
+            <End Role="Contacts" EntitySet="Contacts" />
+            <End Role="Accounts" EntitySet="Accounts" />
+          </AssociationSet>
+          <AssociationSet Name="accounts2contacts" Association="Self.accounts2contacts">
+            <End Role="Contacts" EntitySet="Contacts" />
+            <End Role="Accounts" EntitySet="Accounts" />
+          </AssociationSet>
+          <AssociationSet Name="users2accounts" Association="Self.users2accounts">
+            <End Role="Accounts" EntitySet="Accounts" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="users2contacts" Association="Self.users2contacts">
+            <End Role="Contacts" EntitySet="Contacts" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping Space="C-S" xmlns="urn:schemas-microsoft-com:windows:storage:mapping:CS">
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="HOTLOADDBModel2StoreContainer" CdmEntityContainer="HOTLOADDBEntities2">
+          <EntitySetMapping Name="Accounts">
+            <EntityTypeMapping TypeName="HOTLOADDBModel2.Account">
+              <MappingFragment StoreEntitySet="Accounts">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="contact_id" ColumnName="contact_id" />
+                <ScalarProperty Name="billing_contact_id" ColumnName="billing_contact_id" />
+                <ScalarProperty Name="billing_address_id" ColumnName="billing_address_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Addresses">
+            <EntityTypeMapping TypeName="HOTLOADDBModel2.Address">
+              <MappingFragment StoreEntitySet="Addresses">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="street" ColumnName="street" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="zip" ColumnName="zip" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contacts">
+            <EntityTypeMapping TypeName="HOTLOADDBModel2.Contact">
+              <MappingFragment StoreEntitySet="Contacts">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="contact_name" ColumnName="contact_name" />
+                <ScalarProperty Name="contact_phone" ColumnName="contact_phone" />
+                <ScalarProperty Name="contact_email" ColumnName="contact_email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Loads">
             <EntityTypeMapping TypeName="HOTLOADDBModel2.Load">
               <MappingFragment StoreEntitySet="Loads">
                 <ScalarProperty Name="bol_num" ColumnName="bol_num" />
+                <ScalarProperty Name="load_status" ColumnName="load_status" />
                 <ScalarProperty Name="pro_num" ColumnName="pro_num" />
                 <ScalarProperty Name="quote_num" ColumnName="quote_num" />
                 <ScalarProperty Name="ref_num" ColumnName="ref_num" />
@@ -77,12 +371,26 @@
                 <ScalarProperty Name="mileage" ColumnName="mileage" />
                 <ScalarProperty Name="carrier_rate" ColumnName="carrier_rate" />
                 <ScalarProperty Name="customer_rate" ColumnName="customer_rate" />
-                <ScalarProperty Name="pick_appointment" ColumnName="pick_appointment" />
-                <ScalarProperty Name="drop_appointment" ColumnName="drop_appointment" />
+                <ScalarProperty Name="pick_date" ColumnName="pick_date" />
+                <ScalarProperty Name="pick_time" ColumnName="pick_time" />
+                <ScalarProperty Name="drop_date" ColumnName="drop_date" />
+                <ScalarProperty Name="drop_time" ColumnName="drop_time" />
+                <ScalarProperty Name="last_updated_time" ColumnName="last_updated_time" />
                 <ScalarProperty Name="driver_id" ColumnName="driver_id" />
                 <ScalarProperty Name="dispatch_id" ColumnName="dispatch_id" />
                 <ScalarProperty Name="customer_id" ColumnName="customer_id" />
                 <ScalarProperty Name="broker_id" ColumnName="broker_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="HOTLOADDBModel2.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="contact_id" ColumnName="contact_id" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="user_password" ColumnName="user_password" />
+                <ScalarProperty Name="account_id" ColumnName="account_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -91,7 +399,7 @@
     </edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
-  <Designer xmlns="http://schemas.microsoft.com/ado/2007/06/edmx">
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <Connection>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
@@ -102,7 +410,7 @@
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>

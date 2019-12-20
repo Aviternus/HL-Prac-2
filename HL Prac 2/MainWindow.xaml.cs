@@ -375,7 +375,7 @@ namespace HL_Prac_2
                             select loads
                             ).ToList();
 
-            /*
+            /* DEPRECATED SEARCH FUNCTION
             matchedLoads = HOTLOADEntity.Loads.Where(
                 x => x.bol_num.ToString().Contains(bolSearch_txt.Text) &&
                 x.pro_num.ToString().Contains(proSearch_txt.Text) &&

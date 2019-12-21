@@ -10,6 +10,7 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="account_name" Type="varchar" MaxLength="50" />
           <Property Name="active" Type="int" />
           <Property Name="contact_id" Type="int" />
           <Property Name="billing_contact_id" Type="int" />
@@ -58,6 +59,7 @@
           <Property Name="dispatch_id" Type="int" />
           <Property Name="customer_id" Type="int" />
           <Property Name="broker_id" Type="int" />
+          <Property Name="account_id" Type="int" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -105,6 +107,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="loads2accounts">
+          <End Role="Accounts" Type="Self.Accounts" Multiplicity="0..1" />
+          <End Role="Loads" Type="Self.Loads" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accounts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Loads">
+              <PropertyRef Name="account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="users2accounts">
           <End Role="Accounts" Type="Self.Accounts" Multiplicity="0..1" />
           <End Role="Users" Type="Self.Users" Multiplicity="*" />
@@ -147,6 +161,10 @@
             <End Role="Contacts" EntitySet="Contacts" />
             <End Role="Accounts" EntitySet="Accounts" />
           </AssociationSet>
+          <AssociationSet Name="loads2accounts" Association="Self.loads2accounts">
+            <End Role="Accounts" EntitySet="Accounts" />
+            <End Role="Loads" EntitySet="Loads" />
+          </AssociationSet>
           <AssociationSet Name="users2accounts" Association="Self.users2accounts">
             <End Role="Accounts" EntitySet="Accounts" />
             <End Role="Users" EntitySet="Users" />
@@ -172,6 +190,8 @@
           <NavigationProperty Name="Address" Relationship="Self.accounts2addresses" FromRole="Accounts" ToRole="Addresses" />
           <NavigationProperty Name="Contact" Relationship="Self.accounts2billingcontacts" FromRole="Accounts" ToRole="Contacts" />
           <NavigationProperty Name="Users" Relationship="Self.users2accounts" FromRole="Accounts" ToRole="Users" />
+          <Property Name="account_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Loads" Relationship="HOTLOADDBModel2.loads2accounts" FromRole="Account" ToRole="Load" />
         </EntityType>
         <EntityType Name="Address">
           <Key>
@@ -219,6 +239,8 @@
           <Property Name="dispatch_id" Type="Int32" />
           <Property Name="customer_id" Type="Int32" />
           <Property Name="broker_id" Type="Int32" />
+          <Property Name="account_id" Type="Int32" />
+          <NavigationProperty Name="Account" Relationship="HOTLOADDBModel2.loads2accounts" FromRole="Load" ToRole="Account" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -318,7 +340,23 @@
             <End Role="Contacts" EntitySet="Contacts" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
+          <AssociationSet Name="loads2accounts" Association="HOTLOADDBModel2.loads2accounts">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Load" EntitySet="Loads" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="loads2accounts">
+          <End Type="HOTLOADDBModel2.Account" Role="Account" Multiplicity="0..1" />
+          <End Type="HOTLOADDBModel2.Load" Role="Load" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Load">
+              <PropertyRef Name="account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -328,6 +366,7 @@
           <EntitySetMapping Name="Accounts">
             <EntityTypeMapping TypeName="HOTLOADDBModel2.Account">
               <MappingFragment StoreEntitySet="Accounts">
+                <ScalarProperty Name="account_name" ColumnName="account_name" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="active" ColumnName="active" />
                 <ScalarProperty Name="contact_id" ColumnName="contact_id" />
@@ -360,6 +399,7 @@
           <EntitySetMapping Name="Loads">
             <EntityTypeMapping TypeName="HOTLOADDBModel2.Load">
               <MappingFragment StoreEntitySet="Loads">
+                <ScalarProperty Name="account_id" ColumnName="account_id" />
                 <ScalarProperty Name="bol_num" ColumnName="bol_num" />
                 <ScalarProperty Name="load_status" ColumnName="load_status" />
                 <ScalarProperty Name="pro_num" ColumnName="pro_num" />

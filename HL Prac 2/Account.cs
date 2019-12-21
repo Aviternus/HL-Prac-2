@@ -18,6 +18,7 @@ namespace HL_Prac_2
         public Account()
         {
             this.Users = new HashSet<User>();
+            this.Loads = new HashSet<Load>();
         }
     
         public int id { get; set; }
@@ -25,10 +26,13 @@ namespace HL_Prac_2
         public Nullable<int> contact_id { get; set; }
         public Nullable<int> billing_contact_id { get; set; }
         public Nullable<int> billing_address_id { get; set; }
+        public string account_name { get; set; }
     
         public virtual Address Address { get; set; }
         public virtual Contact Contact { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User> Users { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Load> Loads { get; set; }
     }
 }

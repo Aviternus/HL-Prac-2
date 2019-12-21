@@ -34,5 +34,8 @@ namespace HL_Prac_2
         public Nullable<int> dispatch_id { get; set; }
         public Nullable<int> customer_id { get; set; }
         public Nullable<int> broker_id { get; set; }
+        public Nullable<int> account_id { get; set; }
+    
+        public virtual Account Account { get; set; }
     }
 }

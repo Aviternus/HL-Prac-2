@@ -375,32 +375,6 @@ namespace HL_Prac_2
                             select loads
                             ).ToList();
 
-            /* DEPRECATED SEARCH FUNCTION
-            matchedLoads = HOTLOADEntity.Loads.Where(
-                x => x.bol_num.ToString().Contains(bolSearch_txt.Text) &&
-                x.pro_num.ToString().Contains(proSearch_txt.Text) &&
-                x.quote_num.ToString().Contains(quoteSearch_txt.Text) &&
-                x.ref_num.ToString().Contains(refSearch_txt.Text) &&
-
-                //Pick Date search terms
-                ((pickDateStart_dtpckr.SelectedDate == null || x.pick_date.Value >= pickDateStart_dtpckr.SelectedDate) &&
-
-                (pickDateEnd_dtpckr.SelectedDate == null || x.pick_date.Value <= pickDateEnd_dtpckr.SelectedDate)) &&
-
-                //Pick Time search terms
-                ((pickTimeStartSearch_txt.Text == null || pickTimeStart == TimeSpan.Zero || x.pick_time.Value >= pickTimeStart) &&
-                (pickTimeEndSearch_txt.Text == null || pickTimeEnd == TimeSpan.Zero || x.pick_time.Value <= pickTimeEnd)) &&
-
-                //Drop Date Search terms
-                ((dropDateStart_dtpckr.SelectedDate == null || x.drop_date.Value >= dropDateStart_dtpckr.SelectedDate) &&
-
-                (dropDateEnd_dtpckr.SelectedDate == null || x.drop_date.Value <= dropDateEnd_dtpckr.SelectedDate)) &&
-
-                //Drop Time search terms
-                ((dropTimeStartSearch_txt.Text == null || dropTimeStart == TimeSpan.Zero || x.drop_time.Value >= dropTimeStart) &&
-                (dropTimeEndSearch_txt.Text == null || dropTimeEnd == TimeSpan.Zero || x.drop_time.Value <= dropTimeEnd))
-                ).ToList();
-            */
             LoadBoard.ItemsSource = matchedLoads;
         }
 

@@ -137,7 +137,6 @@
                         <DataGridTextColumn x:Name="dropTimeColumn" Header="Drop Time" Binding="{Binding drop_time, StringFormat=hh\\:mm}" />
                         <DataGridTextColumn x:Name="lastUpdatedColumn" Header="Last Updated" Binding="{Binding last_updated_time}" />
                         <DataGridTextColumn x:Name="driverColumn" Header="Driver" Binding="{Binding driver_id}"/>
-                        <DataGridTextColumn x:Name="driverNameColumn" Header="Driver Name" Binding="{Binding Contacts.contact_name}"/>
                         <DataGridTextColumn x:Name="DispatchColumn" Header="Dispatch" Binding="{Binding dispatch_id}"/>
                         <DataGridTextColumn x:Name="CustomerColumn" Header="Customer" Binding="{Binding customer_id}"/>
                         <DataGridTextColumn x:Name="BrokerColumn" Header="Broker" Binding="{Binding broker_id}"/>

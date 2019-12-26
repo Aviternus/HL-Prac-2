@@ -68,16 +68,16 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Account.cs">
-      <DependentUpon>Model2.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Address.cs">
-      <DependentUpon>Model2.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Contact.cs">
-      <DependentUpon>Model2.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Load.cs">
-      <DependentUpon>Model2.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model2.Context.cs">
       <AutoGen>True</AutoGen>
@@ -95,7 +95,7 @@
       <DependentUpon>Model2.edmx</DependentUpon>
     </Compile>
     <Compile Include="User.cs">
-      <DependentUpon>Model2.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

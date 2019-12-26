@@ -17,7 +17,7 @@ namespace HL_Prac_2
     public partial class MainWindow : Window
     {
         //Entity Model
-        HOTLOADDBEntities2 HOTLOADEntity;
+        HOTLOADDBEntities HOTLOADEntity;
 
         public MainWindow()
         {
@@ -78,7 +78,7 @@ namespace HL_Prac_2
         //Fill datagrid from DB
         public void PopulateGrid()
         {
-            HOTLOADEntity = new HOTLOADDBEntities2();
+            HOTLOADEntity = new HOTLOADDBEntities();
             LoadBoard.ItemsSource = HOTLOADEntity.Loads.ToList();
         }
 
@@ -217,7 +217,7 @@ namespace HL_Prac_2
                 loadModel.last_updated_time = DateTime.Now;
 
                 //Save the load to the database
-                using(HOTLOADDBEntities2 HOTLOADEntity = new HOTLOADDBEntities2())
+                using(HOTLOADDBEntities HOTLOADEntity = new HOTLOADDBEntities())
                 {
                     if(loadModel.bol_num == 0)//Insert
                     {
@@ -266,7 +266,7 @@ namespace HL_Prac_2
             {
                 //Load model
                 Load loadModel = (Load)LoadBoard.SelectedItem;
-                using (HOTLOADDBEntities2 HOTLOADEntity = new HOTLOADDBEntities2())
+                using (HOTLOADDBEntities HOTLOADEntity = new HOTLOADDBEntities())
                 {
                     loadModel = HOTLOADEntity.Loads.Where(x => x.bol_num == loadModel.bol_num).FirstOrDefault();
                     bol_txt.Text = loadModel.bol_num.ToString();
@@ -309,7 +309,7 @@ namespace HL_Prac_2
             //Get the selected load from Datagrid
             Load loadModel = (Load)LoadBoard.SelectedItem;
             if (MessageBox.Show("Are you sure you want to delete this record?", "Confirm Deletion", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-                using (HOTLOADDBEntities2 HOTLOADEntity = new HOTLOADDBEntities2()) 
+                using (HOTLOADDBEntities HOTLOADEntity = new HOTLOADDBEntities()) 
                 {
                     var entry = HOTLOADEntity.Entry(loadModel);
                     if(entry.State == EntityState.Detached)
@@ -328,7 +328,7 @@ namespace HL_Prac_2
         //Search function
         private void Search()
         {
-            HOTLOADEntity = new HOTLOADDBEntities2();
+            HOTLOADEntity = new HOTLOADDBEntities();
             List<Load> matchedLoads = null;
 
             //Timespan handling

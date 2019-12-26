@@ -15,6 +15,7 @@
         <AssociationConnector Association="HOTLOADDBModel.accounts2contacts" />
         <AssociationConnector Association="HOTLOADDBModel.users2accounts" />
         <AssociationConnector Association="HOTLOADDBModel.users2contacts" />
+        <AssociationConnector Association="HOTLOADDBModel.loads2accounts" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

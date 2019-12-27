@@ -106,7 +106,11 @@
                     <MenuItem Name="dTimeController_mnu" Header="Drop Time" IsCheckable="True" IsChecked="True"/>
                     <MenuItem Name="lastUpdateController_mnu" Header="Last Updated" IsCheckable="True" IsChecked="True"/>
                     <MenuItem Name="driverNameController_mnu" Header="Driver Name" IsCheckable="True" IsChecked="True"/>
-                    <MenuItem Name="dispatchNameController_mnu" Header="Dispatch" IsCheckable="True" IsChecked="True"/>
+                    <MenuItem Name="driverPhoneController_mnu" Header="Driver Phone" IsCheckable="True" IsChecked="True"/>
+                    <MenuItem Name="driverEmailController_mnu" Header="Driver Email" IsCheckable="True" IsChecked="True"/>
+                    <MenuItem Name="dispatchNameController_mnu" Header="Dispatch Name" IsCheckable="True" IsChecked="True"/>
+                    <MenuItem Name="dispatchPhoneController_mnu" Header="Dispatch Phone" IsCheckable="True" IsChecked="True"/>
+                    <MenuItem Name="dispatchEmailController_mnu" Header="Dispatch Email" IsCheckable="True" IsChecked="True"/>
                     <MenuItem Name="customerController_mnu" Header="Customer" IsCheckable="True" IsChecked="True"/>
                     <MenuItem Name="brokerController_mnu" Header="Broker" IsCheckable="True" IsChecked="True"/>
                 </ContextMenu>

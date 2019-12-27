@@ -449,7 +449,11 @@ namespace HL_Prac_2
                 dTimeController_mnu,
                 lastUpdateController_mnu,
                 driverNameController_mnu,
+                driverPhoneController_mnu,
+                driverEmailController_mnu,
                 dispatchNameController_mnu,
+                dispatchPhoneController_mnu,
+                dispatchEmailController_mnu,
                 customerController_mnu,
                 brokerController_mnu
             };
@@ -472,7 +476,11 @@ namespace HL_Prac_2
                 dropTimeColumn,
                 lastUpdatedColumn,
                 driverNameColumn,
+                driverPhoneColumn,
+                driverEmailColumn,
                 DispatchNameColumn,
+                DispatchPhoneColumn,
+                DispatchEmailColumn,
                 CustomerColumn,
                 BrokerColumn
             };

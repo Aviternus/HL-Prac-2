@@ -17,7 +17,7 @@ namespace HL_Prac_2
     public partial class MainWindow : Window
     {
         //Entity Model
-        HOTLOADDBEntities HOTLOADEntity;
+        HOTLOADDBEntities2 HOTLOADEntity;
 
         public MainWindow()
         {
@@ -78,7 +78,7 @@ namespace HL_Prac_2
         //Fill datagrid from DB
         public void PopulateGrid()
         {
-            HOTLOADEntity = new HOTLOADDBEntities();
+            HOTLOADEntity = new HOTLOADDBEntities2();
             LoadBoard.ItemsSource = HOTLOADEntity.Loads.ToList();
         }
 
@@ -217,7 +217,7 @@ namespace HL_Prac_2
                 loadModel.last_updated_time = DateTime.Now;
 
                 //Save the load to the database
-                using(HOTLOADDBEntities HOTLOADEntity = new HOTLOADDBEntities())
+                using(HOTLOADDBEntities2 HOTLOADEntity = new HOTLOADDBEntities2())
                 {
                     if(loadModel.bol_num == 0)//Insert
                     {
@@ -267,7 +267,7 @@ namespace HL_Prac_2
                 //Load model
                 ViewModel SelectedItem = (ViewModel)LoadBoard.SelectedItem;
                 Load loadModel = HOTLOADEntity.Loads.Find(SelectedItem.bol_num);
-                using (HOTLOADDBEntities HOTLOADEntity = new HOTLOADDBEntities())
+                using (HOTLOADDBEntities2 HOTLOADEntity = new HOTLOADDBEntities2())
                 {
                     loadModel = HOTLOADEntity.Loads.Where(x => x.bol_num == loadModel.bol_num).FirstOrDefault();
                     bol_txt.Text = loadModel.bol_num.ToString();
@@ -308,7 +308,7 @@ namespace HL_Prac_2
         private void delete_btn_Click(object sender, RoutedEventArgs e)
         {
             //Get the selected load from Datagrid
-            HOTLOADDBEntities HOTLOADEntity = new HOTLOADDBEntities();
+            HOTLOADDBEntities2 HOTLOADEntity = new HOTLOADDBEntities2();
             ViewModel SelectedItem = (ViewModel)LoadBoard.SelectedItem;
             Load loadModel = HOTLOADEntity.Loads.Find(SelectedItem.bol_num);
             if (MessageBox.Show("Are you sure you want to delete this record?", "Confirm Deletion", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
@@ -331,7 +331,7 @@ namespace HL_Prac_2
         //Search function
         private void Search()
         {
-            HOTLOADEntity = new HOTLOADDBEntities();
+            HOTLOADEntity = new HOTLOADDBEntities2();
 
             //Timespan handling
             TimeSpan pickTimeStart = TimeSpan.Zero;

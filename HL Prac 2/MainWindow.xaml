@@ -253,9 +253,14 @@
                     <TextBox x:Name="customerRate_txt" Grid.Column="4" Grid.Row="8" TabIndex="9" Background="Ivory" Margin="3" />
 
                     <!--Driver-->
-                    <Label Content="Driver" Grid.Column="1" Grid.Row="9" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                    <TextBox x:Name="driver_txt" Grid.Column="2" Grid.Row="9" TabIndex="10" Background="Ivory" Margin="3" />
-
+                    <GroupBox Grid.Column="1" Grid.Row="9" Grid.ColumnSpan="2" Grid.RowSpan="3" Margin="-2"/>
+                    <Label Content="Driver Name" Grid.Column="1" Grid.Row="9" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <TextBox x:Name="driverName_txt" Grid.Column="2" Grid.Row="9" TabIndex="10" Background="Ivory" Margin="3" />
+                    <Label Content="Driver Phone" Grid.Column="1" Grid.Row="10" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <TextBox x:Name="driverPhone_txt" Grid.Column="2" Grid.Row="10" TabIndex="10" Background="Ivory" Margin="3" />
+                    <Label Content="Driver Email" Grid.Column="1" Grid.Row="11" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <TextBox x:Name="driverEmail_txt" Grid.Column="2" Grid.Row="11" TabIndex="10" Background="Ivory" Margin="3" />
+                    
                     <!--Dispatch-->
                     <Label Content="Dispatch" Grid.Column="3" Grid.Row="14" VerticalAlignment="Center" HorizontalAlignment="Center" />
                     <TextBox x:Name="dispatch_txt" Grid.Column="4" Grid.Row="14" TabIndex="11" Background="Ivory" Margin="3" />

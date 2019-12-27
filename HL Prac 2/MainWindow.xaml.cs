@@ -54,7 +54,9 @@ namespace HL_Prac_2
             DropIn_txt.Clear();
             DropOut_txt.Clear();
 
-            driver_txt.Clear();
+            driverName_txt.Clear();
+            driverPhone_txt.Clear();
+            driverEmail_txt.Clear();
             dispatch_txt.Clear();
             customer_txt.Clear();
             broker_txt.Clear();
@@ -176,14 +178,17 @@ namespace HL_Prac_2
             //Value Setting process
             try
             {
-                //Load model
+                //Models
                 Load loadModel = new Load();
+                Contact driverModel = new Contact();
+
                 //Get the load data from input fields
                 loadModel.bol_num = Convert.ToInt32(bol_txt.Text.Trim());
                 loadModel.load_status = loadStatus_cmbo.Text;
                 loadModel.pro_num = pro_txt.Text.Trim();
                 loadModel.quote_num = quote_txt.Text.Trim();
                 loadModel.ref_num = ref_txt.Text.Trim();
+
                 try
                 {
                     loadModel.weight = Convert.ToDouble(weight_txt.Text.Trim());
@@ -208,7 +213,35 @@ namespace HL_Prac_2
                 loadModel.drop_date = dropDate_picker.SelectedDate.Value;
                 loadModel.drop_time = TimeSpanBuilder(dropAptTime_txt.Text);
 
-                loadModel.driver_id = Convert.ToInt32(driver_txt.Text.Trim());
+                // //Convert.ToInt32(driver_txt.Text.Trim()); //TODO FIX THIS, needs to search contacts table for id that matches name
+                driverModel.contact_name = driverName_txt.Text.Trim();
+                driverModel.contact_phone = driverPhone_txt.Text.Trim();
+                driverModel.contact_email = driverEmail_txt.Text.Trim();
+                using (HOTLOADDBEntities2 DBEntity = new HOTLOADDBEntities2())
+                {
+                    Contact driver = null;
+                    //Search for driver to see if it exists
+                    driver = DBEntity.Contacts.FirstOrDefault(x => 
+                        ((x.contact_name == driverModel.contact_name) && 
+                        (x.contact_phone == driverModel.contact_phone) && 
+                        (x.contact_email == driverModel.contact_email)));
+
+                    //If it does not create it
+                    if(driver == null)
+                    {
+                        DBEntity.Contacts.Add(driverModel);
+                        DBEntity.SaveChanges();
+                        //Search again and select the new entry
+                        driver = DBEntity.Contacts.FirstOrDefault(x =>
+                        ((x.contact_name == driverModel.contact_name) &&
+                        (x.contact_phone == driverModel.contact_phone) &&
+                        (x.contact_email == driverModel.contact_email)));
+                    }
+                    //Save the driver's id to the load model                    
+                    loadModel.driver_id = driver.id;
+                }
+                    
+
                 loadModel.dispatch_id = Convert.ToInt32(dispatch_txt.Text.Trim());
                 loadModel.customer_id = Convert.ToInt32(customer_txt.Text.Trim());
                 loadModel.broker_id = Convert.ToInt32(broker_txt.Text.Trim());
@@ -289,7 +322,11 @@ namespace HL_Prac_2
                     dropDate_picker.Text = loadModel.drop_date.ToString();
                     dropAptTime_txt.Text = TimeStringBuilder(loadModel.drop_time.Value);
 
-                    driver_txt.Text = loadModel.driver_id.ToString();
+                    //Driver details
+                    driverName_txt.Text = SelectedItem.driverContact_name.ToString();
+                    driverPhone_txt.Text = SelectedItem.driverContact_phone.ToString();
+                    driverEmail_txt.Text = SelectedItem.driverContact_email.ToString();
+
                     dispatch_txt.Text = loadModel.dispatch_id.ToString();
                     customer_txt.Text = loadModel.customer_id.ToString();
                     broker_txt.Text = loadModel.broker_id.ToString();

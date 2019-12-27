@@ -35,6 +35,7 @@
             <RowDefinition Height="5" />
             <RowDefinition Height="25" />
             <RowDefinition Height="30" />
+            <RowDefinition Height="25" />
             <RowDefinition Height="*" />
             <RowDefinition Height="5" />
         </Grid.RowDefinitions>
@@ -85,7 +86,7 @@
         <TextBox x:Name="dropTimeEndSearch_txt" TextAlignment="Center" Grid.Column="12" Grid.Row="2" Background="Ivory" Margin="3" TextChanged="Search"/>
         
     <!--Load Board Column Filter-->
-        <Button Name="columnControlMenu" Content="Filter" Grid.Column="13" Grid.Row="2" ContextMenuClosing="ColumnController">
+        <Button Name="columnControlMenu" Content="Filter" Grid.Column="13" Grid.Row="1" ContextMenuClosing="ColumnController">
             <Button.ContextMenu>
                 <ContextMenu>
                     <MenuItem Name="bolController_mnu" Header="BOL#" IsCheckable="True" IsChecked="True"/>
@@ -104,8 +105,8 @@
                     <MenuItem Name="dDateController_mnu" Header="Drop Date" IsCheckable="True" IsChecked="True"/>
                     <MenuItem Name="dTimeController_mnu" Header="Drop Time" IsCheckable="True" IsChecked="True"/>
                     <MenuItem Name="lastUpdateController_mnu" Header="Last Updated" IsCheckable="True" IsChecked="True"/>
-                    <MenuItem Name="driverController_mnu" Header="Driver" IsCheckable="True" IsChecked="True"/>
-                    <MenuItem Name="dispatchController_mnu" Header="Dispatch" IsCheckable="True" IsChecked="True"/>
+                    <MenuItem Name="driverNameController_mnu" Header="Driver Name" IsCheckable="True" IsChecked="True"/>
+                    <MenuItem Name="dispatchNameController_mnu" Header="Dispatch" IsCheckable="True" IsChecked="True"/>
                     <MenuItem Name="customerController_mnu" Header="Customer" IsCheckable="True" IsChecked="True"/>
                     <MenuItem Name="brokerController_mnu" Header="Broker" IsCheckable="True" IsChecked="True"/>
                 </ContextMenu>
@@ -113,7 +114,7 @@
         </Button>    
 
         <!--Load Board tab-->
-        <TabControl Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="13" Background="AntiqueWhite">
+        <TabControl Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="13" Background="AntiqueWhite">
             <TabItem Header="Load Board">
 
                 <!--Data Grid-->
@@ -136,8 +137,12 @@
                         <DataGridTextColumn x:Name="dropDateColumn" Header="Drop Date" Binding="{Binding drop_date, StringFormat= \{0:MM/dd/yyyy\}}" />
                         <DataGridTextColumn x:Name="dropTimeColumn" Header="Drop Time" Binding="{Binding drop_time, StringFormat=hh\\:mm}" />
                         <DataGridTextColumn x:Name="lastUpdatedColumn" Header="Last Updated" Binding="{Binding last_updated_time}" />
-                        <DataGridTextColumn x:Name="driverColumn" Header="Driver" Binding="{Binding driver_id}"/>
-                        <DataGridTextColumn x:Name="DispatchColumn" Header="Dispatch" Binding="{Binding dispatch_id}"/>
+                        <DataGridTextColumn x:Name="driverNameColumn" Header="Driver Name" Binding="{Binding driverContact_name}"/>
+                        <DataGridTextColumn x:Name="driverPhoneColumn" Header="Driver Phone" Binding="{Binding driverContact_phone}"/>
+                        <DataGridTextColumn x:Name="driverEmailColumn" Header="Driver Email" Binding="{Binding driverContact_email}"/>
+                        <DataGridTextColumn x:Name="DispatchNameColumn" Header="Dispatch Name" Binding="{Binding dispatchContact_name}"/>
+                        <DataGridTextColumn x:Name="DispatchPhoneColumn" Header="Dispatch Phone" Binding="{Binding dispatchContact_phone}"/>
+                        <DataGridTextColumn x:Name="DispatchEmailColumn" Header="Dispatch Email" Binding="{Binding dispatchContact_email}"/>
                         <DataGridTextColumn x:Name="CustomerColumn" Header="Customer" Binding="{Binding customer_id}"/>
                         <DataGridTextColumn x:Name="BrokerColumn" Header="Broker" Binding="{Binding broker_id}"/>
                     </DataGrid.Columns>
@@ -146,7 +151,7 @@
             </TabItem>
         </TabControl>
 
-        <TabControl Grid.Column="14" Grid.Row="3" Grid.ColumnSpan="6">
+        <TabControl Grid.Column="14" Grid.Row="1" Grid.ColumnSpan="6" Grid.RowSpan="14">
             <TabItem Header="Load Info">
 
                 <Grid>
@@ -201,62 +206,62 @@
                     </ComboBox>
                     
                     <!--Last Updated-->
-                    <Label Name="lastUpdated_lbl" Content="Last Updated: " Grid.Column="3" Grid.Row="3" Grid.ColumnSpan ="2"/>
+                    <Label Name="lastUpdated_lbl" Content="Last Updated: " Grid.Column="3" Grid.Row="3" Grid.ColumnSpan ="2" VerticalAlignment="Center" HorizontalAlignment="Center" />
 
                     <!--BOL-->
-                    <Label Content="BOL#" Grid.Column="1" Grid.Row="4" />
-                    <TextBox x:Name="bol_txt" Grid.Column="2" Grid.Row="4" Background="GhostWhite" Margin="3" IsReadOnly="True"/>
+                    <Label Content="BOL#" Grid.Column="1" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <TextBox x:Name="bol_txt" Text="0" Grid.Column="2" Grid.Row="4" Background="GhostWhite" Margin="3" IsReadOnly="True"/>
 
                     <!--Pro-->
-                    <Label Content="Pro#" Grid.Column="3" Grid.Row="4" />
+                    <Label Content="Pro#" Grid.Column="3" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Center" />
                     <TextBox x:Name="pro_txt" Grid.Column="4" Grid.Row="4" TabIndex="1" Background="Ivory" Margin="3" />
 
                     <!--Quote-->
-                    <Label Content="Quote#" Grid.Column="1" Grid.Row="5" />
+                    <Label Content="Quote#" Grid.Column="1" Grid.Row="5" VerticalAlignment="Center" HorizontalAlignment="Center" />
                     <TextBox x:Name="quote_txt" Grid.Column="2" Grid.Row="5" TabIndex="2" Background="Ivory" Margin="3" />
 
                     <!--Ref-->
-                    <Label Content="Ref#" Grid.Column="3" Grid.Row="5" />
+                    <Label Content="Ref#" Grid.Column="3" Grid.Row="5" VerticalAlignment="Center" HorizontalAlignment="Center" />
                     <TextBox x:Name="ref_txt" Grid.Column="4" Grid.Row="5" TabIndex="3" Background="Ivory" Margin="3" />
 
                     <!--Weight-->
-                    <Label Content="Weight" Grid.Column="1" Grid.Row="6" />
+                    <Label Content="Weight" Grid.Column="1" Grid.Row="6" VerticalAlignment="Center" HorizontalAlignment="Center" />
                     <TextBox x:Name="weight_txt" Grid.Column="2" Grid.Row="6" TabIndex="4" Background="Ivory" Margin="3" />
 
                     <!--Pieces-->
-                    <Label Content="Pieces" Grid.Column="3" Grid.Row="6" />
+                    <Label Content="Pieces" Grid.Column="3" Grid.Row="6" VerticalAlignment="Center" HorizontalAlignment="Center" />
                     <TextBox x:Name="pieces_txt" Grid.Column="4" Grid.Row="6" TabIndex="5" Background="Ivory" Margin="3" />
 
                     <!--Commodity-->
-                    <Label Content="Commodity" Grid.Column="1" Grid.Row="7" />
+                    <Label Content="Commodity" Grid.Column="1" Grid.Row="7" VerticalAlignment="Center" HorizontalAlignment="Center" />
                     <TextBox x:Name="commodity_txt" Grid.Column="2" Grid.Row="7" TabIndex="6" Background="Ivory" Margin="3" />
 
                     <!--Mileage-->
-                    <Label Content="Mileage" Grid.Column="3" Grid.Row="7" />
+                    <Label Content="Mileage" Grid.Column="3" Grid.Row="7" VerticalAlignment="Center" HorizontalAlignment="Center" />
                     <TextBox x:Name="mileage_txt" Grid.Column="4" Grid.Row="7" TabIndex="7" Background="Ivory" Margin="3" />
 
                     <!--Carrier Rate-->
-                    <Label Content="Carrier Rate" Grid.Column="1" Grid.Row="8" />
+                    <Label Content="Carrier Rate" Grid.Column="1" Grid.Row="8" VerticalAlignment="Center" HorizontalAlignment="Center" />
                     <TextBox x:Name="carrierRate_txt" Grid.Column="2" Grid.Row="8" TabIndex="8" Background="Ivory" Margin="3" />
 
                     <!--Customer Rate-->
-                    <Label Content="Customer Rate" Grid.Column="3" Grid.Row="8" />
+                    <Label Content="Customer Rate" Grid.Column="3" Grid.Row="8" VerticalAlignment="Center" HorizontalAlignment="Center" />
                     <TextBox x:Name="customerRate_txt" Grid.Column="4" Grid.Row="8" TabIndex="9" Background="Ivory" Margin="3" />
 
                     <!--Driver-->
-                    <Label Content="Driver" Grid.Column="1" Grid.Row="9" />
+                    <Label Content="Driver" Grid.Column="1" Grid.Row="9" VerticalAlignment="Center" HorizontalAlignment="Center" />
                     <TextBox x:Name="driver_txt" Grid.Column="2" Grid.Row="9" TabIndex="10" Background="Ivory" Margin="3" />
 
                     <!--Dispatch-->
-                    <Label Content="Dispatch" Grid.Column="3" Grid.Row="9" />
+                    <Label Content="Dispatch" Grid.Column="3" Grid.Row="9" VerticalAlignment="Center" HorizontalAlignment="Center" />
                     <TextBox x:Name="dispatch_txt" Grid.Column="4" Grid.Row="9" TabIndex="11" Background="Ivory" Margin="3" />
 
                     <!--Customer-->
-                    <Label Content="Customer" Grid.Column="1" Grid.Row="10" />
+                    <Label Content="Customer" Grid.Column="1" Grid.Row="10" VerticalAlignment="Center" HorizontalAlignment="Center" />
                     <TextBox x:Name="customer_txt" Grid.Column="2" Grid.Row="10" TabIndex="12" Background="Ivory" Margin="3" />
 
                     <!--Broker-->
-                    <Label Content="Broker" Grid.Column="3" Grid.Row="10" />
+                    <Label Content="Broker" Grid.Column="3" Grid.Row="10" VerticalAlignment="Center" HorizontalAlignment="Center" />
                     <TextBox x:Name="broker_txt" Grid.Column="4" Grid.Row="10" TabIndex="13" Background="Ivory" Margin="3" />
 
                     <!--Pick Up-->

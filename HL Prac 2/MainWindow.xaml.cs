@@ -22,7 +22,7 @@ namespace HL_Prac_2
         public MainWindow()
         {
             InitializeComponent();
-            PopulateGrid();
+            Search();
         }
 
         //Program Initialization
@@ -265,7 +265,8 @@ namespace HL_Prac_2
             if (LoadBoard.SelectedIndex != -1)
             {
                 //Load model
-                Load loadModel = (Load)LoadBoard.SelectedItem;
+                ViewModel SelectedItem = (ViewModel)LoadBoard.SelectedItem;
+                Load loadModel = HOTLOADEntity.Loads.Find(SelectedItem.bol_num);
                 using (HOTLOADDBEntities HOTLOADEntity = new HOTLOADDBEntities())
                 {
                     loadModel = HOTLOADEntity.Loads.Where(x => x.bol_num == loadModel.bol_num).FirstOrDefault();
@@ -307,9 +308,11 @@ namespace HL_Prac_2
         private void delete_btn_Click(object sender, RoutedEventArgs e)
         {
             //Get the selected load from Datagrid
-            Load loadModel = (Load)LoadBoard.SelectedItem;
+            HOTLOADDBEntities HOTLOADEntity = new HOTLOADDBEntities();
+            ViewModel SelectedItem = (ViewModel)LoadBoard.SelectedItem;
+            Load loadModel = HOTLOADEntity.Loads.Find(SelectedItem.bol_num);
             if (MessageBox.Show("Are you sure you want to delete this record?", "Confirm Deletion", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-                using (HOTLOADDBEntities HOTLOADEntity = new HOTLOADDBEntities()) 
+                using (HOTLOADEntity) 
                 {
                     var entry = HOTLOADEntity.Entry(loadModel);
                     if(entry.State == EntityState.Detached)
@@ -329,7 +332,6 @@ namespace HL_Prac_2
         private void Search()
         {
             HOTLOADEntity = new HOTLOADDBEntities();
-            List<Load> matchedLoads = null;
 
             //Timespan handling
             TimeSpan pickTimeStart = TimeSpan.Zero;
@@ -345,8 +347,14 @@ namespace HL_Prac_2
             try { dropTimeEnd = TimeSpanBuilder(dropTimeEndSearch_txt.Text); }catch (System.Exception){//Ignore
             }
 
-            matchedLoads = (
+            var matchedLoads = (
                             from loads in HOTLOADEntity.Loads
+                            //Drivers join
+                            join drivers in HOTLOADEntity.Contacts
+                            on loads.driver_id equals drivers.id
+                            //Dispatchers join
+                            join dispatchers in HOTLOADEntity.Contacts
+                            on loads.dispatch_id equals dispatchers.id
 
                             where 
                             loads.bol_num.ToString().Contains(bolSearch_txt.Text) &&
@@ -372,10 +380,43 @@ namespace HL_Prac_2
                             ((dropTimeStartSearch_txt.Text == null || dropTimeStart == TimeSpan.Zero || loads.drop_time.Value >= dropTimeStart) &&
                             (dropTimeEndSearch_txt.Text == null || dropTimeEnd == TimeSpan.Zero || loads.drop_time.Value <= dropTimeEnd))
 
-                            select loads
-                            ).ToList();
+                            select new ViewModel
+                            {
+                                //Load properties
+                                bol_num = loads.bol_num,
+                                load_status = loads.load_status,
+                                pro_num = loads.pro_num,
+                                quote_num = loads.quote_num,
+                                ref_num = loads.ref_num,
+                                weight = loads.weight,
+                                pieces = loads.pieces,
+                                commodity = loads.commodity,
+                                mileage = loads.mileage,
+                                carrier_rate = loads.carrier_rate,
+                                customer_rate = loads.customer_rate,
+                                pick_date = loads.pick_date,
+                                pick_time = loads.pick_time,
+                                drop_date = loads.drop_date,
+                                drop_time = loads.drop_time,
+                                last_updated_time = loads.last_updated_time,
+                                driver_id = loads.driver_id,
+                                dispatch_id = loads.dispatch_id,
+                                customer_id = loads.customer_id,
+                                broker_id = loads.broker_id,
+                                account_id = loads.account_id,
 
-            LoadBoard.ItemsSource = matchedLoads;
+                                //Driver properties
+                                driverContact_name = drivers.contact_name,
+                                driverContact_phone = drivers.contact_phone,
+                                driverContact_email = drivers.contact_email,
+
+                                //Dispatch properties
+                                dispatchContact_name = dispatchers.contact_name,
+                                dispatchContact_phone = dispatchers.contact_phone,
+                                dispatchContact_email = dispatchers.contact_email,
+                            });
+
+            LoadBoard.ItemsSource = matchedLoads.ToList();
         }
 
         private void Search(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
@@ -407,8 +448,8 @@ namespace HL_Prac_2
                 dDateController_mnu,
                 dTimeController_mnu,
                 lastUpdateController_mnu,
-                driverController_mnu,
-                dispatchController_mnu,
+                driverNameController_mnu,
+                dispatchNameController_mnu,
                 customerController_mnu,
                 brokerController_mnu
             };
@@ -430,8 +471,8 @@ namespace HL_Prac_2
                 dropDateColumn,
                 dropTimeColumn,
                 lastUpdatedColumn,
-                driverColumn,
-                DispatchColumn,
+                driverNameColumn,
+                DispatchNameColumn,
                 CustomerColumn,
                 BrokerColumn
             };

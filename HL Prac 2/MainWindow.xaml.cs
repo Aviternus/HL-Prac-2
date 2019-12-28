@@ -22,12 +22,6 @@ namespace HL_Prac_2
             Search();
         }
 
-        //Program Initialization
-        public void Initialize()
-        {
-            
-        }
-
         public void Clear()
         {
             bol_txt.Text = "0";
@@ -51,7 +45,7 @@ namespace HL_Prac_2
             DropIn_txt.Clear();
             DropOut_txt.Clear();
 
-            driverName_txt.Clear();
+            driverName_txt.Text = "";
             driverPhone_txt.Clear();
             driverEmail_txt.Clear();
             dispatch_txt.Clear();
@@ -67,99 +61,6 @@ namespace HL_Prac_2
             //disable copy & delete buttons
             delete_btn.IsEnabled = false;
             copy_btn.IsEnabled = false;
-        }
-        //Clear textfields button
-        private void clear_btn_Click(object sender, RoutedEventArgs e)
-        {
-            Clear();
-        }
-
-        //DateBuilding method
-        public DateTime DateBuilder(DateTime datePicker, string timeText)
-        {
-            //Starting value
-            DateTime newDate = datePicker;
-            //Set default time value
-            if (timeText=="")
-            {
-                timeText = "00:00";
-            }
-
-            //Zero out previous time values
-            newDate = newDate.AddHours(-newDate.Hour);
-            newDate = newDate.AddMinutes(-newDate.Minute);
-
-            //Add in time values
-            string[] splitTime = timeText.Split(':');
-            newDate = newDate.AddHours(Convert.ToInt32(splitTime[0]));
-            newDate = newDate.AddMinutes(Convert.ToInt32(splitTime[1]));
-
-            return newDate;
-        }
-
-        //Time Span Builder
-        public TimeSpan TimeSpanBuilder(string timeString)
-        {
-            var hours = Int32.Parse(timeString.Split(':')[0]);
-            var minutes = Int32.Parse(timeString.Split(':')[1]);
-
-            var timeSpan = new TimeSpan(hours, minutes, 0);
-            return timeSpan;
-        }
-
-        public string TimeStringBuilder(TimeSpan span)
-        {
-            string format = @"hh\:mm";
-            string time;
-
-            time = span.ToString(format);
-            
-            return time;
-        }
-
-        public int ParseStatus(string statusString)
-        {
-            int comboBoxIndex = 0;
-            switch (statusString)
-            {
-                case "Unnassigned":
-                    comboBoxIndex = 0;
-                    break;
-                case "Assigned":
-                    comboBoxIndex = 1;
-                    break;
-                case "Rate Confirmation":
-                    comboBoxIndex = 2;
-                    break;
-                case "Dispatched":
-                    comboBoxIndex = 3;
-                    break;
-                case "At Shipper":
-                    comboBoxIndex = 4;
-                    break;
-                case "In Transit":
-                    comboBoxIndex = 5;
-                    break;
-                case "At Consignee":
-                    comboBoxIndex = 6;
-                    break;
-                case "Delivered":
-                    comboBoxIndex = 7;
-                    break;
-                case "Paid":
-                    comboBoxIndex = 8;
-                    break;
-                case "Invoiced":
-                    comboBoxIndex = 9;
-                    break;
-                case "Collected":
-                    comboBoxIndex = 10;
-                    break;
-                default:
-                    comboBoxIndex = 0;
-                    break;
-            }
-            return comboBoxIndex;
         }
 
         //Update or Create Button
@@ -419,8 +320,8 @@ namespace HL_Prac_2
 
                                 select new ViewModel
                                 {
-                                //Load properties
-                                bol_num = loads.bol_num,
+                                    //Load properties
+                                    bol_num = loads.bol_num,
                                     load_status = loads.load_status,
                                     pro_num = loads.pro_num,
                                     quote_num = loads.quote_num,
@@ -442,13 +343,13 @@ namespace HL_Prac_2
                                     broker_id = loads.broker_id,
                                     account_id = loads.account_id,
 
-                                //Driver properties
-                                driverContact_name = drivers.contact_name,
+                                    //Driver properties
+                                    driverContact_name = drivers.contact_name,
                                     driverContact_phone = drivers.contact_phone,
                                     driverContact_email = drivers.contact_email,
 
-                                //Dispatch properties
-                                dispatchContact_name = dispatchers.contact_name,
+                                    //Dispatch properties
+                                    dispatchContact_name = dispatchers.contact_name,
                                     dispatchContact_phone = dispatchers.contact_phone,
                                     dispatchContact_email = dispatchers.contact_email,
                                 });
@@ -457,15 +358,6 @@ namespace HL_Prac_2
             }  
         }
 
-        private void Search(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            Search();
-        }
-
-        private void Search(object sender, System.Windows.Controls.TextChangedEventArgs e)
-        {
-            Search();
-        }
         //Column Display Control
         private void ColumnController(object sender, System.Windows.Controls.ContextMenuEventArgs e)
         {
@@ -538,12 +430,113 @@ namespace HL_Prac_2
             }
         }
 
-        public void DriverAutoComplete()
-        {
-            using (HOTLOADDBEntities2 hOTLOADDB = new HOTLOADDBEntities2())
-            {
+        /********************
+         *  Helper Methods  *
+         ********************/
 
+        //Button Routing
+        private void clear_btn_Click(object sender, RoutedEventArgs e)
+        {
+            Clear();
+        }
+
+        private void Search(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            Search();
+        }
+        private void Search(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            Search();
+        }
+
+        //DateBuilding method
+        public DateTime DateBuilder(DateTime datePicker, string timeText)
+        {
+            //Starting value
+            DateTime newDate = datePicker;
+            //Set default time value
+            if (timeText == "")
+            {
+                timeText = "00:00";
             }
+
+            //Zero out previous time values
+            newDate = newDate.AddHours(-newDate.Hour);
+            newDate = newDate.AddMinutes(-newDate.Minute);
+
+            //Add in time values
+            string[] splitTime = timeText.Split(':');
+            newDate = newDate.AddHours(Convert.ToInt32(splitTime[0]));
+            newDate = newDate.AddMinutes(Convert.ToInt32(splitTime[1]));
+
+            return newDate;
+        }
+
+        //Time Span Builder
+        public TimeSpan TimeSpanBuilder(string timeString)
+        {
+            var hours = Int32.Parse(timeString.Split(':')[0]);
+            var minutes = Int32.Parse(timeString.Split(':')[1]);
+
+            var timeSpan = new TimeSpan(hours, minutes, 0);
+            return timeSpan;
+        }
+
+        //Time string building method
+        public string TimeStringBuilder(TimeSpan span)
+        {
+            string format = @"hh\:mm";
+            string time;
+
+            time = span.ToString(format);
+
+            return time;
+        }
+
+        //Load status parsing method
+        public int ParseStatus(string statusString)
+        {
+            int comboBoxIndex = 0;
+            switch (statusString)
+            {
+                case "Unnassigned":
+                    comboBoxIndex = 0;
+                    break;
+                case "Assigned":
+                    comboBoxIndex = 1;
+                    break;
+                case "Rate Confirmation":
+                    comboBoxIndex = 2;
+                    break;
+                case "Dispatched":
+                    comboBoxIndex = 3;
+                    break;
+                case "At Shipper":
+                    comboBoxIndex = 4;
+                    break;
+                case "In Transit":
+                    comboBoxIndex = 5;
+                    break;
+                case "At Consignee":
+                    comboBoxIndex = 6;
+                    break;
+                case "Delivered":
+                    comboBoxIndex = 7;
+                    break;
+                case "Paid":
+                    comboBoxIndex = 8;
+                    break;
+                case "Invoiced":
+                    comboBoxIndex = 9;
+                    break;
+                case "Collected":
+                    comboBoxIndex = 10;
+                    break;
+                default:
+                    comboBoxIndex = 0;
+                    break;
+            }
+            return comboBoxIndex;
         }
     }
 }

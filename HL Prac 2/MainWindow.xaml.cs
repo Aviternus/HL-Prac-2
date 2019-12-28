@@ -287,11 +287,11 @@ namespace HL_Prac_2
 
                 var matchedLoads = (
                                 from loads in HOTLOADEntity.Loads
-                                    //Drivers join
-                            join drivers in HOTLOADEntity.Contacts
+                                //Drivers join
+                                join drivers in HOTLOADEntity.Contacts
                                 on loads.driver_id equals drivers.id
-                            //Dispatchers join
-                            join dispatchers in HOTLOADEntity.Contacts
+                                //Dispatchers join
+                                join dispatchers in HOTLOADEntity.Contacts
                                 on loads.dispatch_id equals dispatchers.id
 
                                 where
@@ -429,6 +429,46 @@ namespace HL_Prac_2
                 }
             }
         }
+        //Driver auto fill
+        public void DriverAutofill()
+        {
+            string name = driverName_txt.Text;
+            string phone = driverPhone_txt.Text;
+            string email = driverEmail_txt.Text;
+
+            using (HOTLOADDBEntities2 HOTLOADDBEntity = new HOTLOADDBEntities2())
+            {
+                List<string> possibleDriverNames = new List<string>();
+
+                var queryToList = 
+                    (from drivers in HOTLOADDBEntity.Contacts
+                    where drivers.contact_name.Contains(driverName_txt.Text)
+                    select new
+                    {
+                        driverName = drivers.contact_name,
+                        driverPhone = drivers.contact_phone,
+                        driverEmail = drivers.contact_email,
+                    }).ToList();
+
+                List<Contact> possibleDrivers = 
+                    queryToList.Select(x => new Contact
+                    {
+                        contact_name = x.driverName,
+                        contact_phone = x.driverPhone,
+                        contact_email = x.driverEmail,
+                    }).ToList();
+
+                foreach (Contact driver in possibleDrivers)
+                {
+                    possibleDriverNames.Add(driver.contact_name);
+                }
+
+                if(possibleDriverNames.ElementAt(0) != null)
+                {
+                    PickOut_text.Text = possibleDriverNames.ElementAt(0);
+                }
+            }
+        }
 
         /********************
          *  Helper Methods  *
@@ -439,7 +479,10 @@ namespace HL_Prac_2
         {
             Clear();
         }
-
+        private void driverName_txt_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            DriverAutofill();
+        }
         private void Search(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             Search();

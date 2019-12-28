@@ -254,10 +254,13 @@
 
                     <!--Driver-->
                     <GroupBox Grid.Column="1" Grid.Row="9" Grid.ColumnSpan="2" Grid.RowSpan="3" Margin="-2"/>
+                    <!--Name-->
                     <Label Content="Driver Name" Grid.Column="1" Grid.Row="9" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                    <TextBox x:Name="driverName_txt" Grid.Column="2" Grid.Row="9" TabIndex="10" Background="Ivory" Margin="3" />
+                    <TextBox x:Name="driverName_txt" Grid.Column="2" Grid.Row="9" TabIndex="10" Background="Ivory" Margin="3" TextChanged="driverName_txt_TextChanged" />
+                    <!--Phone-->
                     <Label Content="Driver Phone" Grid.Column="1" Grid.Row="10" VerticalAlignment="Center" HorizontalAlignment="Center" />
                     <TextBox x:Name="driverPhone_txt" Grid.Column="2" Grid.Row="10" TabIndex="10" Background="Ivory" Margin="3" />
+                    <!--Email-->
                     <Label Content="Driver Email" Grid.Column="1" Grid.Row="11" VerticalAlignment="Center" HorizontalAlignment="Center" />
                     <TextBox x:Name="driverEmail_txt" Grid.Column="2" Grid.Row="11" TabIndex="10" Background="Ivory" Margin="3" />
                     

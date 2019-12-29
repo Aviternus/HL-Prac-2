@@ -60,13 +60,13 @@
     <!--Pick Appointment Search-->
         <!--Date Start-->
         <Label Content="Pick Date Start" HorizontalAlignment="Center" FontSize="10" Grid.Column="5" Grid.Row="1" />
-        <DatePicker Name="pickDateStart_dtpckr" Grid.Column="5" Grid.Row="2" SelectedDateChanged="Search" />
+        <DatePicker Name="pickDateStart_dtpckr" Grid.Column="5" Grid.Row="2" SelectedDateChanged="Search" TextBoxBase.TextChanged="Search"/>
         <!--Time Start-->
         <Label Content="Pick Time Start" HorizontalAlignment="Center" FontSize="10" Grid.Column="6" Grid.Row="1" />
         <TextBox x:Name="pickTimeStartSearch_txt" TextAlignment="Center" Grid.Column="6" Grid.Row="2" Background="Ivory" Margin="3" TextChanged="Search"/>
         <!--Date End-->
         <Label Content="Pick Date End" HorizontalAlignment="Center" FontSize="10" Grid.Column="7" Grid.Row="1" />
-        <DatePicker Name="pickDateEnd_dtpckr" Grid.Column="7" Grid.Row="2" SelectedDateChanged="Search" />
+        <DatePicker Name="pickDateEnd_dtpckr" Grid.Column="7" Grid.Row="2" SelectedDateChanged="Search" TextBoxBase.TextChanged="Search"/>
         <!--Time End-->
         <Label Content="Pick Time End" HorizontalAlignment="Center" FontSize="10" Grid.Column="8" Grid.Row="1" />
         <TextBox x:Name="pickTimeEndSearch_txt" TextAlignment="Center" Grid.Column="8" Grid.Row="2" Background="Ivory" Margin="3" TextChanged="Search"/>
@@ -74,13 +74,13 @@
     <!--Drop Appointment Search-->
         <!--Date Start-->
         <Label Content="Drop Date Start" HorizontalAlignment="Center" FontSize="10" Grid.Column="9" Grid.Row="1" />
-        <DatePicker Name="dropDateStart_dtpckr" Grid.Column="9" Grid.Row="2" SelectedDateChanged="Search" />
+        <DatePicker Name="dropDateStart_dtpckr" Grid.Column="9" Grid.Row="2" SelectedDateChanged="Search" TextBoxBase.TextChanged="Search"/>
         <!--Time Start-->
         <Label Content="Drop Time Start" HorizontalAlignment="Center" FontSize="10" Grid.Column="10" Grid.Row="1" />
         <TextBox x:Name="dropTimeStartSearch_txt" TextAlignment="Center" Grid.Column="10" Grid.Row="2" Background="Ivory" Margin="3" TextChanged="Search"/>
         <!--Date Start-->
         <Label Content="Drop Date End" HorizontalAlignment="Center" FontSize="10" Grid.Column="11" Grid.Row="1" />
-        <DatePicker Name="dropDateEnd_dtpckr" Grid.Column="11" Grid.Row="2" SelectedDateChanged="Search" />
+        <DatePicker Name="dropDateEnd_dtpckr" Grid.Column="11" Grid.Row="2" SelectedDateChanged="Search" TextBoxBase.TextChanged="Search"/>
         <!--Time End-->
         <Label Content="Drop Time End" HorizontalAlignment="Center" FontSize="10" Grid.Column="12" Grid.Row="1" />
         <TextBox x:Name="dropTimeEndSearch_txt" TextAlignment="Center" Grid.Column="12" Grid.Row="2" Background="Ivory" Margin="3" TextChanged="Search"/>

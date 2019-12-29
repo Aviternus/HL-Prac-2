@@ -108,7 +108,7 @@ namespace HL_Prac_2
                 driverModel.contact_name = driverName_cmbo.Text.Trim();
                 driverModel.contact_phone = driverPhone_txt.Text.Trim();
                 driverModel.contact_email = driverEmail_txt.Text.Trim();
-                using (HOTLOADDBEntities2 DBEntity = new HOTLOADDBEntities2())
+                using (HOTLOADDBEntities DBEntity = new HOTLOADDBEntities())
                 {
                     Contact driver = null;
                     //Search for driver to see if it exists
@@ -141,7 +141,7 @@ namespace HL_Prac_2
                 loadModel.last_updated_time = DateTime.Now;
 
                 //Save the load to the database
-                using(HOTLOADDBEntities2 HOTLOADEntity = new HOTLOADDBEntities2())
+                using(HOTLOADDBEntities HOTLOADEntity = new HOTLOADDBEntities())
                 {
                     if(loadModel.bol_num == 0)//Insert
                     {
@@ -190,7 +190,7 @@ namespace HL_Prac_2
             {
                 //Load model
                 ViewModel SelectedItem = (ViewModel)LoadBoard.SelectedItem;
-                using (HOTLOADDBEntities2 HOTLOADEntity = new HOTLOADDBEntities2())
+                using (HOTLOADDBEntities HOTLOADEntity = new HOTLOADDBEntities())
                 {
                     //Get the load model from the ViewModel
                     Load loadModel = HOTLOADEntity.Loads.Find(SelectedItem.bol_num);
@@ -238,7 +238,7 @@ namespace HL_Prac_2
         private void delete_btn_Click(object sender, RoutedEventArgs e)
         {
             //Get the selected load from Datagrid
-            HOTLOADDBEntities2 HOTLOADEntity = new HOTLOADDBEntities2();
+            HOTLOADDBEntities HOTLOADEntity = new HOTLOADDBEntities();
             ViewModel SelectedItem = (ViewModel)LoadBoard.SelectedItem;
             Load loadModel = HOTLOADEntity.Loads.Find(SelectedItem.bol_num);
             if (MessageBox.Show("Are you sure you want to delete this record?", "Confirm Deletion", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
@@ -261,7 +261,7 @@ namespace HL_Prac_2
         //Search function
         private void Search()
         {
-            using (HOTLOADDBEntities2 HOTLOADEntity = new HOTLOADDBEntities2())
+            using (HOTLOADDBEntities HOTLOADEntity = new HOTLOADDBEntities())
             {
                 //Timespan handling
                 TimeSpan pickTimeStart = TimeSpan.Zero;
@@ -436,7 +436,7 @@ namespace HL_Prac_2
 
             try
             {
-                using (HOTLOADDBEntities2 HOTLOADDBEntity = new HOTLOADDBEntities2())
+                using (HOTLOADDBEntities HOTLOADDBEntity = new HOTLOADDBEntities())
                 {
                     List<string> possibleDriverNames = new List<string>();
 

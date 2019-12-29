@@ -46,8 +46,8 @@ namespace HL_Prac_2
             DropOut_txt.Clear();
 
             driverName_cmbo.Text = "";
-            driverPhone_txt.Clear();
-            driverEmail_txt.Clear();
+            driverPhone_cmbo.Text = "";
+            driverEmail_cmbo.Text = "";
             dispatch_txt.Clear();
             customer_txt.Clear();
             broker_txt.Clear();
@@ -104,10 +104,9 @@ namespace HL_Prac_2
                 loadModel.drop_date = dropDate_picker.SelectedDate.Value;
                 loadModel.drop_time = TimeSpanBuilder(dropAptTime_txt.Text);
 
-                // //Convert.ToInt32(driver_txt.Text.Trim()); //TODO FIX THIS, needs to search contacts table for id that matches name
                 driverModel.contact_name = driverName_cmbo.Text.Trim();
-                driverModel.contact_phone = driverPhone_txt.Text.Trim();
-                driverModel.contact_email = driverEmail_txt.Text.Trim();
+                driverModel.contact_phone = driverPhone_cmbo.Text.Trim();
+                driverModel.contact_email = driverEmail_cmbo.Text.Trim();
                 using (HOTLOADDBEntities DBEntity = new HOTLOADDBEntities())
                 {
                     Contact driver = null;
@@ -217,8 +216,8 @@ namespace HL_Prac_2
 
                     //Driver details
                     driverName_cmbo.Text = SelectedItem.driverContact_name.ToString();
-                    driverPhone_txt.Text = SelectedItem.driverContact_phone.ToString();
-                    driverEmail_txt.Text = SelectedItem.driverContact_email.ToString();
+                    driverPhone_cmbo.Text = SelectedItem.driverContact_phone.ToString();
+                    driverEmail_cmbo.Text = SelectedItem.driverContact_email.ToString();
 
                     dispatch_txt.Text = loadModel.dispatch_id.ToString();
                     customer_txt.Text = loadModel.customer_id.ToString();
@@ -429,11 +428,11 @@ namespace HL_Prac_2
                 }
             }
         }
-        //Driver auto fill
+        //Driver auto fill method
         public void DriverAutoFill(object sender, EventArgs e)
         {
             string name = driverName_cmbo.Text;
-
+            
             try
             {
                 using (HOTLOADDBEntities HOTLOADDBEntity = new HOTLOADDBEntities())
@@ -463,6 +462,11 @@ namespace HL_Prac_2
                         possibleDriverNames.Add(driver.contact_name);
                     }
 
+                    if ((possibleDrivers.Count == 1) && (name == possibleDrivers.ElementAt(0).contact_name))
+                    {
+                        driverPhone_cmbo.Text = possibleDrivers.ElementAt(0).contact_phone;
+                        driverEmail_cmbo.Text = possibleDrivers.ElementAt(0).contact_email;
+                    }
                     driverName_cmbo.ItemsSource = possibleDriverNames;
                     driverName_cmbo.IsDropDownOpen = true;
                 }

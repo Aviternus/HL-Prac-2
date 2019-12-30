@@ -432,22 +432,26 @@ namespace HL_Prac_2
         public void DriverAutoFill(object sender, EventArgs e)
         {
             string name = driverName_cmbo.Text;
-            
+            string phone = driverPhone_cmbo.Text;
+            string email = driverEmail_cmbo.Text;
+
             try
             {
                 using (HOTLOADDBEntities HOTLOADDBEntity = new HOTLOADDBEntities())
                 {
                     List<string> possibleDriverNames = new List<string>();
+                    List<string> possibleDriverPhones = new List<string>();
+                    List<string> possibleDriverEmails = new List<string>();
 
                     var queryToList =
                         (from drivers in HOTLOADDBEntity.Contacts
-                         where drivers.contact_name.Contains(name)
-                         select new
-                         {
-                             driverName = drivers.contact_name,
-                             driverPhone = drivers.contact_phone,
-                             driverEmail = drivers.contact_email,
-                         }).ToList();
+                            where drivers.contact_name.Contains(name)
+                            select new
+                            {
+                                driverName = drivers.contact_name,
+                                driverPhone = drivers.contact_phone,
+                                driverEmail = drivers.contact_email,
+                            }).ToList();
 
                     List<Contact> possibleDrivers =
                         queryToList.Select(x => new Contact
@@ -460,15 +464,41 @@ namespace HL_Prac_2
                     foreach (Contact driver in possibleDrivers)
                     {
                         possibleDriverNames.Add(driver.contact_name);
+                        possibleDriverPhones.Add(driver.contact_phone);
+                        possibleDriverEmails.Add(driver.contact_email);
                     }
 
-                    if ((possibleDrivers.Count == 1) && (name == possibleDrivers.ElementAt(0).contact_name))
+                    bool singleMatch = (possibleDrivers.Count == 1) && 
+                        (name == possibleDriverNames[0]) || (phone == possibleDriverPhones[0]) || (email == possibleDriverEmails[0]);
+
+                    if (singleMatch)
                     {
+                        driverName_cmbo.Text = possibleDrivers.ElementAt(0).contact_name;
                         driverPhone_cmbo.Text = possibleDrivers.ElementAt(0).contact_phone;
                         driverEmail_cmbo.Text = possibleDrivers.ElementAt(0).contact_email;
+                        dispatch_txt.Text = "Done";
                     }
+
                     driverName_cmbo.ItemsSource = possibleDriverNames;
-                    driverName_cmbo.IsDropDownOpen = true;
+                    driverPhone_cmbo.ItemsSource = possibleDriverPhones;
+                    driverEmail_cmbo.ItemsSource = possibleDriverEmails;
+
+                    if (sender == driverName_cmbo)
+                    {
+                        driverName_cmbo.IsDropDownOpen = true;
+                    }
+                    else if (sender == driverPhone_cmbo)
+                    {
+                        driverPhone_cmbo.IsDropDownOpen = true;
+                    }
+                    else if (sender == driverEmail_cmbo)
+                    {
+                        driverEmail_cmbo.IsDropDownOpen = true;
+                    }
+
+                    name = "";
+                    phone = "";
+                    email = "";
                 }
             }
             catch (Exception ex)

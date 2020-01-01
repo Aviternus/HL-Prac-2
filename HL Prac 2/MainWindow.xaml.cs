@@ -157,7 +157,7 @@ namespace HL_Prac_2
                         (x.contact_email == dispatchModel.contact_email)));
                     }
                     //Save the driver's id to the load model                    
-                    loadModel.driver_id = dispatch.id;
+                    loadModel.dispatch_id = dispatch.id;
                 }
 
                 loadModel.customer_id = Convert.ToInt32(customer_txt.Text.Trim());

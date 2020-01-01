@@ -112,7 +112,7 @@ namespace HL_Prac_2
                 driverModel.contact_name = driverName_cmbo.Text.Trim();
                 driverModel.contact_phone = driverPhone_cmbo.Text.Trim();
                 driverModel.contact_email = driverEmail_cmbo.Text.Trim();
-                using (HOTLOADDBEntities DBEntity = new HOTLOADDBEntities())
+                using (HOTLOADDBEntities2 DBEntity = new HOTLOADDBEntities2())
                 {
                     Contact driver = null;
                     //Search for driver to see if it exists
@@ -136,7 +136,7 @@ namespace HL_Prac_2
                     loadModel.driver_id = driver.id;
                 }
 
-                using (HOTLOADDBEntities DBEntity = new HOTLOADDBEntities())
+                using (HOTLOADDBEntities2 DBEntity = new HOTLOADDBEntities2())
                 {
                     Contact dispatch = null;
                     //Search for driver to see if it exists
@@ -167,7 +167,7 @@ namespace HL_Prac_2
                 loadModel.last_updated_time = DateTime.Now;
 
                 //Save the load to the database
-                using(HOTLOADDBEntities HOTLOADEntity = new HOTLOADDBEntities())
+                using(HOTLOADDBEntities2 HOTLOADEntity = new HOTLOADDBEntities2())
                 {
                     if(loadModel.bol_num == 0)//Insert
                     {
@@ -216,7 +216,7 @@ namespace HL_Prac_2
             {
                 //Load model
                 ViewModel SelectedItem = (ViewModel)LoadBoard.SelectedItem;
-                using (HOTLOADDBEntities HOTLOADEntity = new HOTLOADDBEntities())
+                using (HOTLOADDBEntities2 HOTLOADEntity = new HOTLOADDBEntities2())
                 {
                     //Get the load model from the ViewModel
                     Load loadModel = HOTLOADEntity.Loads.Find(SelectedItem.bol_num);
@@ -268,7 +268,7 @@ namespace HL_Prac_2
         private void delete_btn_Click(object sender, RoutedEventArgs e)
         {
             //Get the selected load from Datagrid
-            HOTLOADDBEntities HOTLOADEntity = new HOTLOADDBEntities();
+            HOTLOADDBEntities2 HOTLOADEntity = new HOTLOADDBEntities2();
             ViewModel SelectedItem = (ViewModel)LoadBoard.SelectedItem;
             Load loadModel = HOTLOADEntity.Loads.Find(SelectedItem.bol_num);
             if (MessageBox.Show("Are you sure you want to delete this record?", "Confirm Deletion", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
@@ -291,7 +291,7 @@ namespace HL_Prac_2
         //Search function
         private void Search()
         {
-            using (HOTLOADDBEntities HOTLOADEntity = new HOTLOADDBEntities())
+            using (HOTLOADDBEntities2 HOTLOADEntity = new HOTLOADDBEntities2())
             {
                 //Timespan handling
                 TimeSpan pickTimeStart = TimeSpan.Zero;
@@ -468,7 +468,7 @@ namespace HL_Prac_2
 
             try
             {
-                using (HOTLOADDBEntities HOTLOADDBEntity = new HOTLOADDBEntities())
+                using (HOTLOADDBEntities2 HOTLOADDBEntity = new HOTLOADDBEntities2())
                 {
                     List<string> possibleDriverNames = new List<string>();
                     List<string> possibleDriverPhones = new List<string>();

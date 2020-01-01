@@ -76,7 +76,13 @@ namespace HL_Prac_2
                 //Models
                 Load loadModel = new Load();
                 Contact driverModel = new Contact();
+                driverModel.contact_name = "";
+                driverModel.contact_phone = "";
+                driverModel.contact_email = "";
                 Contact dispatchModel = new Contact();
+                dispatchModel.contact_name = "";
+                dispatchModel.contact_phone = "";
+                dispatchModel.contact_email = "";
 
                 //Get the load data from input fields
                 loadModel.bol_num = Convert.ToInt32(bol_txt.Text.Trim());
@@ -109,6 +115,7 @@ namespace HL_Prac_2
                 loadModel.drop_date = dropDate_picker.SelectedDate.Value;
                 loadModel.drop_time = TimeSpanBuilder(dropAptTime_txt.Text);
 
+                //Driver portion
                 driverModel.contact_name = driverName_cmbo.Text.Trim();
                 driverModel.contact_phone = driverPhone_cmbo.Text.Trim();
                 driverModel.contact_email = driverEmail_cmbo.Text.Trim();
@@ -136,10 +143,14 @@ namespace HL_Prac_2
                     loadModel.driver_id = driver.id;
                 }
 
+                //Dispatch portion
+                dispatchModel.contact_name = dispatchName_cmbo.Text.Trim();
+                dispatchModel.contact_phone = dispatchPhone_cmbo.Text.Trim();
+                dispatchModel.contact_email = dispatchEmail_cmbo.Text.Trim();
                 using (HOTLOADDBEntities DBEntity = new HOTLOADDBEntities())
                 {
                     Contact dispatch = null;
-                    //Search for driver to see if it exists
+                    //Search for dispatcher to see if it exists
                     dispatch = DBEntity.Contacts.FirstOrDefault(x =>
                         ((x.contact_name == dispatchModel.contact_name) &&
                         (x.contact_phone == dispatchModel.contact_phone) &&
@@ -156,7 +167,7 @@ namespace HL_Prac_2
                         (x.contact_phone == dispatchModel.contact_phone) &&
                         (x.contact_email == dispatchModel.contact_email)));
                     }
-                    //Save the driver's id to the load model                    
+                    //Save the dispatcher's id to the load model                    
                     loadModel.dispatch_id = dispatch.id;
                 }
 
@@ -247,9 +258,9 @@ namespace HL_Prac_2
                     driverEmail_cmbo.Text = SelectedItem.driverContact_email.ToString();
 
                     //Dispatch details
-                    dispatchName_cmbo.Text = SelectedItem.dispatchContact_name.ToString();
-                    dispatchPhone_cmbo.Text = SelectedItem.dispatchContact_phone.ToString();
-                    dispatchEmail_cmbo.Text = SelectedItem.dispatchContact_email.ToString();
+                    dispatchName_cmbo.Text = SelectedItem.dispatchContact_name;
+                    dispatchPhone_cmbo.Text = SelectedItem.dispatchContact_phone;
+                    dispatchEmail_cmbo.Text = SelectedItem.dispatchContact_email;
 
                     customer_txt.Text = loadModel.customer_id.ToString();
                     broker_txt.Text = loadModel.broker_id.ToString();

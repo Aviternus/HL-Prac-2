@@ -294,7 +294,7 @@
                     <Label Content="Dispatch Phone" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="3" Grid.Row="10" />
                     <ComboBox Name="dispatchPhone_cmbo" Background="Ivory" Margin="3" IsEditable="True" Height="30" HorizontalContentAlignment="Center" Grid.Column="4" Grid.Row="10" />
                     <!--Email-->
-                    <Label Content="Dispatch Phone" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="3" Grid.Row="11" />
+                    <Label Content="Dispatch Email" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="3" Grid.Row="11" />
                     <ComboBox Name="dispatchEmail_cmbo" Background="Ivory" Margin="3" IsEditable="True" Height="30" HorizontalContentAlignment="Center" Grid.Column="4" Grid.Row="11" />
 
 

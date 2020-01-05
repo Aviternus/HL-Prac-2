@@ -45,9 +45,6 @@ namespace HL_Prac_2
             DropIn_txt.Clear();
             DropOut_txt.Clear();
 
-            driverName_cmbo.Text = "";
-            driverPhone_cmbo.Text = "";
-            driverEmail_cmbo.Text = "";
 
             dispatchName_cmbo.Text = "";
             dispatchPhone_cmbo.Text = "";

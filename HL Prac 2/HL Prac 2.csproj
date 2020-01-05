@@ -73,6 +73,9 @@
     <Compile Include="Address.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Carrier.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Contact.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>

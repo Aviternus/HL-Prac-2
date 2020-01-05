@@ -30,5 +30,6 @@ namespace HL_Prac_2
         public virtual DbSet<Address> Addresses { get; set; }
         public virtual DbSet<Contact> Contacts { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Carrier> Carriers { get; set; }
     }
 }

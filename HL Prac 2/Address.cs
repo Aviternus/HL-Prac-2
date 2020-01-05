@@ -18,6 +18,7 @@ namespace HL_Prac_2
         public Address()
         {
             this.Accounts = new HashSet<Account>();
+            this.Carriers = new HashSet<Carrier>();
         }
     
         public int id { get; set; }
@@ -28,5 +29,7 @@ namespace HL_Prac_2
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Account> Accounts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Carrier> Carriers { get; set; }
     }
 }

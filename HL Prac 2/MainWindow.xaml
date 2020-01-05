@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:HL_Prac_2"
         mc:Ignorable="d"
         Title="Hot Load" Height="1000" Width="1800" WindowStartupLocation="CenterScreen" FontFamily="Book Antiqua" Background="GhostWhite">
+    <!--Rounded TextBox Resource-->
     <Window.Resources>
         <ControlTemplate x:Key="TextBoxBaseControlTemplate" TargetType="{x:Type TextBoxBase}">
             <Border Background="{TemplateBinding Background}" 
@@ -27,6 +28,7 @@
             </ControlTemplate.Triggers>
         </ControlTemplate>
     </Window.Resources>
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5" />
@@ -78,7 +80,7 @@
         <Label Content="Ref#" HorizontalAlignment="Center" FontSize="10" Grid.Column="4" Grid.Row="1" />
         <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" x:Name="refSearch_txt" TextAlignment="Center" Grid.Column="4" Grid.Row="2" Background="Ivory" Margin="3" TextChanged="Search"/>
 
-    <!--Pick Appointment Search-->
+        <!--Pick Appointment Search-->
         <!--Date Start-->
         <Label Content="Pick Date Start" HorizontalAlignment="Center" FontSize="10" Grid.Column="5" Grid.Row="1" />
         <DatePicker Name="pickDateStart_dtpckr" Grid.Column="5" Grid.Row="2" SelectedDateChanged="Search" TextBoxBase.TextChanged="Search"/>
@@ -92,7 +94,7 @@
         <Label Content="Pick Time End" HorizontalAlignment="Center" FontSize="10" Grid.Column="8" Grid.Row="1" />
         <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" x:Name="pickTimeEndSearch_txt" TextAlignment="Center" Grid.Column="8" Grid.Row="2" Background="Ivory" Margin="3" TextChanged="Search"/>
 
-    <!--Drop Appointment Search-->
+        <!--Drop Appointment Search-->
         <!--Date Start-->
         <Label Content="Drop Date Start" HorizontalAlignment="Center" FontSize="10" Grid.Column="9" Grid.Row="1" />
         <DatePicker Name="dropDateStart_dtpckr" Grid.Column="9" Grid.Row="2" SelectedDateChanged="Search" TextBoxBase.TextChanged="Search"/>
@@ -105,8 +107,8 @@
         <!--Time End-->
         <Label Content="Drop Time End" HorizontalAlignment="Center" FontSize="10" Grid.Column="12" Grid.Row="1" />
         <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" x:Name="dropTimeEndSearch_txt" TextAlignment="Center" Grid.Column="12" Grid.Row="2" Background="Ivory" Margin="3" TextChanged="Search"/>
-        
-    <!--Load Board Column Filter-->
+
+        <!--Load Board Column Filter-->
         <Button Name="columnControlMenu" Content="Filter" Grid.Column="13" Grid.Row="1" ContextMenuClosing="ColumnController">
             <Button.ContextMenu>
                 <ContextMenu>
@@ -136,7 +138,7 @@
                     <MenuItem Name="brokerController_mnu" Header="Broker" IsCheckable="True" IsChecked="True"/>
                 </ContextMenu>
             </Button.ContextMenu>
-        </Button>    
+        </Button>
 
         <!--Load Board tab-->
         <TabControl Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="14" Background="AntiqueWhite">
@@ -182,9 +184,9 @@
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="5" />
-                        <ColumnDefinition Width="auto" />
                         <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="5" />
                     </Grid.ColumnDefinitions>
@@ -212,66 +214,97 @@
                         <RowDefinition Height="30" />
                         <RowDefinition Height="30" />
                         <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
                         <RowDefinition Height="5" />
                     </Grid.RowDefinitions>
-                    
-                    <!--Load Status-->
-                    <ComboBox Name="loadStatus_cmbo" Grid.Column="1" Grid.Row="3">
-                        <ComboBoxItem Content="Unnassigned" IsSelected="True"/>
-                        <ComboBoxItem Content="Assigned"/>
-                        <ComboBoxItem Content="Rate Confirmation"/>
-                        <ComboBoxItem Content="Dispatched"/>
-                        <ComboBoxItem Content="At Shipper"/>
-                        <ComboBoxItem Content="In Transit"/>
-                        <ComboBoxItem Content="At Consignee"/>
-                        <ComboBoxItem Content="Delivered"/>
-                        <ComboBoxItem Content="Paid"/>
-                        <ComboBoxItem Content="Invoiced"/>
-                        <ComboBoxItem Content="Collected"/>
-                    </ComboBox>
-                    
-                    <!--Last Updated-->
-                    <Label Name="lastUpdated_lbl" Content="Last Updated: " Grid.Column="3" Grid.Row="3" Grid.ColumnSpan ="2" VerticalAlignment="Center" HorizontalAlignment="Center" />
 
-                    <!--BOL-->
-                    <Label Content="BOL#" Grid.Column="1" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                    <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" x:Name="bol_txt" Text="0" Grid.Column="2" Grid.Row="4" Background="GhostWhite" Margin="3" IsReadOnly="True"/>
+                    <!--Load Details Group-->
+                    <GroupBox Header="Load Details" Grid.ColumnSpan="4" Grid.RowSpan="6" Grid.Column="1" Grid.Row="3">
+                        <Grid HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
 
-                    <!--Pro-->
-                    <Label Content="Pro#" Grid.Column="3" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                    <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" x:Name="pro_txt" Grid.Column="4" Grid.Row="4" TabIndex="1" Background="Ivory" Margin="3" />
+                            <!--Left Side-->
+                            <StackPanel HorizontalAlignment="Stretch" Grid.Column="0">
+                                <!--Load Status-->
+                                <ComboBox Name="loadStatus_cmbo" HorizontalContentAlignment="Center">
+                                    <ComboBoxItem Content="Unnassigned" IsSelected="True"/>
+                                    <ComboBoxItem Content="Assigned"/>
+                                    <ComboBoxItem Content="Rate Confirmation"/>
+                                    <ComboBoxItem Content="Dispatched"/>
+                                    <ComboBoxItem Content="At Shipper"/>
+                                    <ComboBoxItem Content="In Transit"/>
+                                    <ComboBoxItem Content="At Consignee"/>
+                                    <ComboBoxItem Content="Delivered"/>
+                                    <ComboBoxItem Content="Paid"/>
+                                    <ComboBoxItem Content="Invoiced"/>
+                                    <ComboBoxItem Content="Collected"/>
+                                </ComboBox>
 
-                    <!--Quote-->
-                    <Label Content="Quote#" Grid.Column="1" Grid.Row="5" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                    <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" x:Name="quote_txt" Grid.Column="2" Grid.Row="5" TabIndex="2" Background="Ivory" Margin="3" />
+                                <!--BOL-->
+                                <DockPanel>
+                                    <Label Content="BOL#" VerticalAlignment="Center" HorizontalAlignment="Center" DockPanel.Dock="Left"/>
+                                    <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" x:Name="bol_txt" TextAlignment="Center" Text="0" Background="GhostWhite" Margin="3" IsReadOnly="True" DockPanel.Dock="Left"/>
+                                </DockPanel>
+                                <DockPanel>
+                                    <!--Quote-->
+                                    <Label Content="Quote#" VerticalAlignment="Center" HorizontalAlignment="Center" DockPanel.Dock="Left"/>
+                                    <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" x:Name="quote_txt" TextAlignment="Center" TabIndex="2" Background="Ivory" Margin="3" DockPanel.Dock="Right"/>
+                                </DockPanel>
+                                <DockPanel>
+                                    <!--Weight-->
+                                    <Label Content="Weight" VerticalAlignment="Center" HorizontalAlignment="Center" DockPanel.Dock="Left"/>
+                                    <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" x:Name="weight_txt" TextAlignment="Center" TabIndex="4" Background="Ivory" Margin="3" DockPanel.Dock="Right"/>
+                                </DockPanel>
+                                <DockPanel>
+                                    <!--Commodity-->
+                                    <Label Content="Commodity" VerticalAlignment="Center" HorizontalAlignment="Center" DockPanel.Dock="Left"/>
+                                    <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" x:Name="commodity_txt" TextAlignment="Center" TabIndex="6" Background="Ivory" Margin="3" DockPanel.Dock="Right"/>
+                                </DockPanel>
+                                <DockPanel>
+                                    <!--Carrier Rate-->
+                                    <Label Content="Carrier Rate" VerticalAlignment="Center" HorizontalAlignment="Center" DockPanel.Dock="Left"/>
+                                    <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" x:Name="carrierRate_txt" TextAlignment="Center" TabIndex="8" Background="Ivory" Margin="3" DockPanel.Dock="Right"/>
 
-                    <!--Ref-->
-                    <Label Content="Ref#" Grid.Column="3" Grid.Row="5" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                    <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" x:Name="ref_txt" Grid.Column="4" Grid.Row="5" TabIndex="3" Background="Ivory" Margin="3" />
+                                </DockPanel>
+                            </StackPanel>
 
-                    <!--Weight-->
-                    <Label Content="Weight" Grid.Column="1" Grid.Row="6" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                    <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" x:Name="weight_txt" Grid.Column="2" Grid.Row="6" TabIndex="4" Background="Ivory" Margin="3" />
+                            <!--Right Side-->
+                            <StackPanel HorizontalAlignment="Stretch" Grid.Column="1">
+                                <!--Last Updated-->
+                                <Label Name="lastUpdated_lbl" Content="Last Updated: " Grid.ColumnSpan ="2" VerticalAlignment="Center" HorizontalAlignment="Center" />
 
-                    <!--Pieces-->
-                    <Label Content="Pieces" Grid.Column="3" Grid.Row="6" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                    <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" x:Name="pieces_txt" Grid.Column="4" Grid.Row="6" TabIndex="5" Background="Ivory" Margin="3" />
-
-                    <!--Commodity-->
-                    <Label Content="Commodity" Grid.Column="1" Grid.Row="7" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                    <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" x:Name="commodity_txt" Grid.Column="2" Grid.Row="7" TabIndex="6" Background="Ivory" Margin="3" />
-
-                    <!--Mileage-->
-                    <Label Content="Mileage" Grid.Column="3" Grid.Row="7" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                    <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" x:Name="mileage_txt" Grid.Column="4" Grid.Row="7" TabIndex="7" Background="Ivory" Margin="3" />
-
-                    <!--Carrier Rate-->
-                    <Label Content="Carrier Rate" Grid.Column="1" Grid.Row="8" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                    <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" x:Name="carrierRate_txt" Grid.Column="2" Grid.Row="8" TabIndex="8" Background="Ivory" Margin="3" />
-
-                    <!--Customer Rate-->
-                    <Label Content="Customer Rate" Grid.Column="3" Grid.Row="8" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                    <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" x:Name="customerRate_txt" Grid.Column="4" Grid.Row="8" TabIndex="9" Background="Ivory" Margin="3" />
+                                <DockPanel>
+                                    <!--Pro-->
+                                    <Label Content="Pro#" VerticalAlignment="Center" HorizontalAlignment="Center" DockPanel.Dock="Left"/>
+                                    <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" x:Name="pro_txt" TextAlignment="Center" TabIndex="1" Background="Ivory" Margin="3" DockPanel.Dock="Right"/>
+                                </DockPanel>
+                                <DockPanel>
+                                    <!--Ref-->
+                                    <Label Content="Ref#" VerticalAlignment="Center" HorizontalAlignment="Center" DockPanel.Dock="Left"/>
+                                    <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" x:Name="ref_txt" TextAlignment="Center" TabIndex="3" Background="Ivory" Margin="3" DockPanel.Dock="Right"/>
+                                </DockPanel>
+                                <DockPanel>
+                                    <!--Pieces-->
+                                    <Label Content="Pieces" VerticalAlignment="Center" HorizontalAlignment="Center" DockPanel.Dock="Left"/>
+                                    <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" x:Name="pieces_txt" TextAlignment="Center" TabIndex="5" Background="Ivory" Margin="3" DockPanel.Dock="Right"/>
+                                </DockPanel>
+                                <DockPanel>
+                                    <!--Mileage-->
+                                    <Label Content="Mileage" VerticalAlignment="Center" HorizontalAlignment="Center" DockPanel.Dock="Left"/>
+                                    <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" x:Name="mileage_txt" TextAlignment="Center" TabIndex="7" Background="Ivory" Margin="3" DockPanel.Dock="Right"/>
+                                </DockPanel>
+                                <DockPanel>
+                                    <!--Customer Rate-->
+                                    <Label Content="Customer Rate" VerticalAlignment="Center" HorizontalAlignment="Center" DockPanel.Dock="Left"/>
+                                    <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" x:Name="customerRate_txt" TextAlignment="Center" TabIndex="9" Background="Ivory" Margin="3" DockPanel.Dock="Right"/>
+                                </DockPanel>
+                            </StackPanel>
+                        </Grid>
+                    </GroupBox>
 
                     <!--Driver-->
                     <GroupBox Grid.Column="1" Grid.Row="9" Grid.ColumnSpan="2" Grid.RowSpan="3" Margin="-2"/>
@@ -284,7 +317,7 @@
                     <!--Email-->
                     <Label Content="Driver Email" Grid.Column="1" Grid.Row="11" VerticalAlignment="Center" HorizontalAlignment="Center" />
                     <ComboBox Name="driverEmail_cmbo" Background="Ivory" Margin="3" IsEditable="True" Height="30" HorizontalContentAlignment="Center" Grid.Column="2" Grid.Row="11" />
-                    
+
                     <!--Dispatch-->
                     <GroupBox Grid.ColumnSpan="2" Grid.RowSpan="3" Margin="-2" Grid.Column="3" Grid.Row="9" />
                     <!--Name-->
@@ -297,14 +330,24 @@
                     <Label Content="Dispatch Email" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="3" Grid.Row="11" />
                     <ComboBox Name="dispatchEmail_cmbo" Background="Ivory" Margin="3" IsEditable="True" Height="30" HorizontalContentAlignment="Center" Grid.Column="4" Grid.Row="11" />
 
+                    <!--Carrier Selection-->
+                    <GroupBox Header="Carrier" Grid.ColumnSpan="2" Grid.RowSpan="4" Grid.Column="1" Grid.Row="13">
+                        <StackPanel>
+                            <WrapPanel>
+                                <Button Content="Assign Carrier" Name="assignCarrier_btn" Margin="3"/>
+                                <Button Content="Remove Carrier" Name="removeCarrier_btn" Margin="3"/>
+                            </WrapPanel>
 
-                    <!--Customer-->
-                    <Label Content="Customer" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="3" Grid.Row="14" />
-                    <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" x:Name="customer_txt" TabIndex="12" Background="Ivory" Margin="3" Grid.Column="4" Grid.Row="14" />
+                            <Label Content="Carrier Name:" Name="carrierName_lbl"/>
 
-                    <!--Broker-->
-                    <Label Content="Broker" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="3" Grid.Row="13" />
-                    <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" x:Name="broker_txt" TabIndex="13" Background="Ivory" Margin="3" Grid.Column="4" Grid.Row="13" />
+                            <WrapPanel>
+                                <Label Content="Carrier MC#:" Name="carrierMC_lbl"/>
+                                <Label Content="Carrier DOT:" Name="carrierDot_lbl"/>
+                            </WrapPanel>
+
+                            <Label Content="Carrier Address:" Name="carrierAddress_lbl"/>
+                        </StackPanel>
+                    </GroupBox>
 
                     <!--Pick Up-->
                     <Label Content="Pick Date" Grid.Column="1" Grid.Row="18" VerticalAlignment="Center" HorizontalAlignment="Center" />
@@ -326,17 +369,24 @@
                     <Label Content="Delivery In" Grid.Column="3" Grid.Row="20" VerticalAlignment="Center" HorizontalAlignment="Center" />
                     <Label Content="Delivery Out" Grid.Column="3" Grid.Row="21" VerticalAlignment="Center" HorizontalAlignment="Center" />
 
+                    <!--Broker-->
+                    <Label Content="Broker" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="17" />
+                    <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" x:Name="broker_txt" TabIndex="13" Background="Ivory" Margin="3" Grid.Column="2" Grid.Row="17" />
+
+                    <!--Customer-->
+                    <Label Content="Customer" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="3" Grid.Row="17" />
+                    <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" x:Name="customer_txt" TabIndex="12" Background="Ivory" Margin="3" Grid.Column="4" Grid.Row="17" />
+
                     <!--Load View Buttons-->
-                    
                     <!--Update & New Button-->
                     <Button x:Name="update_btn" Content="New Load" Grid.Column="1" Grid.Row="1" Margin="3" Width="100" Click="update_btn_Click" />
-                    
+
                     <!--Clear Button-->
                     <Button x:Name="clear_btn" Content="Clear" Grid.Column="2" Grid.Row="1" Margin="3" Width="100" Click="clear_btn_Click" />
-                    
+
                     <!--Copy Button-->
                     <Button x:Name="copy_btn" Content="Copy Load" Grid.Column="3" Grid.Row="1" Margin="3" Width="100" Click="copy_btn_Click" IsEnabled="False"/>
-                    
+
                     <!--Delete Button-->
                     <Button x:Name="delete_btn" Content="Delete" Grid.Column="4" Grid.Row="1" Margin="3" Width="100" IsEnabled="False" Click="delete_btn_Click"/>
                 </Grid>

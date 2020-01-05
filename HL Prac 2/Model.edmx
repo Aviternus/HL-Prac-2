@@ -20,11 +20,21 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="street" Type="varchar" MaxLength="50" />
           <Property Name="city" Type="varchar" MaxLength="50" />
           <Property Name="state" Type="varchar" MaxLength="2" />
           <Property Name="zip" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Carriers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="mc_num" Type="varchar" MaxLength="10" />
+          <Property Name="dot_num" Type="varchar" MaxLength="10" />
+          <Property Name="billing_contact_id" Type="int" />
+          <Property Name="billing_address_id" Type="int" />
         </EntityType>
         <EntityType Name="Contacts">
           <Key>
@@ -107,6 +117,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="carriers_to_address">
+          <End Role="Addresses" Type="Self.Addresses" Multiplicity="0..1" />
+          <End Role="Carriers" Type="Self.Carriers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Addresses">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Carriers">
+              <PropertyRef Name="billing_address_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="carriers_to_contacts">
+          <End Role="Contacts" Type="Self.Contacts" Multiplicity="0..1" />
+          <End Role="Carriers" Type="Self.Carriers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contacts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Carriers">
+              <PropertyRef Name="billing_contact_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="loads2accounts">
           <End Role="Accounts" Type="Self.Accounts" Multiplicity="0..1" />
           <End Role="Loads" Type="Self.Loads" Multiplicity="*" />
@@ -146,6 +180,7 @@
         <EntityContainer Name="HOTLOADDBModelStoreContainer">
           <EntitySet Name="Accounts" EntityType="Self.Accounts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Addresses" EntityType="Self.Addresses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Carriers" EntityType="Self.Carriers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Contacts" EntityType="Self.Contacts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Loads" EntityType="Self.Loads" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
@@ -160,6 +195,14 @@
           <AssociationSet Name="accounts2contacts" Association="Self.accounts2contacts">
             <End Role="Contacts" EntitySet="Contacts" />
             <End Role="Accounts" EntitySet="Accounts" />
+          </AssociationSet>
+          <AssociationSet Name="carriers_to_address" Association="Self.carriers_to_address">
+            <End Role="Addresses" EntitySet="Addresses" />
+            <End Role="Carriers" EntitySet="Carriers" />
+          </AssociationSet>
+          <AssociationSet Name="carriers_to_contacts" Association="Self.carriers_to_contacts">
+            <End Role="Contacts" EntitySet="Contacts" />
+            <End Role="Carriers" EntitySet="Carriers" />
           </AssociationSet>
           <AssociationSet Name="loads2accounts" Association="Self.loads2accounts">
             <End Role="Accounts" EntitySet="Accounts" />
@@ -235,6 +278,15 @@
             <End Role="Account" EntitySet="Accounts" />
             <End Role="Load" EntitySet="Loads" />
           </AssociationSet>
+          <EntitySet Name="Carriers" EntityType="HOTLOADDBModel.Carrier" />
+          <AssociationSet Name="carriers_to_address" Association="HOTLOADDBModel.carriers_to_address">
+            <End Role="Address" EntitySet="Addresses" />
+            <End Role="Carrier" EntitySet="Carriers" />
+          </AssociationSet>
+          <AssociationSet Name="carriers_to_contacts" Association="HOTLOADDBModel.carriers_to_contacts">
+            <End Role="Contact" EntitySet="Contacts" />
+            <End Role="Carrier" EntitySet="Carriers" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Account">
           <Key>
@@ -261,6 +313,7 @@
           <Property Name="state" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="zip" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="Accounts" Relationship="HOTLOADDBModel.accounts2addresses" FromRole="Address" ToRole="Account" />
+          <NavigationProperty Name="Carriers" Relationship="HOTLOADDBModel.carriers_to_address" FromRole="Address" ToRole="Carrier" />
         </EntityType>
         <EntityType Name="Contact">
           <Key>
@@ -272,6 +325,7 @@
           <Property Name="contact_email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Accounts" Relationship="HOTLOADDBModel.accounts2billingcontacts" FromRole="Contact" ToRole="Account" />
           <NavigationProperty Name="Users" Relationship="HOTLOADDBModel.users2contacts" FromRole="Contact" ToRole="User" />
+          <NavigationProperty Name="Carriers" Relationship="HOTLOADDBModel.carriers_to_contacts" FromRole="Contact" ToRole="Carrier" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -357,6 +411,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Carrier">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="mc_num" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="dot_num" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="billing_contact_id" Type="Int32" />
+          <Property Name="billing_address_id" Type="Int32" />
+          <NavigationProperty Name="Address" Relationship="HOTLOADDBModel.carriers_to_address" FromRole="Carrier" ToRole="Address" />
+          <NavigationProperty Name="Contact" Relationship="HOTLOADDBModel.carriers_to_contacts" FromRole="Carrier" ToRole="Contact" />
+        </EntityType>
+        <Association Name="carriers_to_address">
+          <End Type="HOTLOADDBModel.Address" Role="Address" Multiplicity="0..1" />
+          <End Type="HOTLOADDBModel.Carrier" Role="Carrier" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Carrier">
+              <PropertyRef Name="billing_address_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="carriers_to_contacts">
+          <End Type="HOTLOADDBModel.Contact" Role="Contact" Multiplicity="0..1" />
+          <End Type="HOTLOADDBModel.Carrier" Role="Carrier" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contact">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Carrier">
+              <PropertyRef Name="billing_contact_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -431,6 +521,17 @@
                 <ScalarProperty Name="username" ColumnName="username" />
                 <ScalarProperty Name="contact_id" ColumnName="contact_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Carriers">
+            <EntityTypeMapping TypeName="HOTLOADDBModel.Carrier">
+              <MappingFragment StoreEntitySet="Carriers">
+                <ScalarProperty Name="billing_address_id" ColumnName="billing_address_id" />
+                <ScalarProperty Name="billing_contact_id" ColumnName="billing_contact_id" />
+                <ScalarProperty Name="dot_num" ColumnName="dot_num" />
+                <ScalarProperty Name="mc_num" ColumnName="mc_num" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

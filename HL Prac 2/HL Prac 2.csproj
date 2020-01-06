@@ -76,8 +76,14 @@
     <Compile Include="Carrier.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="CarrierSelectorWindow.xaml.cs">
+      <DependentUpon>CarrierSelectorWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Contact.cs">
       <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContactSelectorWindow.xaml.cs">
+      <DependentUpon>ContactSelectorWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Load.cs">
       <DependentUpon>Model.tt</DependentUpon>
@@ -101,6 +107,14 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModel.cs" />
+    <Page Include="CarrierSelectorWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ContactSelectorWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

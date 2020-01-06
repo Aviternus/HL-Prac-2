@@ -1,0 +1,81 @@
+﻿<Window x:Class="HL_Prac_2.ContactSelectorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HL_Prac_2"
+        mc:Ignorable="d"
+       Title="Contact Selector" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" FontFamily="Book Antiqua" Background="GhostWhite">
+    <!--Rounded Text Box Resource Template-->
+    <Window.Resources>
+        <ControlTemplate x:Key="TextBoxBaseControlTemplate" TargetType="{x:Type TextBoxBase}">
+            <Border Background="{TemplateBinding Background}" 
+                x:Name="Bd" BorderBrush="Gray"
+                BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="10">
+                <ScrollViewer x:Name="PART_ContentHost"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" TargetName="Bd"/>
+                    <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                </Trigger>
+                <Trigger Property="Width" Value="Auto">
+                    <Setter Property="MinWidth" Value="25"/>
+                </Trigger>
+                <Trigger Property="Height" Value="Auto">
+                    <Setter Property="MinHeight" Value="20"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="175"/>
+            <ColumnDefinition Width="175"/>
+            <ColumnDefinition Width="5"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="5"/>
+        </Grid.RowDefinitions>
+
+        <!--Contact DataGrid-->
+        <DataGrid Name="ContactSearchDataGrid" AutoGenerateColumns="False" AlternatingRowBackground="Cornsilk" Background="Ivory" IsReadOnly="True" Grid.ColumnSpan="2" Grid.RowSpan="4" Grid.Column="1" Grid.Row="1" MouseDoubleClick="ContactSearchDataGrid_MouseDoubleClick">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Contact Name" x:Name="contactNameColumn" Binding="{Binding contact_name}" />
+                <DataGridTextColumn Header="Contact Phone" x:Name="contactPhoneColumn" Binding="{Binding contact_phone}" />
+                <DataGridTextColumn Header="Contact Email" x:Name="contactEmailColumn" Binding="{Binding contact_email}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!--Input Fields-->
+        <!--Contact Name-->
+        <Label Content="Contact Name" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="5" />
+        <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" Name="contactName_txt" TabIndex="1" Background="Ivory" Margin="3" Grid.Column="2" Grid.Row="5" HorizontalContentAlignment="Center" TextChanged="contactName_txt_TextChanged"/>
+
+        <!--Contact Phone-->
+        <Label Content="Contact Phone" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="6" />
+        <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" Name="contactPhone_txt" TabIndex="1" Background="Ivory" Margin="3" Grid.Column="2" Grid.Row="6" HorizontalContentAlignment="Center" TextChanged="contactPhone_txt_TextChanged"/>
+
+        <!--Contact Email-->
+        <Label Content="Contact Email" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="7" />
+        <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" Name="contactEmail_txt" TabIndex="1" Background="Ivory" Margin="3" Grid.Column="2" Grid.Row="7" HorizontalContentAlignment="Center" TextChanged="contactEmail_txt_TextChanged"/>
+
+        <WrapPanel HorizontalAlignment="Center" Grid.ColumnSpan="2"  Grid.Column="1" Grid.Row="8">
+            <!--Buttons-->
+            <Button Name="confirm_btn" Content="Confirm" Margin="5" Width="100" Height="25" Click="confirm_btn_Click"/>
+            <Button Name="clear_btn" Content="Clear" Margin="5" Width="100" Height="25" Click="clear_btn_Click"/>
+            <Button Name="cancel_btn" Content="Cancel" Margin="5" Width="100" Height="25" Click="cancel_btn_Click"/>
+        </WrapPanel>
+    </Grid>
+</Window>

@@ -14,11 +14,12 @@ namespace HL_Prac_2
     
     public partial class Carrier
     {
-        public int Id { get; set; }
         public string mc_num { get; set; }
         public string dot_num { get; set; }
         public Nullable<int> billing_contact_id { get; set; }
         public Nullable<int> billing_address_id { get; set; }
+        public int id { get; set; }
+        public string carrier_name { get; set; }
     
         public virtual Address Address { get; set; }
         public virtual Contact Contact { get; set; }

@@ -28,9 +28,10 @@
         </EntityType>
         <EntityType Name="Carriers">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="id" />
           </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="carrier_name" Type="varchar" MaxLength="50" />
           <Property Name="mc_num" Type="varchar" MaxLength="10" />
           <Property Name="dot_num" Type="varchar" MaxLength="10" />
           <Property Name="billing_contact_id" Type="int" />
@@ -413,15 +414,16 @@
         </Association>
         <EntityType Name="Carrier">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="mc_num" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="dot_num" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="billing_contact_id" Type="Int32" />
           <Property Name="billing_address_id" Type="Int32" />
           <NavigationProperty Name="Address" Relationship="HOTLOADDBModel.carriers_to_address" FromRole="Carrier" ToRole="Address" />
           <NavigationProperty Name="Contact" Relationship="HOTLOADDBModel.carriers_to_contacts" FromRole="Carrier" ToRole="Contact" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="carrier_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="carriers_to_address">
           <End Type="HOTLOADDBModel.Address" Role="Address" Multiplicity="0..1" />
@@ -527,11 +529,12 @@
           <EntitySetMapping Name="Carriers">
             <EntityTypeMapping TypeName="HOTLOADDBModel.Carrier">
               <MappingFragment StoreEntitySet="Carriers">
+                <ScalarProperty Name="carrier_name" ColumnName="carrier_name" />
+                <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="billing_address_id" ColumnName="billing_address_id" />
                 <ScalarProperty Name="billing_contact_id" ColumnName="billing_contact_id" />
                 <ScalarProperty Name="dot_num" ColumnName="dot_num" />
                 <ScalarProperty Name="mc_num" ColumnName="mc_num" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

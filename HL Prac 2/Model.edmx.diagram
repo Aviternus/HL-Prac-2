@@ -5,7 +5,7 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="2c8b412a0268407ba7394a04c21832cd" Name="Diagram1">
-        <EntityTypeShape EntityType="HOTLOADDBModel.Load" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HOTLOADDBModel.Load" Width="1.5" PointX="0.75" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="HOTLOADDBModel.Account" Width="1.5" PointX="5.625" PointY="1" />
         <EntityTypeShape EntityType="HOTLOADDBModel.Address" Width="1.5" PointX="3.375" PointY="5.25" />
         <EntityTypeShape EntityType="HOTLOADDBModel.Contact" Width="1.5" PointX="3.375" PointY="1.125" />

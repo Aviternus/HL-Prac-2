@@ -331,11 +331,11 @@
                     <ComboBox Name="dispatchEmail_cmbo" Background="Ivory" Margin="3" IsEditable="True" Height="30" HorizontalContentAlignment="Center" Grid.Column="4" Grid.Row="11" />
 
                     <!--Carrier Selection-->
-                    <GroupBox Header="Carrier" Grid.ColumnSpan="2" Grid.RowSpan="4" Grid.Column="1" Grid.Row="13">
+                    <GroupBox Header="Carrier" Grid.ColumnSpan="2" Grid.RowSpan="3" Grid.Column="1" Grid.Row="13">
                         <StackPanel>
                             <WrapPanel>
-                                <Button Content="Assign Carrier" Name="assignCarrier_btn" Margin="3"/>
-                                <Button Content="Remove Carrier" Name="removeCarrier_btn" Margin="3"/>
+                                <Button Content="Assign Carrier" Name="assignCarrier_btn" Margin="3" Click="assignCarrier_btn_Click"/>
+                                <Button Content="Remove Carrier" Name="removeCarrier_btn" Margin="3" Click="removeCarrier_btn_Click"/>
                             </WrapPanel>
 
                             <Label Content="Carrier Name:" Name="carrierName_lbl"/>
@@ -344,8 +344,6 @@
                                 <Label Content="Carrier MC#:" Name="carrierMC_lbl"/>
                                 <Label Content="Carrier DOT:" Name="carrierDot_lbl"/>
                             </WrapPanel>
-
-                            <Label Content="Carrier Address:" Name="carrierAddress_lbl"/>
                         </StackPanel>
                     </GroupBox>
 

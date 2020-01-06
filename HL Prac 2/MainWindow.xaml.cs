@@ -16,6 +16,8 @@ namespace HL_Prac_2
     /// </summary>
     public partial class MainWindow : Window
     {
+        Load CurrentLoad; //May remove later if unused
+        private Carrier CurrentCarrier; //Used to retrieve carrier from carrier selector
         public MainWindow()
         {
             InitializeComponent();
@@ -62,6 +64,9 @@ namespace HL_Prac_2
             //disable copy & delete buttons
             delete_btn.IsEnabled = false;
             copy_btn.IsEnabled = false;
+
+            //Reset CurrentCarrier
+            CurrentCarrier = null;
         }
 
         //Update or Create Button
@@ -658,6 +663,37 @@ namespace HL_Prac_2
                     break;
             }
             return comboBoxIndex;
+        }
+        //Carrier selection button triggers
+        private void assignCarrier_btn_Click(object sender, RoutedEventArgs e)
+        {
+            CarrierSelectorWindow carrierSelector = new CarrierSelectorWindow();
+            carrierSelector.RaiseCarrierEvent += new EventHandler<CarrierEvent>(carrierSearch_RaiseCustomEvent);
+            carrierSelector.Show();
+        }
+
+        private void removeCarrier_btn_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentCarrier = null;
+            carrierName_lbl.Content = "Carrier Name:";
+            carrierMC_lbl.Content = "MC#:";
+            carrierDot_lbl.Content = "DOT#:";
+        }
+        //Method to update cucrrent carrier and set carrier fields on new carrier selection
+        private void UpdateCarrierFields(Carrier newCarrier)
+        {
+            if(newCarrier != null)
+            {
+                CurrentCarrier = newCarrier;
+                carrierName_lbl.Content = newCarrier.carrier_name;
+                carrierMC_lbl.Content = "MC#:" + newCarrier.mc_num;
+                carrierDot_lbl.Content = "DOT#:" + newCarrier.dot_num;
+            }        
+        }
+        //Event to get Carrier from Carrier selector window
+        void carrierSearch_RaiseCustomEvent(object sender, CarrierEvent e)
+        {
+            UpdateCarrierFields(e.ReturnCarrier);
         }
     }
 }

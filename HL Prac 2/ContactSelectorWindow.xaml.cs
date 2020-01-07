@@ -16,7 +16,7 @@ namespace HL_Prac_2
 {
     public partial class ContactSelectorWindow : Window
     {
-        public event EventHandler<ContactEvent> RaiseCustomEvent;
+        public event EventHandler<ContactEvent> RaiseContactEvent;
         Contact SelectedContact;
         public ContactSelectorWindow()
         {
@@ -116,18 +116,6 @@ namespace HL_Prac_2
             }
         }
 
-        //Datagrid double click select method
-        public void SelectContact()
-        {
-            if (ContactSearchDataGrid.SelectedIndex != -1)
-            {
-                Contact selectedContact = (Contact)ContactSearchDataGrid.SelectedItem;
-
-                //Set Input Fields to selection
-                UpdateContact(selectedContact);
-            }
-        }
-
         //Button trigger methods
         private void ContactSearchDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -183,7 +171,7 @@ namespace HL_Prac_2
 
             UpdateContact(newContact);
             //Pass data to parent
-            RaiseCustomEvent(this, new ContactEvent(SelectedContact));
+            RaiseContactEvent(this, new ContactEvent(SelectedContact));
             this.Close();
         }
 

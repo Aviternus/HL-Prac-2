@@ -73,6 +73,9 @@
     <Compile Include="Address.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="AddressSelectorWindow.xaml.cs">
+      <DependentUpon>AddressSelectorWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Carrier.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -107,6 +110,10 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModel.cs" />
+    <Page Include="AddressSelectorWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CarrierSelectorWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

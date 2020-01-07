@@ -181,18 +181,16 @@ namespace HL_Prac_2
         private void contactSelect_btn_Click(object sender, RoutedEventArgs e)
         {
             ContactSelectorWindow contactSelector = new ContactSelectorWindow(billingContact);
-            contactSelector.RaiseCustomEvent += new EventHandler<ContactEvent>(contactSelector_RaiseCustomEvent);
+            contactSelector.RaiseContactEvent += new EventHandler<ContactEvent>(contactSelector_RaiseCustomEvent);
             contactSelector.Show();
         }
 
         private void addressSelect_btn_Click(object sender, RoutedEventArgs e)
         {
-            //TODO Add Address selector
-            /*
-             * addressSelectorWindow addressSearch = new AddressSelectorWindow(billingAddress);            
+            
+            AddressSelectorWindow addressSearch = new AddressSelectorWindow(billingAddress);            
             addressSearch.RaiseAddressEvent += new EventHandler<AddressEvent>(addressSearch_RaiseCustomEvent);
             addressSearch.Show();
-             */
         }
 
         //Window button triggers
@@ -265,6 +263,21 @@ namespace HL_Prac_2
             if (SelectedCarrier != null) //Handles exception if contact is selected but no carrier is selected
             {
                 SelectedCarrier.billing_contact_id = billingContact.id;
+                using (HOTLOADDBEntities HOTLOADEntity = new HOTLOADDBEntities())
+                {
+                    HOTLOADEntity.Entry(SelectedCarrier).State = EntityState.Modified;
+                    HOTLOADEntity.SaveChanges();
+                }
+            }
+        }
+
+        //Event to get Address from Address selector
+        void addressSearch_RaiseCustomEvent(object sender, AddressEvent e)
+        {
+            UpdateBillingAddressFields(e.ReturnAddress);
+            if (SelectedCarrier != null)//Handles exception if address is selected but no carrier is selected
+            {
+                SelectedCarrier.billing_address_id = billingAddress.id;
                 using (HOTLOADDBEntities HOTLOADEntity = new HOTLOADDBEntities())
                 {
                     HOTLOADEntity.Entry(SelectedCarrier).State = EntityState.Modified;

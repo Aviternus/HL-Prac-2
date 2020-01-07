@@ -16,12 +16,112 @@ namespace HL_Prac_2
     /// </summary>
     public partial class MainWindow : Window
     {
-        Load CurrentLoad; //May remove later if unused
+        Load CurrentLoad; //TODO see about refactoring some methods using this object as it may vastly simplify things
         private Carrier CurrentCarrier; //Used to retrieve carrier from carrier selector
         public MainWindow()
         {
             InitializeComponent();
             Search();
+        }
+
+        //Search function
+        private void Search()
+        {
+            using (HOTLOADDBEntities HOTLOADEntity = new HOTLOADDBEntities())
+            {
+                //Timespan handling
+                TimeSpan pickTimeStart = TimeSpan.Zero;
+                TimeSpan pickTimeEnd = TimeSpan.Zero;
+                TimeSpan dropTimeStart = TimeSpan.Zero;
+                TimeSpan dropTimeEnd = TimeSpan.Zero;
+                try { pickTimeStart = TimeSpanBuilder(pickTimeStartSearch_txt.Text); }
+                catch (System.Exception)
+                {//Ignore
+                }
+                try { pickTimeEnd = TimeSpanBuilder(pickTimeEndSearch_txt.Text); }
+                catch (System.Exception)
+                {//Ignore
+                }
+                try { dropTimeStart = TimeSpanBuilder(dropTimeStartSearch_txt.Text); }
+                catch (System.Exception)
+                {//Ignore
+                }
+                try { dropTimeEnd = TimeSpanBuilder(dropTimeEndSearch_txt.Text); }
+                catch (System.Exception)
+                {//Ignore
+                }
+
+                var matchedLoads = (
+                                from loads in HOTLOADEntity.Loads
+                                    //Drivers join
+                                join drivers in HOTLOADEntity.Contacts
+                                on loads.driver_id equals drivers.id
+                                //Dispatchers join
+                                join dispatchers in HOTLOADEntity.Contacts
+                                on loads.dispatch_id equals dispatchers.id
+
+                                where
+                                loads.bol_num.ToString().Contains(bolSearch_txt.Text) &&
+                                loads.pro_num.ToString().Contains(proSearch_txt.Text) &&
+                                loads.quote_num.ToString().Contains(quoteSearch_txt.Text) &&
+                                loads.ref_num.ToString().Contains(refSearch_txt.Text) &&
+
+                                //Pick Date search terms
+                                ((pickDateStart_dtpckr.SelectedDate == null || loads.pick_date >= pickDateStart_dtpckr.SelectedDate) &&
+
+                                (pickDateEnd_dtpckr.SelectedDate == null || loads.pick_date <= pickDateEnd_dtpckr.SelectedDate)) &&
+
+                                //Pick Time search terms
+                                ((pickTimeStartSearch_txt.Text == null || pickTimeStart == TimeSpan.Zero || loads.pick_time.Value >= pickTimeStart) &&
+                                (pickTimeEndSearch_txt.Text == null || pickTimeEnd == TimeSpan.Zero || loads.pick_time.Value <= pickTimeEnd)) &&
+
+                                //Drop Date Search terms
+                                ((dropDateStart_dtpckr.SelectedDate == null || loads.drop_date >= dropDateStart_dtpckr.SelectedDate) &&
+
+                                (dropDateEnd_dtpckr.SelectedDate == null || loads.drop_date <= dropDateEnd_dtpckr.SelectedDate)) &&
+
+                                //Drop Time search terms
+                                ((dropTimeStartSearch_txt.Text == null || dropTimeStart == TimeSpan.Zero || loads.drop_time.Value >= dropTimeStart) &&
+                                (dropTimeEndSearch_txt.Text == null || dropTimeEnd == TimeSpan.Zero || loads.drop_time.Value <= dropTimeEnd))
+
+                                select new ViewModel
+                                {
+                                    //Load properties
+                                    bol_num = loads.bol_num,
+                                    load_status = loads.load_status,
+                                    pro_num = loads.pro_num,
+                                    quote_num = loads.quote_num,
+                                    ref_num = loads.ref_num,
+                                    weight = loads.weight,
+                                    pieces = loads.pieces,
+                                    commodity = loads.commodity,
+                                    mileage = loads.mileage,
+                                    carrier_rate = loads.carrier_rate,
+                                    customer_rate = loads.customer_rate,
+                                    pick_date = loads.pick_date,
+                                    pick_time = loads.pick_time,
+                                    drop_date = loads.drop_date,
+                                    drop_time = loads.drop_time,
+                                    last_updated_time = loads.last_updated_time,
+                                    driver_id = loads.driver_id,
+                                    dispatch_id = loads.dispatch_id,
+                                    customer_id = loads.customer_id,
+                                    broker_id = loads.broker_id,
+                                    account_id = loads.account_id,
+
+                                    //Driver properties
+                                    driverContact_name = drivers.contact_name,
+                                    driverContact_phone = drivers.contact_phone,
+                                    driverContact_email = drivers.contact_email,
+
+                                    //Dispatch properties
+                                    dispatchContact_name = dispatchers.contact_name,
+                                    dispatchContact_phone = dispatchers.contact_phone,
+                                    dispatchContact_email = dispatchers.contact_email,
+                                });
+
+                LoadBoard.ItemsSource = matchedLoads.ToList();
+            }
         }
 
         public void Clear()
@@ -47,7 +147,6 @@ namespace HL_Prac_2
             DropIn_txt.Clear();
             DropOut_txt.Clear();
 
-
             dispatchName_cmbo.Text = "";
             dispatchPhone_cmbo.Text = "";
             dispatchEmail_cmbo.Text = "";
@@ -67,6 +166,7 @@ namespace HL_Prac_2
 
             //Reset CurrentCarrier
             CurrentCarrier = null;
+            UpdateCarrierFields();
         }
 
         //Update or Create Button
@@ -176,6 +276,9 @@ namespace HL_Prac_2
                 loadModel.customer_id = Convert.ToInt32(customer_txt.Text.Trim());
                 loadModel.broker_id = Convert.ToInt32(broker_txt.Text.Trim());
 
+                //Update carrier id from current carrier if there is one
+                loadModel.carrier_id = CurrentCarrier.id;
+
                 //Last updated
                 loadModel.last_updated_time = DateTime.Now;
 
@@ -196,8 +299,7 @@ namespace HL_Prac_2
                     //Save the changes
                     HOTLOADEntity.SaveChanges();
                     Search();
-                }
-                
+                }               
             }
             //Entity Model Exception handler
             catch (DbEntityValidationException dbEx)
@@ -214,6 +316,10 @@ namespace HL_Prac_2
                     }
                 }
             }
+            //Reset current object selections
+            CurrentCarrier = null;
+            CurrentLoad = null;
+            UpdateCarrierFields();
         }
 
         //Copy Load button
@@ -227,14 +333,26 @@ namespace HL_Prac_2
         {
             if (LoadBoard.SelectedIndex != -1)
             {
+                //Reset current object selections
+                CurrentCarrier = null;
+                CurrentLoad = null;
+                UpdateCarrierFields();
                 //Load model
                 ViewModel SelectedItem = (ViewModel)LoadBoard.SelectedItem;
                 using (HOTLOADDBEntities HOTLOADEntity = new HOTLOADDBEntities())
                 {
                     //Get the load model from the ViewModel
                     Load loadModel = HOTLOADEntity.Loads.Find(SelectedItem.bol_num);
+                    loadModel = HOTLOADEntity.Loads.Where(x => x.bol_num == loadModel.bol_num).FirstOrDefault(); //TODO TEST IF THESE LINES ARE REDUNDANT
 
-                    loadModel = HOTLOADEntity.Loads.Where(x => x.bol_num == loadModel.bol_num).FirstOrDefault();
+                    //Set current Carrier and Load objects
+                    CurrentLoad = loadModel;
+                    if (loadModel.carrier_id != null)
+                    {
+                        CurrentCarrier = HOTLOADEntity.Carriers.Find(loadModel.carrier_id);
+                        UpdateCarrierFields(CurrentCarrier);
+                    }
+
                     bol_txt.Text = loadModel.bol_num.ToString();
                     loadStatus_cmbo.SelectedIndex = ParseStatus(loadModel.load_status);
                     pro_txt.Text = loadModel.pro_num.ToString();
@@ -301,105 +419,7 @@ namespace HL_Prac_2
                 }
         }
 
-        //Search function
-        private void Search()
-        {
-            using (HOTLOADDBEntities HOTLOADEntity = new HOTLOADDBEntities())
-            {
-                //Timespan handling
-                TimeSpan pickTimeStart = TimeSpan.Zero;
-                TimeSpan pickTimeEnd = TimeSpan.Zero;
-                TimeSpan dropTimeStart = TimeSpan.Zero;
-                TimeSpan dropTimeEnd = TimeSpan.Zero;
-                try { pickTimeStart = TimeSpanBuilder(pickTimeStartSearch_txt.Text); }
-                catch (System.Exception)
-                {//Ignore
-                }
-                try { pickTimeEnd = TimeSpanBuilder(pickTimeEndSearch_txt.Text); }
-                catch (System.Exception)
-                {//Ignore
-                }
-                try { dropTimeStart = TimeSpanBuilder(dropTimeStartSearch_txt.Text); }
-                catch (System.Exception)
-                {//Ignore
-                }
-                try { dropTimeEnd = TimeSpanBuilder(dropTimeEndSearch_txt.Text); }
-                catch (System.Exception)
-                {//Ignore
-                }
-
-                var matchedLoads = (
-                                from loads in HOTLOADEntity.Loads
-                                //Drivers join
-                                join drivers in HOTLOADEntity.Contacts
-                                on loads.driver_id equals drivers.id
-                                //Dispatchers join
-                                join dispatchers in HOTLOADEntity.Contacts
-                                on loads.dispatch_id equals dispatchers.id
-
-                                where
-                                loads.bol_num.ToString().Contains(bolSearch_txt.Text) &&
-                                loads.pro_num.ToString().Contains(proSearch_txt.Text) &&
-                                loads.quote_num.ToString().Contains(quoteSearch_txt.Text) &&
-                                loads.ref_num.ToString().Contains(refSearch_txt.Text) &&
-
-                                //Pick Date search terms
-                                ((pickDateStart_dtpckr.SelectedDate == null || loads.pick_date >= pickDateStart_dtpckr.SelectedDate) &&
-
-                                (pickDateEnd_dtpckr.SelectedDate == null || loads.pick_date <= pickDateEnd_dtpckr.SelectedDate)) &&
-
-                                //Pick Time search terms
-                                ((pickTimeStartSearch_txt.Text == null || pickTimeStart == TimeSpan.Zero || loads.pick_time.Value >= pickTimeStart) &&
-                                (pickTimeEndSearch_txt.Text == null || pickTimeEnd == TimeSpan.Zero || loads.pick_time.Value <= pickTimeEnd)) &&
-
-                                //Drop Date Search terms
-                                ((dropDateStart_dtpckr.SelectedDate == null || loads.drop_date >= dropDateStart_dtpckr.SelectedDate) &&
-
-                                (dropDateEnd_dtpckr.SelectedDate == null || loads.drop_date <= dropDateEnd_dtpckr.SelectedDate)) &&
-
-                                //Drop Time search terms
-                                ((dropTimeStartSearch_txt.Text == null || dropTimeStart == TimeSpan.Zero || loads.drop_time.Value >= dropTimeStart) &&
-                                (dropTimeEndSearch_txt.Text == null || dropTimeEnd == TimeSpan.Zero || loads.drop_time.Value <= dropTimeEnd))
-
-                                select new ViewModel
-                                {
-                                    //Load properties
-                                    bol_num = loads.bol_num,
-                                    load_status = loads.load_status,
-                                    pro_num = loads.pro_num,
-                                    quote_num = loads.quote_num,
-                                    ref_num = loads.ref_num,
-                                    weight = loads.weight,
-                                    pieces = loads.pieces,
-                                    commodity = loads.commodity,
-                                    mileage = loads.mileage,
-                                    carrier_rate = loads.carrier_rate,
-                                    customer_rate = loads.customer_rate,
-                                    pick_date = loads.pick_date,
-                                    pick_time = loads.pick_time,
-                                    drop_date = loads.drop_date,
-                                    drop_time = loads.drop_time,
-                                    last_updated_time = loads.last_updated_time,
-                                    driver_id = loads.driver_id,
-                                    dispatch_id = loads.dispatch_id,
-                                    customer_id = loads.customer_id,
-                                    broker_id = loads.broker_id,
-                                    account_id = loads.account_id,
-
-                                    //Driver properties
-                                    driverContact_name = drivers.contact_name,
-                                    driverContact_phone = drivers.contact_phone,
-                                    driverContact_email = drivers.contact_email,
-
-                                    //Dispatch properties
-                                    dispatchContact_name = dispatchers.contact_name,
-                                    dispatchContact_phone = dispatchers.contact_phone,
-                                    dispatchContact_email = dispatchers.contact_email,
-                                });
-
-                LoadBoard.ItemsSource = matchedLoads.ToList();
-            }  
-        }
+        
 
         //Column Display Control
         private void ColumnController(object sender, System.Windows.Controls.ContextMenuEventArgs e)
@@ -472,90 +492,6 @@ namespace HL_Prac_2
                 }
             }
         }
-        //Driver auto fill method
-        public void DriverAutoFill(object sender, EventArgs e)
-        {
-            string name = driverName_cmbo.Text;
-            string phone = driverPhone_cmbo.Text;
-            string email = driverEmail_cmbo.Text;
-
-            try
-            {
-                using (HOTLOADDBEntities HOTLOADDBEntity = new HOTLOADDBEntities())
-                {
-                    List<string> possibleDriverNames = new List<string>();
-                    List<string> possibleDriverPhones = new List<string>();
-                    List<string> possibleDriverEmails = new List<string>();
-
-                    var queryToList =
-                        (from drivers in HOTLOADDBEntity.Contacts
-                            where drivers.contact_name.Contains(name)
-                            select new
-                            {
-                                driverName = drivers.contact_name,
-                                driverPhone = drivers.contact_phone,
-                                driverEmail = drivers.contact_email,
-                            }).ToList();
-
-                    List<Contact> possibleDrivers =
-                        queryToList.Select(x => new Contact
-                        {
-                            contact_name = x.driverName,
-                            contact_phone = x.driverPhone,
-                            contact_email = x.driverEmail,
-                        }).ToList();
-
-                    foreach (Contact driver in possibleDrivers)
-                    {
-                        possibleDriverNames.Add(driver.contact_name);
-                        possibleDriverPhones.Add(driver.contact_phone);
-                        possibleDriverEmails.Add(driver.contact_email);
-                    }
-
-                    bool singleMatch = (possibleDrivers.Count == 1) && 
-                        (name == possibleDriverNames[0]) || (phone == possibleDriverPhones[0]) || (email == possibleDriverEmails[0]);
-
-                    if (singleMatch)
-                    {
-                        driverName_cmbo.Text = possibleDrivers.ElementAt(0).contact_name;
-                        driverPhone_cmbo.Text = possibleDrivers.ElementAt(0).contact_phone;
-                        driverEmail_cmbo.Text = possibleDrivers.ElementAt(0).contact_email;
-                    }
-
-                    driverName_cmbo.ItemsSource = possibleDriverNames;
-                    driverPhone_cmbo.ItemsSource = possibleDriverPhones;
-                    driverEmail_cmbo.ItemsSource = possibleDriverEmails;
-
-                    if (sender == driverName_cmbo)
-                    {
-                        driverName_cmbo.IsDropDownOpen = true;
-                    }
-                    else if (sender == driverPhone_cmbo)
-                    {
-                        driverPhone_cmbo.IsDropDownOpen = true;
-                    }
-                    else if (sender == driverEmail_cmbo)
-                    {
-                        driverEmail_cmbo.IsDropDownOpen = true;
-                    }
-
-                    name = "";
-                    phone = "";
-                    email = "";
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        //Dispatch AutoFill
-        public void DispatchAutoFill(object sender, EventArgs e)
-        {
-
-        }
-
 
         /********************
          *  Helper Methods  *
@@ -679,21 +615,36 @@ namespace HL_Prac_2
             carrierMC_lbl.Content = "MC#:";
             carrierDot_lbl.Content = "DOT#:";
         }
-        //Method to update cucrrent carrier and set carrier fields on new carrier selection
+        //Over loaded Method to update cucrrent carrier and set carrier fields on new carrier selection or to reset them if no carrier is passed
         private void UpdateCarrierFields(Carrier newCarrier)
         {
             if(newCarrier != null)
             {
                 CurrentCarrier = newCarrier;
-                carrierName_lbl.Content = newCarrier.carrier_name;
-                carrierMC_lbl.Content = "MC#:" + newCarrier.mc_num;
-                carrierDot_lbl.Content = "DOT#:" + newCarrier.dot_num;
-            }        
+                carrierName_lbl.Content = CurrentCarrier.carrier_name;
+                carrierMC_lbl.Content = "MC#:" + CurrentCarrier.mc_num;
+                carrierDot_lbl.Content = "DOT#:" + CurrentCarrier.dot_num;
+            }     
+        }
+        private void UpdateCarrierFields()
+        {
+            carrierName_lbl.Content = "Name:";
+            carrierMC_lbl.Content = "MC#:";
+            carrierDot_lbl.Content = "DOT#:";
         }
         //Event to get Carrier from Carrier selector window
         void carrierSearch_RaiseCustomEvent(object sender, CarrierEvent e)
         {
             UpdateCarrierFields(e.ReturnCarrier);
+            if (CurrentLoad != null) //Handles exception if carrier is selected but no load is selected
+            {
+                CurrentLoad.carrier_id = CurrentCarrier.id;
+                using (HOTLOADDBEntities HOTLOADEntity = new HOTLOADDBEntities())
+                {
+                    HOTLOADEntity.Entry(CurrentLoad).State = EntityState.Modified;
+                    HOTLOADEntity.SaveChanges();
+                }
+            }
         }
     }
 }

@@ -277,7 +277,7 @@ namespace HL_Prac_2
                 loadModel.broker_id = Convert.ToInt32(broker_txt.Text.Trim());
 
                 //Update carrier id from current carrier if there is one
-                if (CurrentCarrier != null) 
+                if (CurrentCarrier != null) //Handles error when saving a load without a carrier
                 {
                     loadModel.carrier_id = CurrentCarrier.id;
                 }

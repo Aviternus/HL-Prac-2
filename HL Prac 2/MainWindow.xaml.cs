@@ -277,7 +277,14 @@ namespace HL_Prac_2
                 loadModel.broker_id = Convert.ToInt32(broker_txt.Text.Trim());
 
                 //Update carrier id from current carrier if there is one
-                loadModel.carrier_id = CurrentCarrier.id;
+                if (CurrentCarrier != null) 
+                {
+                    loadModel.carrier_id = CurrentCarrier.id;
+                }
+                else
+                {
+                    loadModel.carrier_id = null;
+                }
 
                 //Last updated
                 loadModel.last_updated_time = DateTime.Now;

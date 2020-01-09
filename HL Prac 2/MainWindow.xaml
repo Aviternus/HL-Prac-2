@@ -306,30 +306,6 @@
                         </Grid>
                     </GroupBox>
 
-                    <!--Driver-->
-                    <GroupBox Grid.Column="1" Grid.Row="9" Grid.ColumnSpan="2" Grid.RowSpan="3" Margin="-2"/>
-                    <!--Name-->
-                    <Label Content="Driver Name" Grid.Column="1" Grid.Row="9" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                    <ComboBox Name="driverName_cmbo" Background="Ivory" Margin="3" IsEditable="True" Height="30" HorizontalContentAlignment="Center" Grid.Column="2" Grid.Row="9" />
-                    <!--Phone-->
-                    <Label Content="Driver Phone" Grid.Column="1" Grid.Row="10" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                    <ComboBox Name="driverPhone_cmbo" Background="Ivory" Margin="3" IsEditable="True" Height="30" HorizontalContentAlignment="Center" Grid.Column="2" Grid.Row="10" />
-                    <!--Email-->
-                    <Label Content="Driver Email" Grid.Column="1" Grid.Row="11" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                    <ComboBox Name="driverEmail_cmbo" Background="Ivory" Margin="3" IsEditable="True" Height="30" HorizontalContentAlignment="Center" Grid.Column="2" Grid.Row="11" />
-
-                    <!--Dispatch-->
-                    <GroupBox Grid.ColumnSpan="2" Grid.RowSpan="3" Margin="-2" Grid.Column="3" Grid.Row="9" />
-                    <!--Name-->
-                    <Label Content="Dispatch Name" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="3" Grid.Row="9" />
-                    <ComboBox Name="dispatchName_cmbo" Background="Ivory" Margin="3" IsEditable="True" Height="30" HorizontalContentAlignment="Center" Grid.Column="4" Grid.Row="9" />
-                    <!--Phone-->
-                    <Label Content="Dispatch Phone" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="3" Grid.Row="10" />
-                    <ComboBox Name="dispatchPhone_cmbo" Background="Ivory" Margin="3" IsEditable="True" Height="30" HorizontalContentAlignment="Center" Grid.Column="4" Grid.Row="10" />
-                    <!--Email-->
-                    <Label Content="Dispatch Email" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="3" Grid.Row="11" />
-                    <ComboBox Name="dispatchEmail_cmbo" Background="Ivory" Margin="3" IsEditable="True" Height="30" HorizontalContentAlignment="Center" Grid.Column="4" Grid.Row="11" />
-
                     <!--Carrier Selection-->
                     <GroupBox Header="Carrier" Grid.ColumnSpan="2" Grid.RowSpan="3" Grid.Column="1" Grid.Row="12">
                         <StackPanel>

@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\avite\source\repos\HL Prac 2\HL Prac 2\Model.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\HAL 3000\source\repos\Aviternus\HL-Prac-2\HL Prac 2\Model.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

@@ -26,6 +26,13 @@ namespace HL_Prac_2
             InitializeComponent();
             Search();
         }
+        //Overloaded constructor to allow window to start with a carrier selection
+        public CarrierSelectorWindow(Carrier startingCarrier)
+        {
+            InitializeComponent();
+            UpdateCarrier(startingCarrier);
+            Search();
+        }
 
         //Carrier Search method
         public void Search()

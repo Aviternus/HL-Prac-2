@@ -35,7 +35,9 @@ namespace HL_Prac_2
         public Nullable<System.DateTime> last_updated_time { get; set; }
         public string load_status { get; set; }
         public Nullable<int> account_id { get; set; }
+        public Nullable<int> carrier_id { get; set; }
     
         public virtual Account Account { get; set; }
+        public virtual Carrier Carrier { get; set; }
     }
 }

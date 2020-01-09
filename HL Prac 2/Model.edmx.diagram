@@ -19,6 +19,7 @@
         <EntityTypeShape EntityType="HOTLOADDBModel.Carrier" Width="1.5" PointX="5.625" PointY="5.25" />
         <AssociationConnector Association="HOTLOADDBModel.carriers_to_address" />
         <AssociationConnector Association="HOTLOADDBModel.carriers_to_contacts" />
+        <AssociationConnector Association="HOTLOADDBModel.loads2carriers" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

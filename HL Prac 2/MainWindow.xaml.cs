@@ -147,10 +147,6 @@ namespace HL_Prac_2
             DropIn_txt.Clear();
             DropOut_txt.Clear();
 
-            dispatchName_cmbo.Text = "";
-            dispatchPhone_cmbo.Text = "";
-            dispatchEmail_cmbo.Text = "";
-
             customer_txt.Clear();
             broker_txt.Clear();
 
@@ -217,10 +213,6 @@ namespace HL_Prac_2
                 loadModel.drop_date = dropDate_picker.SelectedDate.Value;
                 loadModel.drop_time = TimeSpanBuilder(dropAptTime_txt.Text);
 
-                //Driver portion
-                driverModel.contact_name = driverName_cmbo.Text.Trim();
-                driverModel.contact_phone = driverPhone_cmbo.Text.Trim();
-                driverModel.contact_email = driverEmail_cmbo.Text.Trim();
                 using (HOTLOADDBEntities DBEntity = new HOTLOADDBEntities())
                 {
                     Contact driver = null;
@@ -245,10 +237,6 @@ namespace HL_Prac_2
                     loadModel.driver_id = driver.id;
                 }
 
-                //Dispatch portion
-                dispatchModel.contact_name = dispatchName_cmbo.Text.Trim();
-                dispatchModel.contact_phone = dispatchPhone_cmbo.Text.Trim();
-                dispatchModel.contact_email = dispatchEmail_cmbo.Text.Trim();
                 using (HOTLOADDBEntities DBEntity = new HOTLOADDBEntities())
                 {
                     Contact dispatch = null;
@@ -378,16 +366,6 @@ namespace HL_Prac_2
 
                     dropDate_picker.Text = loadModel.drop_date.ToString();
                     dropAptTime_txt.Text = TimeStringBuilder(loadModel.drop_time.Value);
-
-                    //Driver details
-                    driverName_cmbo.Text = SelectedItem.driverContact_name.ToString();
-                    driverPhone_cmbo.Text = SelectedItem.driverContact_phone.ToString();
-                    driverEmail_cmbo.Text = SelectedItem.driverContact_email.ToString();
-
-                    //Dispatch details
-                    dispatchName_cmbo.Text = SelectedItem.dispatchContact_name;
-                    dispatchPhone_cmbo.Text = SelectedItem.dispatchContact_phone;
-                    dispatchEmail_cmbo.Text = SelectedItem.dispatchContact_email;
 
                     customer_txt.Text = loadModel.customer_id.ToString();
                     broker_txt.Text = loadModel.broker_id.ToString();

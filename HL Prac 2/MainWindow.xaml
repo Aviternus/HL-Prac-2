@@ -347,6 +347,23 @@
                         </StackPanel>
                     </GroupBox>
 
+                    <!--Customer Selection-->
+                    <GroupBox Header="Customer" Grid.ColumnSpan="2" Grid.RowSpan="3" Grid.Column="3" Grid.Row="13">
+                        <StackPanel>
+                            <WrapPanel>
+                                <Button Content="Set Customer" Name="assignCustomer_btn" Margin="3"/>
+                                <Button Content="Delete Customer" Name="removeCustomer_btn" Margin="3"/>
+                            </WrapPanel>
+
+                            <Label Content="Customer Name:" Name="customerName_lbl"/>
+
+                            <WrapPanel>
+                                <Label Content="Contact Name:" Name="customerContactName_lbl"/>
+                                <Label Content="Contact Phone:" Name="customerContactPhone_lbl"/>
+                            </WrapPanel>
+                        </StackPanel>
+                    </GroupBox>
+
                     <!--Pick Up-->
                     <Label Content="Pick Date" Grid.Column="1" Grid.Row="18" VerticalAlignment="Center" HorizontalAlignment="Center" />
                     <DatePicker Name="pickDate_picker" Grid.Column="2" Grid.Row="18" Background="Ivory" Margin="3" />

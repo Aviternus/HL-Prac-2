@@ -88,6 +88,9 @@
     <Compile Include="ContactSelectorWindow.xaml.cs">
       <DependentUpon>ContactSelectorWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CustomerSelectorWindow.xaml.cs">
+      <DependentUpon>CustomerSelectorWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Load.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -119,6 +122,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ContactSelectorWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomerSelectorWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

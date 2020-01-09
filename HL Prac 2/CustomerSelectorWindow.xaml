@@ -1,0 +1,97 @@
+﻿<Window x:Class="HL_Prac_2.CustomerSelectorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HL_Prac_2"
+        mc:Ignorable="d"
+        Title="Customer Selector" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" FontFamily="Book Antiqua" Background="GhostWhite">
+    <!--Rounded Text Box Resource Template-->
+    <Window.Resources>
+        <ControlTemplate x:Key="TextBoxBaseControlTemplate" TargetType="{x:Type TextBoxBase}">
+            <Border Background="{TemplateBinding Background}" 
+                x:Name="Bd" BorderBrush="Gray"
+                BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="10">
+                <ScrollViewer x:Name="PART_ContentHost"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" TargetName="Bd"/>
+                    <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                </Trigger>
+                <Trigger Property="Width" Value="Auto">
+                    <Setter Property="MinWidth" Value="25"/>
+                </Trigger>
+                <Trigger Property="Height" Value="Auto">
+                    <Setter Property="MinHeight" Value="20"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="5"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="5"/>
+        </Grid.RowDefinitions>
+
+        <!--Search DataGrid-->
+        <DataGrid Name="CustomerSearchGrid" AutoGenerateColumns="False" AlternatingRowBackground="Cornsilk" Background="Ivory" IsReadOnly="True" Grid.ColumnSpan="2" Grid.RowSpan="3" Grid.Column="1" Grid.Row="1" MouseDoubleClick="CarrierSearchGrid_MouseDoubleClick">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Customer Name" x:Name="customerNameColumn" Binding="{Binding customer_name}" />
+                <DataGridTextColumn Header="Customer Contact" x:Name="customerContactColumn" Binding="{Binding contact_name}" />
+                <DataGridTextColumn Header="Billing Address" x:Name="customerBillingAddress" Binding="{Binding billing_address}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!--Input Fields-->
+        <!--Customer Name-->
+        <Label Content="Customer Name" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="4" />
+        <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" Name="customerName_txt" TabIndex="1" Background="Ivory" Margin="3" Grid.Column="2" Grid.Row="4" TextChanged="customerName_txt_TextChanged"/>
+
+        
+        <!--Carrier Billing Contact Group-->
+        <GroupBox Header="Billing Contact" HorizontalAlignment="Center" Grid.ColumnSpan="1" Grid.RowSpan="4" Grid.Column="1" Grid.Row="5">
+            <StackPanel>
+                <Label Name="contactName_lbl" Content="Name: " HorizontalAlignment="Center"/>
+                <Label Name="contactPhone_lbl" Content="Phone: " HorizontalAlignment="Center"/>
+                <Label Name="contactEmail_lbl" Content="Email: " HorizontalAlignment="Center"/>
+                <Label Content="" />
+                <Button Name="contactSelect_btn" Content="Select Contact" HorizontalAlignment="Center" VerticalAlignment="Center" Click="contactSelect_btn_Click"/>
+            </StackPanel>
+        </GroupBox>
+
+        <!--Carrier Billing Address Group-->
+        <GroupBox Header="Billing Address" HorizontalAlignment="Center" Grid.ColumnSpan="1" Grid.RowSpan="4" Grid.Column="2" Grid.Row="5">
+            <StackPanel>
+                <Label Name="addressStreet_lbl" Content="Street: " HorizontalAlignment="Center"/>
+                <Label Name="addressCity_lbl" Content="City: " HorizontalAlignment="Center"/>
+                <Label Name="addressState_lbl" Content="State: " HorizontalAlignment="Center"/>
+                <Label Name="addressZip_lbl" Content="ZIP: " HorizontalAlignment="Center"/>
+                <Button Name="addressSelect_btn" Content="Select Contact" HorizontalAlignment="Center" VerticalAlignment="Center" Click="addressSelect_btn_Click"/>
+            </StackPanel>
+        </GroupBox>
+
+        <!--Buttons-->
+        <WrapPanel HorizontalAlignment="Center" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="9">
+            <Button Name="confirm_btn" Content="Confirm" Margin="5" Width="90" Height="25" Click="confirm_btn_Click"/>
+            <Button Name="clear_btn" Content="Clear" Margin="5" Width="90" Height="25" Click="clear_btn_Click"/>
+            <Button Name="cancel_btn" Content="Cancel" Margin="5" Width="90" Height="25" Click="cancel_btn_Click"/>
+        </WrapPanel>
+    </Grid>
+</Window>

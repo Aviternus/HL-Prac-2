@@ -331,7 +331,7 @@
                     <ComboBox Name="dispatchEmail_cmbo" Background="Ivory" Margin="3" IsEditable="True" Height="30" HorizontalContentAlignment="Center" Grid.Column="4" Grid.Row="11" />
 
                     <!--Carrier Selection-->
-                    <GroupBox Header="Carrier" Grid.ColumnSpan="2" Grid.RowSpan="3" Grid.Column="1" Grid.Row="13">
+                    <GroupBox Header="Carrier" Grid.ColumnSpan="2" Grid.RowSpan="3" Grid.Column="1" Grid.Row="12">
                         <StackPanel>
                             <WrapPanel>
                                 <Button Content="Assign Carrier" Name="assignCarrier_btn" Margin="3" Click="assignCarrier_btn_Click"/>
@@ -348,7 +348,7 @@
                     </GroupBox>
 
                     <!--Customer Selection-->
-                    <GroupBox Header="Customer" Grid.ColumnSpan="2" Grid.RowSpan="3" Grid.Column="3" Grid.Row="13">
+                    <GroupBox Header="Customer" Grid.ColumnSpan="2" Grid.RowSpan="3" Grid.Column="3" Grid.Row="12">
                         <StackPanel>
                             <WrapPanel>
                                 <Button Content="Set Customer" Name="assignCustomer_btn" Margin="3"/>

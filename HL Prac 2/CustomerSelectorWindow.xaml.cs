@@ -14,9 +14,6 @@ using System.Windows.Shapes;
 
 namespace HL_Prac_2
 {
-    /// <summary>
-    /// Interaction logic for CustomerSelectorWindow.xaml
-    /// </summary>
     public partial class CustomerSelectorWindow : Window
     {
         public event EventHandler<CustomerEvent> RaiseCustomerEvent;
@@ -92,6 +89,7 @@ namespace HL_Prac_2
                                         info_contact_id = customers.info_contact_id,
                                         billing_contact_id = customers.billing_contact_id,
                                         billing_address_id = customers.billing_address_id,
+                                        terms = customers.terms,
                                     }
                                     ).ToList();
 
@@ -103,6 +101,7 @@ namespace HL_Prac_2
                                         info_contact_id = x.info_contact_id,
                                         billing_contact_id = x.billing_contact_id,
                                         billing_address_id = x.billing_address_id,
+                                        terms = x.terms,
                                     }).ToList();
             }
             return returnedList;
@@ -143,6 +142,9 @@ namespace HL_Prac_2
 
             using (HOTLOADDBEntities HOTLOADEntity = new HOTLOADDBEntities())
             {
+                infoContact = HOTLOADEntity.Contacts.Find(selectedCustomer.info_contact_id);
+                UpdateInfoContactFields(infoContact);
+
                 billingContact = HOTLOADEntity.Contacts.Find(selectedCustomer.billing_contact_id);
                 UpdateBillingContactFields(billingContact);
 
@@ -153,14 +155,26 @@ namespace HL_Prac_2
             SelectedCustomer = selectedCustomer;
         }
 
+        //Method to select customer from datagrid on doubleclick
+        private void SelectCustomer()
+        {
+            if (CustomerSearchGrid.SelectedIndex != -1)
+            {
+                Customer selectedCustomer = (Customer)CustomerSearchGrid.SelectedItem;
+
+                //Set Input Fields to selection
+                UpdateCustomer(selectedCustomer);
+            }
+        }
+
         private void CustomerSearchGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-
+            SelectCustomer();
         }
 
         private void customerName_txt_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+            Search();
         }
 
         private void infoContactSelect_btn_Click(object sender, RoutedEventArgs e)

@@ -15,6 +15,7 @@ namespace HL_Prac_2
     {
         Load CurrentLoad; //TODO see about refactoring some methods using this object as it may vastly simplify things
         private Carrier CurrentCarrier; //Used to retrieve carrier from carrier selector
+        private Customer CurrentCustomer; //Used to retrive customer from customer selector
         public MainWindow()
         {
             InitializeComponent();
@@ -159,7 +160,9 @@ namespace HL_Prac_2
 
             //Reset CurrentCarrier
             CurrentCarrier = null;
+            CurrentCustomer = null;
             UpdateCarrierFields();
+            UpdateCustomerFields();
         }
 
         //Update or Create Button
@@ -309,9 +312,11 @@ namespace HL_Prac_2
                 }
             }
             //Reset current object selections
-            CurrentCarrier = null;
             CurrentLoad = null;
+            CurrentCarrier = null;
+            CurrentCustomer = null;
             UpdateCarrierFields();
+            UpdateCustomerFields();
         }
 
         //Copy Load button
@@ -326,9 +331,11 @@ namespace HL_Prac_2
             if (LoadBoard.SelectedIndex != -1)
             {
                 //Reset current object selections
-                CurrentCarrier = null;
                 CurrentLoad = null;
+                CurrentCarrier = null;
+                CurrentCustomer = null;
                 UpdateCarrierFields();
+                UpdateCustomerFields();
                 //Load model
                 ViewModel SelectedItem = (ViewModel)LoadBoard.SelectedItem;
                 using (HOTLOADDBEntities HOTLOADEntity = new HOTLOADDBEntities())
@@ -591,11 +598,9 @@ namespace HL_Prac_2
         private void removeCarrier_btn_Click(object sender, RoutedEventArgs e)
         {
             CurrentCarrier = null;
-            carrierName_lbl.Content = "Carrier Name:";
-            carrierMC_lbl.Content = "MC#:";
-            carrierDot_lbl.Content = "DOT#:";
+            UpdateCarrierFields();
         }
-        //Over loaded Method to update cucrrent carrier and set carrier fields on new carrier selection or to reset them if no carrier is passed
+        //Over loaded Method to update current carrier and set carrier fields on new carrier selection or to reset them if no carrier is passed
         private void UpdateCarrierFields(Carrier newCarrier)
         {
             if(newCarrier != null)
@@ -608,10 +613,11 @@ namespace HL_Prac_2
         }
         private void UpdateCarrierFields()
         {
-            carrierName_lbl.Content = "Name:";
+            carrierName_lbl.Content = "Carrier Name:";
             carrierMC_lbl.Content = "MC#:";
             carrierDot_lbl.Content = "DOT#:";
         }
+
         //Event to get Carrier from Carrier selector window
         void carrierSearch_RaiseCustomEvent(object sender, CarrierEvent e)
         {
@@ -627,14 +633,50 @@ namespace HL_Prac_2
             }
         }
 
+        //Over loaded Method to update current customer and set customer fields on new customer selection or to reset them if no customer is passed
+        private void UpdateCustomerFields(Customer newCustomer)
+        {
+            if (newCustomer != null)
+            {
+                CurrentCustomer = newCustomer;
+                carrierName_lbl.Content = CurrentCarrier.carrier_name;
+                carrierMC_lbl.Content = "MC#:" + CurrentCarrier.mc_num;
+                carrierDot_lbl.Content = "DOT#:" + CurrentCarrier.dot_num;
+            }
+        }
+        private void UpdateCustomerFields()
+        {
+            customerName_lbl.Content = "Name:";
+            customerContactName_lbl.Content = "Contact Name:";
+            customerContactPhone_lbl.Content = "Contact Phone:";
+        }
+        
+        //Event to get Customer from Customer selector window
+        void customerSearch_RaiseCustomEvent(object sender, CustomerEvent e)
+        {
+            UpdateCustomerFields(e.ReturnCustomer);
+            if (CurrentLoad != null) //Handles exception if carrier is selected but no load is selected
+            {
+                CurrentLoad.carrier_id = CurrentCarrier.id;
+                using (HOTLOADDBEntities HOTLOADEntity = new HOTLOADDBEntities())
+                {
+                    HOTLOADEntity.Entry(CurrentLoad).State = EntityState.Modified;
+                    HOTLOADEntity.SaveChanges();
+                }
+            }
+        }
+
         private void assignCustomer_btn_Click(object sender, RoutedEventArgs e)
         {
-
+            CustomerSelectorWindow customerSelector = new CustomerSelectorWindow();
+            customerSelector.RaiseCustomerEvent += new EventHandler<CustomerEvent>(customerSearch_RaiseCustomEvent);
+            customerSelector.Show();
         }
 
         private void removeCustomer_btn_Click(object sender, RoutedEventArgs e)
         {
-
+            CurrentCustomer = null;
+            UpdateCustomerFields();
         }
     }
 }

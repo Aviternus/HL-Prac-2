@@ -88,6 +88,9 @@
     <Compile Include="ContactSelectorWindow.xaml.cs">
       <DependentUpon>ContactSelectorWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Customer.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="CustomerSelectorWindow.xaml.cs">
       <DependentUpon>CustomerSelectorWindow.xaml</DependentUpon>
     </Compile>

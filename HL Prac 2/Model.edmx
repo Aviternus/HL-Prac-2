@@ -46,6 +46,17 @@
           <Property Name="contact_phone" Type="varchar" MaxLength="15" />
           <Property Name="contact_email" Type="varchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="Customers">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="customer_name" Type="varchar" MaxLength="50" />
+          <Property Name="info_contact_id" Type="int" />
+          <Property Name="billing_contact_id" Type="int" />
+          <Property Name="billing_address_id" Type="int" />
+          <Property Name="terms" Type="varchar" MaxLength="300" />
+        </EntityType>
         <EntityType Name="Loads">
           <Key>
             <PropertyRef Name="bol_num" />
@@ -143,6 +154,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="customers2billingAddresses">
+          <End Role="Addresses" Type="Self.Addresses" Multiplicity="0..1" />
+          <End Role="Customers" Type="Self.Customers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Addresses">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Customers">
+              <PropertyRef Name="billing_address_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="customers2billingContacts">
+          <End Role="Contacts" Type="Self.Contacts" Multiplicity="0..1" />
+          <End Role="Customers" Type="Self.Customers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contacts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Customers">
+              <PropertyRef Name="billing_contact_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="customers2infoContacts">
+          <End Role="Contacts" Type="Self.Contacts" Multiplicity="0..1" />
+          <End Role="Customers" Type="Self.Customers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contacts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Customers">
+              <PropertyRef Name="info_contact_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="loads2accounts">
           <End Role="Accounts" Type="Self.Accounts" Multiplicity="0..1" />
           <End Role="Loads" Type="Self.Loads" Multiplicity="*" />
@@ -196,6 +243,7 @@
           <EntitySet Name="Addresses" EntityType="Self.Addresses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Carriers" EntityType="Self.Carriers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Contacts" EntityType="Self.Contacts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Loads" EntityType="Self.Loads" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="accounts2addresses" Association="Self.accounts2addresses">
@@ -217,6 +265,18 @@
           <AssociationSet Name="carriers_to_contacts" Association="Self.carriers_to_contacts">
             <End Role="Contacts" EntitySet="Contacts" />
             <End Role="Carriers" EntitySet="Carriers" />
+          </AssociationSet>
+          <AssociationSet Name="customers2billingAddresses" Association="Self.customers2billingAddresses">
+            <End Role="Addresses" EntitySet="Addresses" />
+            <End Role="Customers" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="customers2billingContacts" Association="Self.customers2billingContacts">
+            <End Role="Contacts" EntitySet="Contacts" />
+            <End Role="Customers" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="customers2infoContacts" Association="Self.customers2infoContacts">
+            <End Role="Contacts" EntitySet="Contacts" />
+            <End Role="Customers" EntitySet="Customers" />
           </AssociationSet>
           <AssociationSet Name="loads2accounts" Association="Self.loads2accounts">
             <End Role="Accounts" EntitySet="Accounts" />
@@ -311,6 +371,19 @@
             <End Role="Carrier" EntitySet="Carriers" />
             <End Role="Load" EntitySet="Loads" />
           </AssociationSet>
+          <EntitySet Name="Customers" EntityType="HOTLOADDBModel.Customer" />
+          <AssociationSet Name="customers2billingAddresses" Association="HOTLOADDBModel.customers2billingAddresses">
+            <End Role="Address" EntitySet="Addresses" />
+            <End Role="Customer" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="customers2billingContacts" Association="HOTLOADDBModel.customers2billingContacts">
+            <End Role="Contact" EntitySet="Contacts" />
+            <End Role="Customer" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="customers2infoContacts" Association="HOTLOADDBModel.customers2infoContacts">
+            <End Role="Contact" EntitySet="Contacts" />
+            <End Role="Customer" EntitySet="Customers" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Account">
           <Key>
@@ -338,6 +411,7 @@
           <Property Name="zip" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="Accounts" Relationship="HOTLOADDBModel.accounts2addresses" FromRole="Address" ToRole="Account" />
           <NavigationProperty Name="Carriers" Relationship="HOTLOADDBModel.carriers_to_address" FromRole="Address" ToRole="Carrier" />
+          <NavigationProperty Name="Customers" Relationship="HOTLOADDBModel.customers2billingAddresses" FromRole="Address" ToRole="Customer" />
         </EntityType>
         <EntityType Name="Contact">
           <Key>
@@ -350,6 +424,7 @@
           <NavigationProperty Name="Accounts" Relationship="HOTLOADDBModel.accounts2billingcontacts" FromRole="Contact" ToRole="Account" />
           <NavigationProperty Name="Users" Relationship="HOTLOADDBModel.users2contacts" FromRole="Contact" ToRole="User" />
           <NavigationProperty Name="Carriers" Relationship="HOTLOADDBModel.carriers_to_contacts" FromRole="Contact" ToRole="Carrier" />
+          <NavigationProperty Name="Customers" Relationship="HOTLOADDBModel.customers2billingContacts" FromRole="Contact" ToRole="Customer" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -485,6 +560,56 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="customer_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="info_contact_id" Type="Int32" />
+          <Property Name="billing_contact_id" Type="Int32" />
+          <Property Name="billing_address_id" Type="Int32" />
+          <Property Name="terms" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Address" Relationship="HOTLOADDBModel.customers2billingAddresses" FromRole="Customer" ToRole="Address" />
+          <NavigationProperty Name="Contact" Relationship="HOTLOADDBModel.customers2billingContacts" FromRole="Customer" ToRole="Contact" />
+          <NavigationProperty Name="Contact1" Relationship="HOTLOADDBModel.customers2infoContacts" FromRole="Customer" ToRole="Contact" />
+        </EntityType>
+        <Association Name="customers2billingAddresses">
+          <End Type="HOTLOADDBModel.Address" Role="Address" Multiplicity="0..1" />
+          <End Type="HOTLOADDBModel.Customer" Role="Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="billing_address_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="customers2billingContacts">
+          <End Type="HOTLOADDBModel.Contact" Role="Contact" Multiplicity="0..1" />
+          <End Type="HOTLOADDBModel.Customer" Role="Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contact">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="billing_contact_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="customers2infoContacts">
+          <End Type="HOTLOADDBModel.Contact" Role="Contact" Multiplicity="0..1" />
+          <End Type="HOTLOADDBModel.Customer" Role="Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contact">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="info_contact_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -572,6 +697,18 @@
                 <ScalarProperty Name="billing_contact_id" ColumnName="billing_contact_id" />
                 <ScalarProperty Name="dot_num" ColumnName="dot_num" />
                 <ScalarProperty Name="mc_num" ColumnName="mc_num" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="HOTLOADDBModel.Customer">
+              <MappingFragment StoreEntitySet="Customers">
+                <ScalarProperty Name="terms" ColumnName="terms" />
+                <ScalarProperty Name="billing_address_id" ColumnName="billing_address_id" />
+                <ScalarProperty Name="billing_contact_id" ColumnName="billing_contact_id" />
+                <ScalarProperty Name="info_contact_id" ColumnName="info_contact_id" />
+                <ScalarProperty Name="customer_name" ColumnName="customer_name" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

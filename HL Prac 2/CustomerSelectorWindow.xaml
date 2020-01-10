@@ -34,6 +34,7 @@
             <ColumnDefinition Width="5"/>
             <ColumnDefinition Width="150"/>
             <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="150"/>
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -51,7 +52,7 @@
         </Grid.RowDefinitions>
 
         <!--Search DataGrid-->
-        <DataGrid Name="CustomerSearchGrid" AutoGenerateColumns="False" AlternatingRowBackground="Cornsilk" Background="Ivory" IsReadOnly="True" Grid.ColumnSpan="2" Grid.RowSpan="3" Grid.Column="1" Grid.Row="1" MouseDoubleClick="CarrierSearchGrid_MouseDoubleClick">
+        <DataGrid Name="CustomerSearchGrid" AutoGenerateColumns="False" AlternatingRowBackground="Cornsilk" Background="Ivory" IsReadOnly="True" Grid.ColumnSpan="3" Grid.RowSpan="3" Grid.Column="1" Grid.Row="1" MouseDoubleClick="CustomerSearchGrid_MouseDoubleClick">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Customer Name" x:Name="customerNameColumn" Binding="{Binding customer_name}" />
                 <DataGridTextColumn Header="Customer Contact" x:Name="customerContactColumn" Binding="{Binding contact_name}" />
@@ -62,11 +63,21 @@
         <!--Input Fields-->
         <!--Customer Name-->
         <Label Content="Customer Name" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="4" />
-        <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" Name="customerName_txt" TabIndex="1" Background="Ivory" Margin="3" Grid.Column="2" Grid.Row="4" TextChanged="customerName_txt_TextChanged"/>
+        <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" Name="customerName_txt" TabIndex="1" Background="Ivory" Margin="3" Grid.ColumnSpan="2" Grid.Column="2" Grid.Row="4" TextChanged="customerName_txt_TextChanged"/>
 
-        
+        <!--Carrier Info Contact Group-->
+        <GroupBox Header="Info Contact" HorizontalAlignment="Center" Grid.ColumnSpan="1" Grid.RowSpan="4" Grid.Column="1" Grid.Row="5">
+            <StackPanel>
+                <Label Name="infoContactName_lbl" Content="Name: " HorizontalAlignment="Center"/>
+                <Label Name="infoContactPhone_lbl" Content="Phone: " HorizontalAlignment="Center"/>
+                <Label Name="infoContactEmail_lbl" Content="Email: " HorizontalAlignment="Center"/>
+                <Label Content="" />
+                <Button Name="infoContactSelect_btn" Content="Select Contact" HorizontalAlignment="Center" VerticalAlignment="Center" Click="infoContactSelect_btn_Click"/>
+            </StackPanel>
+        </GroupBox>
+
         <!--Carrier Billing Contact Group-->
-        <GroupBox Header="Billing Contact" HorizontalAlignment="Center" Grid.ColumnSpan="1" Grid.RowSpan="4" Grid.Column="1" Grid.Row="5">
+        <GroupBox Header="Billing Contact" HorizontalAlignment="Center" Grid.ColumnSpan="1" Grid.RowSpan="4" Grid.Column="2" Grid.Row="5">
             <StackPanel>
                 <Label Name="contactName_lbl" Content="Name: " HorizontalAlignment="Center"/>
                 <Label Name="contactPhone_lbl" Content="Phone: " HorizontalAlignment="Center"/>
@@ -77,7 +88,7 @@
         </GroupBox>
 
         <!--Carrier Billing Address Group-->
-        <GroupBox Header="Billing Address" HorizontalAlignment="Center" Grid.ColumnSpan="1" Grid.RowSpan="4" Grid.Column="2" Grid.Row="5">
+        <GroupBox Header="Billing Address" HorizontalAlignment="Center" Grid.ColumnSpan="1" Grid.RowSpan="4" Grid.Column="3" Grid.Row="5">
             <StackPanel>
                 <Label Name="addressStreet_lbl" Content="Street: " HorizontalAlignment="Center"/>
                 <Label Name="addressCity_lbl" Content="City: " HorizontalAlignment="Center"/>

@@ -113,25 +113,6 @@ namespace HL_Prac_2
             return returnedList;
         }
 
-        //Method to set current Carrier and associated fields
-        private void UpdateCarrier(Carrier selectedCarrier)
-        {
-            carrierName_txt.Text = selectedCarrier.carrier_name;
-            carrierMc_txt.Text = selectedCarrier.mc_num;
-            carrierDot_txt.Text = selectedCarrier.dot_num;
-
-            using (HOTLOADDBEntities HOTLOADEntity = new HOTLOADDBEntities())
-            {
-                billingContact = HOTLOADEntity.Contacts.Find(selectedCarrier.billing_contact_id);
-                UpdateBillingContactFields(billingContact);
-
-                billingAddress = HOTLOADEntity.Addresses.Find(selectedCarrier.billing_address_id);
-                UpdateBillingAddressFields(billingAddress);
-            }
-
-            SelectedCarrier = selectedCarrier;
-        }
-
         //Billing contact update method
         private void UpdateBillingContactFields(Contact newBillingContact)
         {
@@ -149,6 +130,25 @@ namespace HL_Prac_2
             addressCity_lbl.Content = billingAddress.city;
             addressState_lbl.Content = billingAddress.state;
             addressZip_lbl.Content = billingAddress.zip;
+        }
+
+        //Method to set current Carrier and associated fields
+        private void UpdateCarrier(Carrier selectedCarrier)
+        {
+            carrierName_txt.Text = selectedCarrier.carrier_name;
+            carrierMc_txt.Text = selectedCarrier.mc_num;
+            carrierDot_txt.Text = selectedCarrier.dot_num;
+
+            using (HOTLOADDBEntities HOTLOADEntity = new HOTLOADDBEntities())
+            {
+                billingContact = HOTLOADEntity.Contacts.Find(selectedCarrier.billing_contact_id);
+                UpdateBillingContactFields(billingContact);
+
+                billingAddress = HOTLOADEntity.Addresses.Find(selectedCarrier.billing_address_id);
+                UpdateBillingAddressFields(billingAddress);
+            }
+
+            SelectedCarrier = selectedCarrier;
         }
 
         //Method to select carrier from datagrid on doubleclick

@@ -11,9 +11,6 @@ using System.Windows.Input;
 //C# DateTime format = 11/12/2019 12:00:00 AM MM/DD/YYYY HH:MM:SS AM
 namespace HL_Prac_2
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         Load CurrentLoad; //TODO see about refactoring some methods using this object as it may vastly simplify things
@@ -404,8 +401,6 @@ namespace HL_Prac_2
                 }
         }
 
-        
-
         //Column Display Control
         private void ColumnController(object sender, System.Windows.Controls.ContextMenuEventArgs e)
         {
@@ -630,6 +625,16 @@ namespace HL_Prac_2
                     HOTLOADEntity.SaveChanges();
                 }
             }
+        }
+
+        private void assignCustomer_btn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void removeCustomer_btn_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

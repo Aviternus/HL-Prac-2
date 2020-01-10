@@ -20,6 +20,10 @@
         <AssociationConnector Association="HOTLOADDBModel.carriers_to_address" />
         <AssociationConnector Association="HOTLOADDBModel.carriers_to_contacts" />
         <AssociationConnector Association="HOTLOADDBModel.loads2carriers" />
+        <EntityTypeShape EntityType="HOTLOADDBModel.Customer" Width="1.5" PointX="8.625" PointY="5.125" />
+        <AssociationConnector Association="HOTLOADDBModel.customers2billingAddresses" />
+        <AssociationConnector Association="HOTLOADDBModel.customers2billingContacts" />
+        <AssociationConnector Association="HOTLOADDBModel.customers2infoContacts" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

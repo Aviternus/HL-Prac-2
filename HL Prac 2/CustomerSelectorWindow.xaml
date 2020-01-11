@@ -94,7 +94,7 @@
                 <Label Name="addressCity_lbl" Content="City:" HorizontalAlignment="Center"/>
                 <Label Name="addressState_lbl" Content="State: " HorizontalAlignment="Center"/>
                 <Label Name="addressZip_lbl" Content="ZIP:" HorizontalAlignment="Center"/>
-                <Button Name="addressSelect_btn" Content="Select Contact" HorizontalAlignment="Center" VerticalAlignment="Center" Click="addressSelect_btn_Click"/>
+                <Button Name="addressSelect_btn" Content="Select Address" HorizontalAlignment="Center" VerticalAlignment="Center" Click="addressSelect_btn_Click"/>
             </StackPanel>
         </GroupBox>
 

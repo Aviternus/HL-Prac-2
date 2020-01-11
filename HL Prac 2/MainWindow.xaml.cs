@@ -639,16 +639,12 @@ namespace HL_Prac_2
             if (newCustomer != null)
             {
                 CurrentCustomer = newCustomer;
-                carrierName_lbl.Content = CurrentCarrier.carrier_name;
-                carrierMC_lbl.Content = "MC#:" + CurrentCarrier.mc_num;
-                carrierDot_lbl.Content = "DOT#:" + CurrentCarrier.dot_num;
+                customerName_lbl.Content = CurrentCustomer.customer_name;
             }
         }
         private void UpdateCustomerFields()
         {
             customerName_lbl.Content = "Name:";
-            customerContactName_lbl.Content = "Contact Name:";
-            customerContactPhone_lbl.Content = "Contact Phone:";
         }
         
         //Event to get Customer from Customer selector window

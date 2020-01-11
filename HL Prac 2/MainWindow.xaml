@@ -309,7 +309,7 @@
                     <!--Carrier Selection-->
                     <GroupBox Header="Carrier" Grid.ColumnSpan="2" Grid.RowSpan="3" Grid.Column="1" Grid.Row="9">
                         <StackPanel>
-                            <WrapPanel>
+                            <WrapPanel HorizontalAlignment="Center">
                                 <Button Content="Assign Carrier" Name="assignCarrier_btn" Margin="3" Click="assignCarrier_btn_Click"/>
                                 <Button Content="Remove Carrier" Name="removeCarrier_btn" Margin="3" Click="removeCarrier_btn_Click"/>
                             </WrapPanel>
@@ -326,17 +326,12 @@
                     <!--Customer Selection-->
                     <GroupBox Header="Customer" Grid.ColumnSpan="2" Grid.RowSpan="3" Grid.Column="3" Grid.Row="9">
                         <StackPanel>
-                            <WrapPanel>
+                            <WrapPanel HorizontalAlignment="Center">
                                 <Button Content="Set Customer" Name="assignCustomer_btn" Margin="3" Click="assignCustomer_btn_Click"/>
                                 <Button Content="Delete Customer" Name="removeCustomer_btn" Margin="3" Click="removeCustomer_btn_Click"/>
                             </WrapPanel>
 
-                            <Label Content="Customer Name:" Name="customerName_lbl"/>
-
-                            <WrapPanel>
-                                <Label Content="Contact Name:" Name="customerContactName_lbl"/>
-                                <Label Content="Contact Phone:" Name="customerContactPhone_lbl"/>
-                            </WrapPanel>
+                            <Label Content="Customer Name:" Name="customerName_lbl" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </GroupBox>
 

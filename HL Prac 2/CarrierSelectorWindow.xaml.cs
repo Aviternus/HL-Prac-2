@@ -184,6 +184,36 @@ namespace HL_Prac_2
             Search();
         }
 
+        //Event to get Contact from contact selector
+        void contactSelector_RaiseCustomEvent(object sender, ContactEvent e)
+        {
+            UpdateBillingContactFields(e.ReturnContact);
+            if (SelectedCarrier != null) //Handles exception if contact is selected but no carrier is selected
+            {
+                SelectedCarrier.billing_contact_id = billingContact.id;
+                using (HOTLOADDBEntities HOTLOADEntity = new HOTLOADDBEntities())
+                {
+                    HOTLOADEntity.Entry(SelectedCarrier).State = EntityState.Modified;
+                    HOTLOADEntity.SaveChanges();
+                }
+            }
+        }
+
+        //Event to get Address from Address selector
+        void addressSearch_RaiseCustomEvent(object sender, AddressEvent e)
+        {
+            UpdateBillingAddressFields(e.ReturnAddress);
+            if (SelectedCarrier != null)//Handles exception if address is selected but no carrier is selected
+            {
+                SelectedCarrier.billing_address_id = billingAddress.id;
+                using (HOTLOADDBEntities HOTLOADEntity = new HOTLOADDBEntities())
+                {
+                    HOTLOADEntity.Entry(SelectedCarrier).State = EntityState.Modified;
+                    HOTLOADEntity.SaveChanges();
+                }
+            }
+        }
+
         //Contact & Address select buttons
         private void contactSelect_btn_Click(object sender, RoutedEventArgs e)
         {
@@ -263,35 +293,7 @@ namespace HL_Prac_2
             this.Close();
         }
 
-        //Event to get Contact from contact selector
-        void contactSelector_RaiseCustomEvent(object sender, ContactEvent e)
-        {
-            UpdateBillingContactFields(e.ReturnContact);
-            if (SelectedCarrier != null) //Handles exception if contact is selected but no carrier is selected
-            {
-                SelectedCarrier.billing_contact_id = billingContact.id;
-                using (HOTLOADDBEntities HOTLOADEntity = new HOTLOADDBEntities())
-                {
-                    HOTLOADEntity.Entry(SelectedCarrier).State = EntityState.Modified;
-                    HOTLOADEntity.SaveChanges();
-                }
-            }
-        }
-
-        //Event to get Address from Address selector
-        void addressSearch_RaiseCustomEvent(object sender, AddressEvent e)
-        {
-            UpdateBillingAddressFields(e.ReturnAddress);
-            if (SelectedCarrier != null)//Handles exception if address is selected but no carrier is selected
-            {
-                SelectedCarrier.billing_address_id = billingAddress.id;
-                using (HOTLOADDBEntities HOTLOADEntity = new HOTLOADDBEntities())
-                {
-                    HOTLOADEntity.Entry(SelectedCarrier).State = EntityState.Modified;
-                    HOTLOADEntity.SaveChanges();
-                }
-            }
-        }
+        
     }
 
     //Event to pass data to parent

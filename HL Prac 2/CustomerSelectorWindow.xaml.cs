@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,6 +25,7 @@ namespace HL_Prac_2
         public CustomerSelectorWindow()
         {
             InitializeComponent();
+            Search();
         }
         //Overloaded constructor to allow window to start with a customer selection
         public CustomerSelectorWindow(Customer startingCustomer)
@@ -111,9 +113,9 @@ namespace HL_Prac_2
         private void UpdateInfoContactFields(Contact newInfoContact)
         {
             infoContact = newInfoContact;
-            contactName_lbl.Content = infoContact.contact_name;
-            contactPhone_lbl.Content = infoContact.contact_phone;
-            contactEmail_lbl.Content = infoContact.contact_email;
+            infoContactName_lbl.Content = infoContact.contact_name;
+            infoContactPhone_lbl.Content = infoContact.contact_phone;
+            infoContactEmail_lbl.Content = infoContact.contact_email;
         }
 
         //Billing contact update method
@@ -177,9 +179,56 @@ namespace HL_Prac_2
             Search();
         }
 
+        //Event to get Contact from contact selector for info contact
+        void infoContactSelector_RaiseCustomEvent(object sender, ContactEvent e)
+        {
+            UpdateInfoContactFields(e.ReturnContact);
+            if (SelectedCustomer != null) //Handles exception if contact is selected but no customer is selected
+            {
+                SelectedCustomer.info_contact_id = infoContact.id;
+                using (HOTLOADDBEntities HOTLOADEntity = new HOTLOADDBEntities())
+                {
+                    HOTLOADEntity.Entry(SelectedCustomer).State = EntityState.Modified;
+                    HOTLOADEntity.SaveChanges();
+                }
+            }
+        }
+
+        //Event to get Contact from contact selector for billing contact
+        void billingContactSelector_RaiseCustomEvent(object sender, ContactEvent e)
+        {
+            UpdateBillingContactFields(e.ReturnContact);
+            if (SelectedCustomer != null) //Handles exception if contact is selected but no customer is selected
+            {
+                SelectedCustomer.info_contact_id = billingContact.id;
+                using (HOTLOADDBEntities HOTLOADEntity = new HOTLOADDBEntities())
+                {
+                    HOTLOADEntity.Entry(SelectedCustomer).State = EntityState.Modified;
+                    HOTLOADEntity.SaveChanges();
+                }
+            }
+        }
+
+        //Event to get Address from Address selector
+        void addressSearch_RaiseCustomEvent(object sender, AddressEvent e)
+        {
+            UpdateBillingAddressFields(e.ReturnAddress);
+            if (SelectedCustomer != null)//Handles exception if address is selected but no carrier is selected
+            {
+                SelectedCustomer.billing_address_id = billingAddress.id;
+                using (HOTLOADDBEntities HOTLOADEntity = new HOTLOADDBEntities())
+                {
+                    HOTLOADEntity.Entry(SelectedCustomer).State = EntityState.Modified;
+                    HOTLOADEntity.SaveChanges();
+                }
+            }
+        }
+
         private void infoContactSelect_btn_Click(object sender, RoutedEventArgs e)
         {
-
+            ContactSelectorWindow infoContactSelector = new ContactSelectorWindow(infoContact);
+            infoContactSelector.RaiseContactEvent += new EventHandler<ContactEvent>(infoContactSelector_RaiseCustomEvent);
+            infoContactSelector.Show();
         }
 
         private void contactSelect_btn_Click(object sender, RoutedEventArgs e)
@@ -194,7 +243,43 @@ namespace HL_Prac_2
 
         private void confirm_btn_Click(object sender, RoutedEventArgs e)
         {
+            Customer newCustomer = new Customer();
+            newCustomer.customer_name = customerName_txt.Text.Trim();
+            if (infoContact != null)
+            {
+                newCustomer.info_contact_id = infoContact.id;
+            }
+            if (billingContact != null)
+            {
+                newCustomer.billing_contact_id = billingContact.id;
+            }
+            if (billingAddress != null)
+            {
+                newCustomer.billing_address_id = billingAddress.id;
+            }
 
+            List<Customer> customerMatch = SearchCustomer(newCustomer);
+
+            //Make sure entry does not already exist
+            if (customerMatch.Count > 0)
+            {
+                newCustomer = customerMatch.ElementAt(0);
+            }
+            else//If it does not add it
+            {
+                using (HOTLOADDBEntities HOTLOADDBEntity = new HOTLOADDBEntities())
+                {
+                    HOTLOADDBEntity.Customers.Add(newCustomer);
+                    HOTLOADDBEntity.SaveChanges();
+                }
+                List<Customer> addedCustomer = SearchCustomer(newCustomer);
+                newCustomer = addedCustomer.ElementAt(0);
+            }
+
+            UpdateCustomer(newCustomer);
+            //Pass data to parent
+            RaiseCustomerEvent(this, new CustomerEvent(newCustomer));
+            this.Close();
         }
 
         private void clear_btn_Click(object sender, RoutedEventArgs e)

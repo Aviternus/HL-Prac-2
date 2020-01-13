@@ -233,12 +233,16 @@ namespace HL_Prac_2
 
         private void contactSelect_btn_Click(object sender, RoutedEventArgs e)
         {
-
+            ContactSelectorWindow contactSelector = new ContactSelectorWindow(billingContact);
+            contactSelector.RaiseContactEvent += new EventHandler<ContactEvent>(billingContactSelector_RaiseCustomEvent);
+            contactSelector.Show();
         }
 
         private void addressSelect_btn_Click(object sender, RoutedEventArgs e)
         {
-
+            AddressSelectorWindow addressSearch = new AddressSelectorWindow(billingAddress);
+            addressSearch.RaiseAddressEvent += new EventHandler<AddressEvent>(addressSearch_RaiseCustomEvent);
+            addressSearch.Show();
         }
 
         private void confirm_btn_Click(object sender, RoutedEventArgs e)
